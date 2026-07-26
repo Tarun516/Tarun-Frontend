@@ -1,0 +1,40 @@
+import type { Metadata } from "next";
+import { Container } from "@/components/Container";
+import { EntryCard } from "@/components/EntryCard";
+import { Footer } from "@/components/Footer";
+import { Navbar } from "@/components/Navbar";
+import { getAllEntries } from "@/data/portfolio";
+
+export const metadata: Metadata = {
+  title: "Projects",
+  description: "Projects and case studies.",
+};
+
+export default function ProjectsPage() {
+  const entries = getAllEntries().filter(
+    (entry) => entry.kind === "project" || entry.kind === "case-study",
+  );
+
+  return (
+    <div className="flex min-h-full flex-1 flex-col">
+      <Navbar />
+      <main className="flex-1">
+        <Container className="pt-14 pb-24 sm:pt-16">
+          <h1 className="font-display text-3xl font-medium tracking-[-0.03em] text-foreground sm:text-4xl">
+            Projects
+          </h1>
+          <p className="mt-3 max-w-prose text-[15px] leading-relaxed text-secondary sm:text-base">
+            Builds and case studies.
+          </p>
+
+          <div className="mt-12 max-w-3xl">
+            {entries.map((entry) => (
+              <EntryCard key={entry.id} entry={entry} />
+            ))}
+          </div>
+        </Container>
+      </main>
+      <Footer />
+    </div>
+  );
+}
