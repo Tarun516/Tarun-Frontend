@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Inter_Tight, JetBrains_Mono } from "next/font/google";
+import { ThemeProvider } from "@/components/ThemeProvider";
+import { ThemeScript } from "@/components/theme-script";
 import { portfolio } from "@/data/portfolio";
 import "./globals.css";
 
@@ -21,7 +23,7 @@ const jetbrains = JetBrains_Mono({
 export const metadata: Metadata = {
   title: {
     default: portfolio.name,
-    template: `%s — ${portfolio.name}`,
+    template: `%s · ${portfolio.name}`,
   },
   description: portfolio.hero.subtitle,
   keywords: [
@@ -48,8 +50,14 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${inter.variable} ${interTight.variable} ${jetbrains.variable} h-full`}
+      suppressHydrationWarning
     >
-      <body className="flex min-h-full flex-col">{children}</body>
+      <head>
+        <ThemeScript />
+      </head>
+      <body className="flex min-h-full flex-col">
+        <ThemeProvider>{children}</ThemeProvider>
+      </body>
     </html>
   );
 }

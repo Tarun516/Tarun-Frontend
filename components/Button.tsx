@@ -22,7 +22,7 @@ export function Button({
   const styles =
     variant === "primary"
       ? "bg-foreground text-background hover:opacity-90"
-      : "border border-border bg-transparent text-foreground hover:border-border-bright";
+      : "border border-border bg-transparent text-foreground hover:border-border-bright hover:bg-surface";
 
   const content = (
     <>

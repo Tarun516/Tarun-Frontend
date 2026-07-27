@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Button } from "@/components/Button";
 import { Container } from "@/components/Container";
+import { ContentDiagram, isDiagramId } from "@/components/diagrams";
 import { Footer } from "@/components/Footer";
 import { MetricCard } from "@/components/MetricCard";
 import { Navbar } from "@/components/Navbar";
@@ -34,31 +35,37 @@ export default async function ProjectPage({ params }: PageProps) {
 
   if (!project) notFound();
 
+  const diagramId =
+    project.diagram && isDiagramId(project.diagram.id)
+      ? project.diagram.id
+      : null;
+  const diagramCaption = project.diagram?.caption;
+
   return (
     <div className="flex min-h-full flex-1 flex-col">
       <Navbar />
 
       <main className="flex-1">
-        <Container className="pt-14 pb-24 sm:pt-16">
+        <Container className="pt-10 pb-16 sm:pt-16 sm:pb-24">
           <div className="max-w-3xl">
             <Link
-              href="/#projects"
+              href="/"
               className="inline-flex items-center gap-2 text-sm text-secondary transition-colors duration-200 ease-out hover:text-foreground"
             >
-              <span aria-hidden="true">←</span> Projects
+              <span aria-hidden="true">←</span> Home
             </Link>
 
-            <header className="mt-8 border-b border-border pb-10">
+            <header className="mt-6 border-b border-border pb-8 sm:mt-8 sm:pb-10">
               <p className="font-mono text-xs text-muted">
                 {project.year} · {project.role}
               </p>
-              <h1 className="mt-4 font-display text-3xl font-medium tracking-[-0.03em] text-foreground sm:text-4xl sm:leading-[1.1]">
+              <h1 className="mt-3 font-display text-[1.75rem] leading-[1.15] font-medium tracking-[-0.03em] text-foreground sm:mt-4 sm:text-4xl sm:leading-[1.1]">
                 {project.title}
               </h1>
-              <p className="mt-4 max-w-prose text-base leading-relaxed text-secondary">
+              <p className="mt-4 max-w-prose text-[15px] leading-relaxed text-secondary sm:text-base">
                 {project.summary}
               </p>
-              <p className="mt-6 text-sm text-muted">
+              <p className="mt-5 text-sm leading-relaxed text-muted sm:mt-6">
                 {project.tags.join("  ·  ")}
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
@@ -74,6 +81,17 @@ export default async function ProjectPage({ params }: PageProps) {
                 ) : null}
               </div>
             </header>
+
+            {diagramId ? (
+              <section className="border-b border-border py-10">
+                <h2 className="font-display text-sm font-medium tracking-[0.08em] text-muted uppercase">
+                  Overview
+                </h2>
+                <div className="mt-6">
+                  <ContentDiagram id={diagramId} caption={diagramCaption} />
+                </div>
+              </section>
+            ) : null}
 
             {project.metrics?.length ? (
               <section className="grid gap-8 border-b border-border py-10 sm:grid-cols-3">

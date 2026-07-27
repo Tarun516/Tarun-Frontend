@@ -16,7 +16,13 @@ export type TechChoice = {
   why: string;
 };
 
-/** Unified list item — projects, case studies, and articles share one UI. */
+/** Optional architecture / flow diagram keyed in `components/diagrams`. */
+export type ContentDiagram = {
+  id: string;
+  caption?: string;
+};
+
+/** Unified list item: projects, case studies, and articles share one UI. */
 export type ContentEntry = {
   id: string;
   kind: EntryKind;
@@ -43,6 +49,7 @@ export type CaseStudy = {
   tradeoffs: string[];
   lessons: string[];
   metrics?: Metric[];
+  diagram?: ContentDiagram;
   repoUrl?: string;
   liveUrl?: string;
 };
@@ -57,6 +64,9 @@ export type Article = {
   published: boolean;
   featured?: boolean;
   tags: string[];
+  diagram?: ContentDiagram;
+  /** Short body paragraphs for the article page. */
+  body?: string[];
 };
 
 export type Experience = {
@@ -80,7 +90,7 @@ export type PortfolioContent = {
     tagline: string;
     subtitle: string;
   };
-  /** One human sentence — not a buzzword list. */
+  /** One human sentence, not a buzzword list. */
   focus: string;
   about: {
     bio: string[];
@@ -90,8 +100,13 @@ export type PortfolioContent = {
       period: string;
       summary: string;
     };
+    education: {
+      school: string;
+      degree: string;
+      period: string;
+    };
     interests: string[];
-    /** Quiet tools list — shown on /about only. */
+    /** Quiet tools list, shown on /about only. */
     tools: {
       category: string;
       items: string[];
@@ -121,8 +136,8 @@ export function kindLabel(kind: EntryKind): string {
  */
 export const portfolio: PortfolioContent = {
   name: "C V Tarun",
-  role: "Software Engineer",
-  location: "India",
+  role: "SDE",
+  location: "Hyderabad",
   email: "taruncv516@gmail.com",
   github: "https://github.com/Tarun516",
   linkedin: "https://www.linkedin.com/in/c-v-tarun-19448124b/",
@@ -138,14 +153,19 @@ export const portfolio: PortfolioContent = {
     "Currently building Memory OS while exploring execution runtimes, context engineering, and AI infrastructure.",
   about: {
     bio: [
-      "I care about systems that stay correct under load — clear interfaces, intentional trade-offs, and failure modes you can reason about.",
+      "I care about systems that stay correct under load: clear interfaces, intentional trade-offs, and failure modes you can reason about.",
       "Most of my time goes into backend services, execution pipelines, and the glue that makes AI features reliable in production.",
     ],
     currentRole: {
       company: "Trizen",
-      title: "Software Engineer",
-      period: "2025 — Present",
-      summary: "Building AI-native backend systems.",
+      title: "SDE",
+      period: "May 2026 to Present",
+      summary: "Building product features and backend systems.",
+    },
+    education: {
+      school: "SRM University, AP",
+      degree: "B.Tech, Computer Science",
+      period: "2021 to 2025",
     },
     interests: [
       "Agent runtimes & orchestration",
@@ -159,16 +179,16 @@ export const portfolio: PortfolioContent = {
         items: ["TypeScript", "JavaScript", "Python", "SQL"],
       },
       {
-        category: "Systems",
-        items: ["Node.js", "Postgres", "Redis", "Docker", "Queues"],
+        category: "Backend",
+        items: ["Node.js", "Express", "MongoDB", "Postgres", "Redis", "Docker", "Queues"],
       },
       {
-        category: "AI",
-        items: ["LLM APIs", "Retrieval", "Tool calling", "Eval harnesses"],
+        category: "Mobile",
+        items: ["React Native"],
       },
       {
         category: "Product",
-        items: ["Next.js", "React", "Tailwind CSS"],
+        items: ["React", "Next.js", "Tailwind CSS"],
       },
     ],
   },
@@ -184,7 +204,7 @@ export const portfolio: PortfolioContent = {
       kind: "case-study",
       title: "Distributed Execution Engine",
       summary:
-        "Designing an execution runtime inspired by durable workflows — with deterministic scheduling, leases, and observable state.",
+        "Designing an execution runtime inspired by durable workflows, with deterministic scheduling, leases, and observable state.",
       role: "Systems design & implementation",
       year: "2026",
       tags: ["TypeScript", "Queues", "Postgres", "Redis"],
@@ -231,6 +251,10 @@ export const portfolio: PortfolioContent = {
         { label: "Duplicate side effects", value: "0" },
         { label: "Ops MTTR", value: "-60%" },
       ],
+      diagram: {
+        id: "execution-engine",
+        caption: "Producer → durable queue → workers, with Postgres as the event log.",
+      },
       repoUrl: "https://github.com",
     },
     {
@@ -277,6 +301,10 @@ export const portfolio: PortfolioContent = {
         { label: "Avg tokens saved", value: "48%" },
         { label: "p95 retrieval", value: "90ms" },
       ],
+      diagram: {
+        id: "context-memory",
+        caption: "Corpus → embed → budget-aware rank → inject.",
+      },
       repoUrl: "https://github.com",
     },
     {
@@ -284,7 +312,7 @@ export const portfolio: PortfolioContent = {
       kind: "project",
       title: "Memory OS",
       summary:
-        "A desktop-first AI operating system for personal knowledge — capture, retrieval, and long-horizon context.",
+        "A desktop-first AI operating system for personal knowledge: capture, retrieval, and long-horizon context.",
       role: "Product & systems",
       year: "2026",
       tags: ["AI", "Desktop", "Memory"],
@@ -305,6 +333,10 @@ export const portfolio: PortfolioContent = {
       challenges: ["Keeping retrieval trustworthy as the corpus grows."],
       tradeoffs: ["Product surface stays minimal so the memory layer can evolve."],
       lessons: ["The OS metaphor only works if capture is frictionless."],
+      diagram: {
+        id: "memory-os",
+        caption: "Capture shell over a local-first memory layer used by retrieval and agents.",
+      },
       repoUrl: "https://github.com",
     },
     {
@@ -312,7 +344,7 @@ export const portfolio: PortfolioContent = {
       kind: "project",
       title: "Local Agent Devtool",
       summary:
-        "A CLI for running, inspecting, and replaying agent traces against fixtures — closer to a debugger than a chat UI.",
+        "A CLI for running, inspecting, and replaying agent traces against fixtures, closer to a debugger than a chat UI.",
       role: "Solo build",
       year: "2024",
       tags: ["CLI", "TypeScript", "DX"],
@@ -399,13 +431,22 @@ export const portfolio: PortfolioContent = {
       slug: "context-windows",
       title: "Why Context Windows Are The Wrong Abstraction",
       summary:
-        "My thoughts on long-term memory for AI systems — and why stuffing the prompt is not a strategy.",
+        "My thoughts on long-term memory for AI systems, and why stuffing the prompt is not a strategy.",
       date: "2026-02-10",
       readingTime: "8 min",
-      href: "/writing",
+      href: "/writing/context-windows",
       published: true,
       featured: true,
       tags: ["AI", "Memory"],
+      diagram: {
+        id: "context-memory",
+        caption: "Selection policy matters more than raw window size.",
+      },
+      body: [
+        "Context windows feel like progress because they are measurable. Bigger number, more room, problem solved.",
+        "In practice, stuffing more text into a prompt rarely creates better long-horizon behavior. It creates noisier attention, higher cost, and systems that cannot explain what they used.",
+        "A better abstraction is memory with a budget: store broadly, retrieve narrowly, and cite what entered the prompt. The window is a packing constraint, not the product.",
+      ],
     },
     {
       slug: "execution-engine-notes",
@@ -414,10 +455,19 @@ export const portfolio: PortfolioContent = {
         "Leases, idempotency keys, and why 'retry' is not a recovery strategy by itself.",
       date: "2025-11-12",
       readingTime: "9 min",
-      href: "/writing",
+      href: "/writing/execution-engine-notes",
       published: true,
       featured: true,
       tags: ["Systems", "Queues"],
+      diagram: {
+        id: "execution-engine",
+        caption: "Retries only help when ownership and side effects are explicit.",
+      },
+      body: [
+        "Retry is the most common recovery strategy and also the easiest way to create duplicate side effects.",
+        "Lease-based ownership, an event log, and idempotency keys turn failure into a state problem instead of a hope problem.",
+        "If you cannot answer who owns a job and whether a side effect already happened, you do not have recovery. You have roulette.",
+      ],
     },
     {
       slug: "context-engineering",
@@ -426,7 +476,7 @@ export const portfolio: PortfolioContent = {
         "Selecting what enters the prompt window matters more than how large the window is.",
       date: "2025-09-03",
       readingTime: "7 min",
-      href: "/writing",
+      href: "/writing/context-engineering",
       published: false,
       tags: ["AI", "Memory"],
     },
@@ -434,20 +484,31 @@ export const portfolio: PortfolioContent = {
   experience: [
     {
       company: "Trizen",
-      role: "Software Engineer",
-      period: "2025 — Present",
+      role: "SDE",
+      period: "May 2026 to Present",
+      highlights: [],
+    },
+    {
+      company: "Trizen",
+      role: "SDE Intern",
+      period: "Nov 2025 to May 2026",
       highlights: [
-        "Building backend systems and AI-native workflows.",
-        "Focus on durability, observability, and clean interfaces.",
+        "Built core features for a mobile marketplace app, including task management, user profiles, address management, and notification preferences, using React Native.",
+        "Developed an internal leads management portal handling hundreds of onboarding entries, cutting manual lead processing time by 30 to 40%.",
+        "Designed and implemented scalable backend services with Node.js and Express for authentication, user management, task orchestration, and system notifications.",
+        "Built event-driven notification workflows for alerts, invitations, and account actions, integrating push notifications and email delivery.",
+        "Built verification workflows to support compliance-oriented user verification.",
       ],
     },
     {
-      company: "Previous Role",
-      role: "Backend Engineer",
-      period: "2022 — 2024",
+      company: "Ziegler Aerospace",
+      role: "Software Developer Intern",
+      period: "Apr 2025 to Aug 2025",
       highlights: [
-        "Owned APIs and data pipelines with an emphasis on reliability.",
-        "Shipped features that stayed operable after launch.",
+        "Built backend APIs for a real-time B2B messaging and quotation platform with dynamic, condition-based workflows.",
+        "Increased performance of complex data retrieval APIs by 30%+ using MongoDB aggregation tuning and index optimization.",
+        "Refactored a monolithic backend into a modular architecture, improving maintainability and cutting code duplication by 50%.",
+        "Resolved 60+ frontend and backend issues per release cycle, improving UI stability and data consistency across dynamic workflows.",
       ],
     },
   ],
@@ -511,4 +572,12 @@ export function getCaseStudy(slug: string): CaseStudy | undefined {
 
 export function getPublishedWriting(): Article[] {
   return portfolio.writing.filter((article) => article.published);
+}
+
+export function getArticle(slug: string): Article | undefined {
+  return portfolio.writing.find((article) => article.slug === slug);
+}
+
+export function getPublishedArticles(): Article[] {
+  return getPublishedWriting();
 }

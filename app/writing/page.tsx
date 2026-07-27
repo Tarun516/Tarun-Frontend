@@ -24,7 +24,7 @@ export default function WritingPage() {
     <div className="flex min-h-full flex-1 flex-col">
       <Navbar />
       <main className="flex-1">
-        <Container className="pt-14 pb-24 sm:pt-16">
+        <Container className="pt-10 pb-16 sm:pt-16 sm:pb-24">
           <h1 className="font-display text-3xl font-medium tracking-[-0.03em] text-foreground sm:text-4xl">
             Writing
           </h1>

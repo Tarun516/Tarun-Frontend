@@ -4,9 +4,9 @@ import { portfolio } from "@/data/portfolio";
 export function Footer() {
   return (
     <footer className="border-t border-border">
-      <Container className="flex items-center justify-between gap-6 py-10">
+      <Container className="flex flex-col gap-4 py-8 sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:py-10">
         <p className="text-sm text-muted">{portfolio.name}</p>
-        <div className="flex flex-wrap gap-6 text-sm text-secondary">
+        <div className="flex flex-wrap gap-x-5 gap-y-3 text-sm text-secondary">
           <a
             href={portfolio.github}
             target="_blank"

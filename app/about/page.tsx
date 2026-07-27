@@ -17,17 +17,17 @@ export default function AboutPage() {
     <div className="flex min-h-full flex-1 flex-col">
       <Navbar />
       <main className="flex-1">
-        <Container className="pt-14 pb-24 sm:pt-16">
-          <div className="flex items-start gap-5">
+        <Container className="pt-10 pb-16 sm:pt-16 sm:pb-24">
+          <div className="flex items-start gap-4 sm:gap-5">
             <Image
               src={portrait}
               alt={portfolio.name}
               width={80}
               height={80}
-              className="size-16 shrink-0 rounded-full object-cover object-top sm:size-20"
+              className="size-14 shrink-0 rounded-full object-cover object-top sm:size-20"
               priority
             />
-            <div>
+            <div className="min-w-0">
               <h1 className="font-display text-3xl font-medium tracking-[-0.03em] text-foreground sm:text-4xl">
                 About
               </h1>
@@ -72,10 +72,13 @@ export default function AboutPage() {
               {portfolio.experience
                 .filter(
                   (item) =>
-                    item.company !== portfolio.about.currentRole.company,
+                    !(
+                      item.company === portfolio.about.currentRole.company &&
+                      item.role === portfolio.about.currentRole.title
+                    ),
                 )
                 .map((item) => (
-                  <li key={`${item.company}-${item.period}`}>
+                  <li key={`${item.company}-${item.role}-${item.period}`}>
                     <p className="font-display text-base text-foreground">
                       {item.role}
                     </p>
@@ -86,14 +89,32 @@ export default function AboutPage() {
                         {item.period}
                       </span>
                     </p>
-                    <ul className="mt-2 space-y-1 text-[15px] text-secondary">
-                      {item.highlights.map((h) => (
-                        <li key={h}>{h}</li>
-                      ))}
-                    </ul>
+                    {item.highlights.length > 0 ? (
+                      <ul className="mt-2 list-disc space-y-1 pl-5 text-[15px] text-secondary">
+                        {item.highlights.map((h) => (
+                          <li key={h}>{h}</li>
+                        ))}
+                      </ul>
+                    ) : null}
                   </li>
                 ))}
             </ul>
+          </section>
+
+          <section className="mt-14 max-w-prose">
+            <h2 className="font-display text-sm font-medium tracking-[0.08em] text-muted uppercase">
+              Education
+            </h2>
+            <p className="mt-4 font-display text-base text-foreground">
+              {portfolio.about.education.degree}
+            </p>
+            <p className="mt-1 text-sm text-secondary">
+              {portfolio.about.education.school}
+              <span className="text-muted"> · </span>
+              <span className="font-mono text-xs text-muted">
+                {portfolio.about.education.period}
+              </span>
+            </p>
           </section>
 
           <section className="mt-14 max-w-prose">

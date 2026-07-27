@@ -1,0 +1,30 @@
+---
+description: How to add theme-aware vector diagrams to projects and articles
+globs: "{data/portfolio.ts,components/diagrams/**,app/projects/**,app/writing/**}"
+alwaysApply: false
+---
+
+# Vector diagrams
+
+Projects and articles can include inline SVG diagrams.
+
+## Add a diagram
+
+1. Create an SVG React component in `components/diagrams/svgs.tsx` (or a new file exported from there).
+2. Use theme classes: `stroke-border-bright`, `stroke-accent`, `stroke-muted`, `fill-foreground`, `fill-muted`.
+3. Register it in `components/diagrams/index.tsx` under a stable `id`.
+4. Attach it in `data/portfolio.ts`:
+
+```ts
+diagram: {
+  id: "memory-os",
+  caption: "Optional short caption.",
+}
+```
+
+## Rules
+
+- Prefer simple monoline architecture / flow diagrams, not decorative illustrations.
+- Diagrams must work in light and dark mode via CSS classes, not hardcoded hex fills.
+- Keep captions short and factual.
+- Never use em dashes in captions.

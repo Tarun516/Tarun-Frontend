@@ -10,9 +10,9 @@ export function EntryCard({ entry }: EntryCardProps) {
   const meta = `${kindLabel(entry.kind)} · ${entry.year}`;
 
   const body = (
-    <div className="flex items-start justify-between gap-6">
+    <div className="flex items-start justify-between gap-4 sm:gap-6">
       <div className="min-w-0">
-        <h3 className="font-display text-lg font-medium tracking-[-0.02em] text-foreground sm:text-xl">
+        <h3 className="font-display text-base font-medium tracking-[-0.02em] text-foreground sm:text-xl">
           {entry.title}
         </h3>
         <p className="mt-1.5 font-mono text-[11px] text-muted">{meta}</p>
@@ -33,7 +33,7 @@ export function EntryCard({ entry }: EntryCardProps) {
   );
 
   const className =
-    "group block border-t border-border py-6 transition-colors duration-200 ease-out first:border-t-0 first:pt-0";
+    "group block border-t border-border py-5 transition-colors duration-200 ease-out first:border-t-0 first:pt-0 sm:py-6";
 
   if (entry.href.startsWith("http") || entry.href.startsWith("mailto:")) {
     return (

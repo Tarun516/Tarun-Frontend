@@ -1,0 +1,25 @@
+---
+description: Writing style for portfolio copy. No em dashes; prefer natural prose.
+alwaysApply: true
+---
+
+# Writing style
+
+- Never use em dashes (`—`) in user-facing copy, metadata titles, dates, or comments that ship as content.
+- Prefer natural punctuation: commas, periods, colons, parentheses, or a short rewrite.
+- For date ranges, use `to` (e.g. `2025 to Present`, `2022 to 2024`), not em dashes.
+- For page title templates, use a middle dot or pipe (e.g. `%s · Name`), not an em dash.
+
+## Examples
+
+```text
+Bad:  I care about systems under load — clear interfaces matter.
+Good: I care about systems under load: clear interfaces matter.
+Good: I care about systems under load. Clear interfaces matter.
+
+Bad:  2025 — Present
+Good: 2025 to Present
+
+Bad:  About — C V Tarun
+Good: About · C V Tarun
+```

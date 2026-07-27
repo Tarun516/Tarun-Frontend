@@ -8,7 +8,7 @@ import { getHomeProjects, getHomeWriting } from "@/data/portfolio";
 
 function SectionLabel({ children }: { children: ReactNode }) {
   return (
-    <p className="mb-6 w-fit border-b border-border-bright pb-2 text-sm whitespace-nowrap text-muted">
+    <p className="mb-5 w-fit border-b border-border-bright pb-2 text-sm text-muted sm:mb-6">
       {children}
     </p>
   );
@@ -35,7 +35,7 @@ export default function Home() {
 
           <section
             id="projects"
-            className="scroll-mt-24 border-t border-border pt-10 sm:pt-12"
+            className="scroll-mt-20 border-t border-border pt-8 sm:scroll-mt-24 sm:pt-12"
           >
             <SectionLabel>Projects</SectionLabel>
             {projects.length > 0 ? (
@@ -53,7 +53,7 @@ export default function Home() {
 
           <section
             id="writing"
-            className="scroll-mt-24 border-t border-border pt-10 pb-24 sm:pt-12"
+            className="scroll-mt-20 border-t border-border pt-8 pb-16 sm:scroll-mt-24 sm:pt-12 sm:pb-24"
           >
             <SectionLabel>Articles & case studies</SectionLabel>
             {writing.length > 0 ? (
