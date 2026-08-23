@@ -56,8 +56,8 @@ export default async function ArticlePage({ params }: PageProps) {
 
       <main className="flex-1">
         <Container className="pt-10 pb-16 sm:pt-16 sm:pb-24">
-          {/* Articles are reading-first: narrow measure, generous leading. */}
-          <div className="max-w-[44rem]">
+          {/* Articles are reading-first: centered narrow measure. */}
+          <div className="mx-auto max-w-[44rem]">
             <Link
               href="/writing"
               className="inline-flex items-center gap-2 text-sm text-secondary transition-colors duration-200 ease-out hover:text-foreground"
@@ -65,8 +65,8 @@ export default async function ArticlePage({ params }: PageProps) {
               <span aria-hidden="true">←</span> Writing
             </Link>
 
-            <header className="mt-6 border-b border-border pb-8 sm:mt-8 sm:pb-10">
-              <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-muted">
+            <header className="mt-10 sm:mt-12">
+              <p className="text-[13px] text-muted">
                 {articleTypeLabel(article.type)} ·{" "}
                 <time dateTime={article.date}>
                   {new Date(`${article.date}T00:00:00`).toLocaleDateString(
@@ -76,21 +76,21 @@ export default async function ArticlePage({ params }: PageProps) {
                 </time>{" "}
                 · {article.readingTime}
               </p>
-              <h1 className="mt-4 font-display text-[1.75rem] leading-[1.15] font-medium tracking-[-0.03em] text-foreground sm:mt-5 sm:text-4xl sm:leading-[1.1]">
+              <h1 className="mt-5 font-display text-[2rem] leading-[1.15] font-medium tracking-[-0.03em] text-foreground sm:text-[2.375rem] sm:leading-[1.1]">
                 {article.title}
               </h1>
-              <p className="mt-4 max-w-prose text-[15px] leading-relaxed text-secondary sm:text-base">
+              <p className="mt-5 text-lg leading-relaxed text-secondary">
                 {article.summary}
               </p>
             </header>
 
             {diagramId ? (
-              <section className="border-b border-border py-10">
+              <figure className="mt-12">
                 <ContentDiagram id={diagramId} caption={diagramCaption} />
-              </section>
+              </figure>
             ) : null}
 
-            <article className="mdx-body pt-10">
+            <article className="mdx-body mt-14 border-t border-border pt-12">
               <ArticleBody />
             </article>
           </div>

@@ -6,13 +6,6 @@ role: "Systems design & implementation"
 year: "2026"
 tags: ["TypeScript", "Queues", "Postgres", "Redis"]
 repoUrl: "https://github.com"
-metrics:
-  - label: "p99 recovery"
-    value: "< 2s"
-  - label: "Duplicate side effects"
-    value: "0"
-  - label: "Ops MTTR"
-    value: "-60%"
 diagram:
   id: "execution-engine"
   caption: "Producer → durable queue → workers, with Postgres as the event log."

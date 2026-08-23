@@ -54,7 +54,8 @@ export default async function ProjectPage({ params }: PageProps) {
 
       <main className="flex-1">
         <Container className="pt-10 pb-16 sm:pt-16 sm:pb-24">
-          <div className="max-w-3xl">
+          {/* Reading column, centered in the page shell; text stays left-aligned. */}
+          <div className="mx-auto max-w-[47.5rem]">
             <Link
               href="/"
               className="inline-flex items-center gap-2 text-sm text-secondary transition-colors duration-200 ease-out hover:text-foreground"
@@ -62,53 +63,60 @@ export default async function ProjectPage({ params }: PageProps) {
               <span aria-hidden="true">←</span> Home
             </Link>
 
-            <header className="mt-6 border-b border-border pb-8 sm:mt-8 sm:pb-10">
-              <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-muted">
-                {project.year} / {project.role}
+            <header className="mt-8 sm:mt-10">
+              <p className="text-sm text-muted">
+                {project.year} · {project.role}
               </p>
-              <h1 className="mt-4 font-display text-[1.75rem] leading-[1.15] font-medium tracking-[-0.03em] text-foreground sm:mt-5 sm:text-4xl sm:leading-[1.1]">
+              <h1 className="mt-4 font-display text-[2rem] leading-[1.12] font-medium tracking-[-0.03em] text-foreground sm:text-[2.5rem]">
                 {project.title}
               </h1>
-              <p className="mt-4 max-w-prose text-[15px] leading-relaxed text-secondary sm:text-base">
+              <p className="mt-5 max-w-prose text-lg leading-relaxed text-secondary">
                 {project.summary}
               </p>
-              <p className="mt-5 text-sm leading-relaxed text-muted sm:mt-6">
-                {project.tags.join("  ·  ")}
+              <p className="mt-4 text-sm text-muted">
+                {project.tags.join(" · ")}
               </p>
-              <div className="mt-8 flex flex-wrap gap-3">
-                {project.repoUrl ? (
-                  <Button href={project.repoUrl} external>
-                    GitHub
-                  </Button>
-                ) : null}
-                {project.liveUrl ? (
-                  <Button href={project.liveUrl} external>
-                    Live
-                  </Button>
-                ) : null}
-              </div>
+              {(project.repoUrl || project.liveUrl) && (
+                <div className="mt-6 flex flex-wrap gap-3">
+                  {project.repoUrl ? (
+                    <Button href={project.repoUrl} external>
+                      GitHub
+                    </Button>
+                  ) : null}
+                  {project.liveUrl ? (
+                    <Button href={project.liveUrl} external>
+                      Live
+                    </Button>
+                  ) : null}
+                </div>
+              )}
             </header>
 
             {diagramId ? (
-              <section className="border-b border-border py-10">
-                <h2 className="font-display text-sm font-medium tracking-[0.08em] text-muted uppercase">
-                  Overview
-                </h2>
-                <div className="mt-6">
-                  <ContentDiagram id={diagramId} caption={diagramCaption} />
+              <figure className="mt-12">
+                <div className="overflow-hidden rounded-xl border border-border bg-surface/60 p-5 sm:p-8">
+                  <div className="text-secondary [&_svg]:mx-auto [&_svg]:block [&_svg]:h-auto [&_svg]:w-full [&_svg]:max-w-full">
+                    <ContentDiagram id={diagramId} />
+                  </div>
                 </div>
-              </section>
+                {diagramCaption ? (
+                  <figcaption className="mt-3 text-sm text-muted">
+                    {diagramCaption}
+                  </figcaption>
+                ) : null}
+              </figure>
             ) : null}
 
+            {/* Metrics only render when real measured numbers exist. */}
             {project.metrics?.length ? (
-              <section className="grid gap-8 border-b border-border py-10 sm:grid-cols-3">
+              <section className="mt-14 grid gap-6 border-t border-border pt-10 sm:grid-cols-3">
                 {project.metrics.map((metric) => (
                   <MetricCard key={metric.label} metric={metric} />
                 ))}
               </section>
             ) : null}
 
-            <article className="mdx-body mdx-story pt-10">
+            <article className="mdx-body mt-14 border-t border-border pt-12">
               <CaseStudyBody />
             </article>
           </div>

@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Container } from "@/components/Container";
-import { EntryCard } from "@/components/EntryCard";
 import { Footer } from "@/components/Footer";
 import { Navbar } from "@/components/Navbar";
-import { getProjectEntries } from "@/lib/content";
+import { ProjectCard } from "@/components/ProjectCard";
+import { getAllProjects } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Projects",
@@ -11,24 +11,36 @@ export const metadata: Metadata = {
 };
 
 export default function ProjectsPage() {
-  const entries = getProjectEntries();
+  const projects = getAllProjects().map((project) => ({
+    id: `project-${project.slug}`,
+    kind: project.kind,
+    title: project.title,
+    summary: project.summary,
+    year: project.year,
+    href: `/projects/${project.href}`,
+    featured: project.featured,
+  }));
 
   return (
     <div className="flex min-h-full flex-1 flex-col">
       <Navbar />
       <main className="flex-1">
         <Container className="pt-10 pb-16 sm:pt-16 sm:pb-24">
-          <h1 className="font-display text-3xl font-medium tracking-[-0.03em] text-foreground sm:text-4xl">
-            Projects
-          </h1>
-          <p className="mt-3 max-w-prose text-[15px] leading-relaxed text-secondary sm:text-base">
-            Builds and case studies.
-          </p>
+          {/* Browse column — wider than a reading measure, centered. */}
+          <div className="mx-auto max-w-[56rem]">
+            <h1 className="font-display text-[2rem] font-medium tracking-[-0.03em] text-foreground sm:text-4xl">
+              Projects
+            </h1>
+            <p className="mt-3 max-w-prose text-lg leading-relaxed text-secondary">
+              Systems, products and experiments I&apos;ve built and
+              learned from.
+            </p>
 
-          <div className="mt-12 max-w-3xl">
-            {entries.map((entry) => (
-              <EntryCard key={entry.id} entry={entry} />
-            ))}
+            <div className="mt-14 grid gap-x-12 gap-y-16 sm:grid-cols-2">
+              {projects.map((entry) => (
+                <ProjectCard key={entry.id} entry={entry} visual />
+              ))}
+            </div>
           </div>
         </Container>
       </main>
