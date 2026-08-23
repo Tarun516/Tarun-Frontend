@@ -114,7 +114,19 @@ Hover color rules:
 
 Nav links and brand use a grow-from-left underline (`after:` pseudo-element, `origin-left scale-x-0 → scale-x-100`, 200ms); the active page keeps a persistent full underline.
 
-Banned motion: scale pop, bounce/spring, rotation, glowing buttons, large parallax, scroll-triggered fade-ins on sections/cards/headings. A reader should never wait for the website.
+Banned motion: scale pop, bounce/spring, rotation, glowing buttons, large parallax, scroll-triggered fade-ins on sections/cards/headlines. A reader should never wait for the website.
+
+## Performance rules (locked)
+
+From Lighthouse guidance (2026-08-23): FCP 0.9s / TBT 50ms / CLS 0 were already good; the target was LCP < 2.5s and Speed Index. These rules protect that:
+
+1. **Never animate above-the-fold content into existence.** No `animate-enter` (or any opacity/transform entrance) on the hero H1, tagline, portrait, bio, or CTAs — the LCP element must be immediately visible. Motion rewards interaction; it does not delay content.
+2. **Font loading**: Inter + Inter Tight preload; `JetBrains_Mono({ preload: false })` in app/layout.tsx (code font isn't needed above the fold). Don't add more preloaded families.
+3. **Images**: keep `next/image` with explicit width/height, `priority` only for the true LCP image, and responsive `sizes`. Below-fold imagery defaults to lazy loading.
+4. **Always benchmark production builds** (`pnpm run build && pnpm start`), never `next dev`, and run Lighthouse 3× taking the median.
+
+Do NOT "optimize" further without evidence: no React/MDX architecture changes, dynamic imports everywhere, service workers, custom caching, or CDN hacks for this site's scale. TBT and CLS being healthy means JS execution and layout are not the problem area.
+
 
 ## Content rules
 

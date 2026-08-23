@@ -1,0 +1,22 @@
+---
+description: Performance rules — no above-fold entrance animations, font preload policy, benchmarking discipline
+globs: "{app/**,components/**}"
+alwaysApply: true
+---
+
+# Performance rules (locked)
+
+Full spec in `docs/design-system.md` → "Performance rules". Baseline: FCP 0.9s, TBT 50ms, CLS 0 — JS execution and layout are NOT the problem area. The focus is LCP / Speed Index (visual completion).
+
+## Hard rules
+
+1. **No entrance animations on above-the-fold content.** Never apply `animate-enter`, `motion-safe:animate-enter`, or any opacity/transform entrance to hero H1, tagline, portrait, bio, or CTAs. The LCP element must render immediately. Motion rewards interaction; it never delays content.
+2. **Fonts**: exactly two preloaded families (Inter, Inter Tight via next/font). `JetBrains_Mono` stays `preload: false`. Do not add more preloaded font families.
+3. **Images**: `next/image` with explicit dimensions always; `priority` only for the genuine LCP image; responsive `sizes`; below-fold imagery lazy by default.
+4. **Benchmark discipline**: performance claims require production builds (`pnpm run build && pnpm start`) and 3 Lighthouse runs taking the median — never `next dev` numbers.
+
+## Don't optimize without evidence
+
+Do not introduce: React/MDX architecture rewrites, pervasive dynamic imports, service workers, custom caching layers, or CDN tricks. With TBT at 50ms and CLS at 0, those are optimization cosplay.
+
+Deviations must be logged in docs/decisions.md in the same change.

@@ -18,6 +18,9 @@ const interTight = Inter_Tight({
 const jetbrains = JetBrains_Mono({
   variable: "--font-jetbrains",
   subsets: ["latin"],
+  // Code font isn't needed above the fold — don't compete with Inter /
+  // Inter Tight during initial load (performance rule, design-system.md).
+  preload: false,
 });
 
 export const metadata: Metadata = {

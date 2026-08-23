@@ -48,6 +48,8 @@ Format: `- YYYY-MM-DD — decision — one-line why.`
 
 - 2026-08-23 — Motion grammar locked per instructions.txt: one system site-wide — single easing `cubic-bezier(0.22,1,0.36,1)`, 200ms hovers, arrows always visible at opacity-45 that clear + nudge max 4px on hover (never hidden-then-revealed), buttons stay put and animate only state, external links use ↗ / internal → / back ←, nav underlines grow from left (after: scale-x), no accent recoloring of titles on hover, no scroll-triggered animations. CSS only; no Framer Motion.
 
+- 2026-08-23 — Performance pass per instructions.txt (Lighthouse): removed all hero entrance animations (H1/tagline/portrait/bio/actions no longer animate into existence — LCP renders immediately); JetBrains Mono set to `preload: false` so only Inter + Inter Tight compete at load. Explicitly not done, per guidance: image recompression (17 KB asset), architecture changes, service workers — TBT/CLS/FCP already healthy. Benchmarking rule recorded: production builds only, median of 3 runs.
+
 <!--
 Add future decisions here as one-liners when they change structure,
 conventions, or standards. Brief is fine.
