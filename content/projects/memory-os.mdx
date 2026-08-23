@@ -1,0 +1,41 @@
+---
+kind: "project"
+title: "Memory OS"
+summary: "A desktop-first AI operating system for personal knowledge: capture, retrieval, and long-horizon context."
+role: "Product & systems"
+year: "2026"
+tags: ["AI", "Desktop", "Memory"]
+featured: true
+repoUrl: "https://github.com"
+diagram:
+  id: "memory-os"
+  caption: "Capture shell over a local-first memory layer used by retrieval and agents."
+---
+
+## Problem
+
+Personal knowledge is fragmented across notes, chats, and files. Agents need a durable memory layer that still feels like a product, not a database.
+
+## Architecture
+
+- Local-first store with sync boundaries for private data.
+- Background indexing pipeline for documents and conversation traces.
+- A thin shell UI focused on search, capture, and citation.
+
+## Tech choices
+
+### Local-first where possible
+
+Privacy and latency matter more than multiplayer collaboration for personal memory.
+
+## Challenges
+
+- Keeping retrieval trustworthy as the corpus grows.
+
+## Trade-offs
+
+- Product surface stays minimal so the memory layer can evolve.
+
+## What I learned
+
+- The OS metaphor only works if capture is frictionless.

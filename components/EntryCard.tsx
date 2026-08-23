@@ -1,6 +1,6 @@
 import Link from "next/link";
-import type { ContentEntry } from "@/data/portfolio";
-import { kindLabel } from "@/data/portfolio";
+import type { ContentEntry } from "@/lib/content/types";
+import { kindLabel } from "@/lib/content/types";
 
 type EntryCardProps = {
   entry: ContentEntry;

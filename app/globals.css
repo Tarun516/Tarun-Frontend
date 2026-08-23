@@ -118,6 +118,100 @@
     outline-offset: 3px;
   }
 
+  /*
+   * Typography for MDX-rendered content (project case studies and articles).
+   * Scoped to .mdx-body so site chrome keeps its hand-tuned styling.
+   * `.mdx-story` additionally numbers h2 sections (01, 02, ...) for the
+   * editorial storytelling treatment on project detail pages.
+   */
+  .mdx-body h2 {
+    @apply font-display mt-2 border-b border-border pb-2 text-lg font-medium tracking-[-0.02em] text-foreground;
+  }
+
+  .mdx-story {
+    counter-reset: story-section;
+  }
+
+  .mdx-story h2 {
+    @apply flex items-baseline gap-3 border-b border-border pb-3 text-base uppercase;
+    counter-increment: story-section;
+  }
+
+  .mdx-story h2::before {
+    content: "0" counter(story-section);
+    @apply font-mono text-xs font-normal tracking-normal text-accent;
+  }
+
+  .mdx-story h2 + p {
+    @apply mt-4;
+  }
+
+  .mdx-story h3 {
+    @apply font-display mt-8 text-base font-medium tracking-tight text-foreground;
+  }
+
+  .mdx-story h3 + p {
+    @apply mt-2 text-sm sm:text-[15px];
+  }
+
+  .mdx-body h3 {
+    @apply font-display mt-8 text-base font-medium tracking-tight text-foreground;
+  }
+
+  .mdx-body p {
+    @apply mt-5 text-[15px] leading-relaxed text-secondary sm:text-base;
+  }
+
+  .mdx-body ul {
+    @apply mt-5 space-y-3;
+  }
+
+  .mdx-body ul li {
+    @apply flex gap-3 text-sm leading-relaxed text-secondary sm:text-base;
+  }
+
+  .mdx-body ul li::before {
+    content: "";
+    @apply mt-2 size-1.5 shrink-0 rounded-full bg-accent;
+  }
+
+  .mdx-body ol {
+    @apply mt-5 list-decimal space-y-3 pl-5 text-[15px] leading-relaxed text-secondary sm:text-base;
+  }
+
+  .mdx-body a {
+    @apply text-foreground underline decoration-border-bright underline-offset-4 transition-colors hover:decoration-accent;
+  }
+
+  .mdx-body blockquote {
+    @apply mt-6 border-l-2 border-accent pl-4 text-[15px] italic leading-relaxed text-secondary sm:text-base;
+  }
+
+  .mdx-body table {
+    @apply mt-6 w-full border-collapse text-left text-sm;
+  }
+
+  .mdx-body th {
+    @apply border-b border-border pb-2 font-medium text-foreground;
+  }
+
+  .mdx-body td {
+    @apply border-b border-border/50 py-2 pr-4 align-top text-secondary;
+  }
+
+  .mdx-body code {
+    @apply rounded bg-surface px-1.5 py-0.5 font-mono text-[13px] text-secondary;
+  }
+
+  .mdx-body pre code {
+    @apply bg-transparent p-0;
+  }
+
+  .mdx-body hr {
+    @apply my-10 border-border;
+  }
+
+
   @media (prefers-reduced-motion: reduce) {
     html {
       scroll-behavior: auto;

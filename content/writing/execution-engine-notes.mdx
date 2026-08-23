@@ -1,0 +1,17 @@
+---
+title: "Building an execution engine that can fail safely"
+summary: "Leases, idempotency keys, and why 'retry' is not a recovery strategy by itself."
+date: "2025-11-12"
+type: "note"
+featured: true
+tags: ["Systems", "Queues"]
+diagram:
+  id: "execution-engine"
+  caption: "Retries only help when ownership and side effects are explicit."
+---
+
+Retry is the most common recovery strategy and also the easiest way to create duplicate side effects.
+
+Lease-based ownership, an event log, and idempotency keys turn failure into a state problem instead of a hope problem.
+
+> If you cannot answer who owns a job and whether a side effect already happened, you do not have recovery. You have roulette.

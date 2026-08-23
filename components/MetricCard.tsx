@@ -1,4 +1,4 @@
-import type { Metric } from "@/data/portfolio";
+import type { Metric } from "@/lib/content/types";
 
 export function MetricCard({ metric }: { metric: Metric }) {
   return (

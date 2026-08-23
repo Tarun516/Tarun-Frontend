@@ -3,7 +3,7 @@ import { Container } from "@/components/Container";
 import { EntryCard } from "@/components/EntryCard";
 import { Footer } from "@/components/Footer";
 import { Navbar } from "@/components/Navbar";
-import { getAllEntries } from "@/data/portfolio";
+import { getProjectEntries } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Projects",
@@ -11,9 +11,7 @@ export const metadata: Metadata = {
 };
 
 export default function ProjectsPage() {
-  const entries = getAllEntries().filter(
-    (entry) => entry.kind === "project" || entry.kind === "case-study",
-  );
+  const entries = getProjectEntries();
 
   return (
     <div className="flex min-h-full flex-1 flex-col">

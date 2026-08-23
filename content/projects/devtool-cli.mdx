@@ -1,0 +1,40 @@
+---
+kind: "project"
+title: "Local Agent Devtool"
+summary: "A CLI for running, inspecting, and replaying agent traces against fixtures, closer to a debugger than a chat UI."
+role: "Solo build"
+year: "2024"
+tags: ["CLI", "TypeScript", "DX"]
+repoUrl: "https://github.com"
+---
+
+## Problem
+
+Agent behavior was hard to reproduce. Developers needed deterministic fixtures and step-level inspection.
+
+## Architecture
+
+- Trace files capture tool calls, prompts, and timings.
+- Replay mode stubs tools and freezes model responses for regression tests.
+
+## Tech choices
+
+### File-based traces
+
+Easy to diff, commit, and share without a hosted backend.
+
+## Challenges
+
+- Keeping replays stable across model version changes.
+
+## Trade-offs
+
+- Optimized for local workflows over multiplayer collaboration.
+
+## What I learned
+
+- Developer tooling should make failure cheap to inspect.
+
+```text
+$ agentdev replay traces/session-42.json --freeze
+```

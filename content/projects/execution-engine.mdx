@@ -1,0 +1,62 @@
+---
+kind: "case-study"
+title: "Distributed Execution Engine"
+summary: "Designing an execution runtime inspired by durable workflows, with deterministic scheduling, leases, and observable state."
+role: "Systems design & implementation"
+year: "2026"
+tags: ["TypeScript", "Queues", "Postgres", "Redis"]
+repoUrl: "https://github.com"
+metrics:
+  - label: "p99 recovery"
+    value: "< 2s"
+  - label: "Duplicate side effects"
+    value: "0"
+  - label: "Ops MTTR"
+    value: "-60%"
+diagram:
+  id: "execution-engine"
+  caption: "Producer → durable queue → workers, with Postgres as the event log."
+---
+
+## Problem
+
+AI workflows were failing silently, retrying unsafely, and offering no clear view of where a run was stuck. Operators needed durability without turning every workflow into a brittle state machine.
+
+## Architecture
+
+- Workers pull jobs from a durable queue with lease-based ownership.
+- Execution state lives in Postgres; Redis handles short-lived coordination and rate limits.
+- A small event log records transitions so retries and audits share the same source of truth.
+- Side effects are gated behind idempotency keys so replays never double-charge external systems.
+
+## Tech choices
+
+### Postgres as system of record
+
+Strong consistency for job state, easier operational tooling, and transactional outbox patterns.
+
+### Lease-based workers
+
+Avoids split-brain ownership when a worker dies mid-task.
+
+### Explicit state machine
+
+Makes illegal transitions impossible and simplifies recovery logic.
+
+## Challenges
+
+- Exactly-once side effects across flaky model APIs.
+- Backpressure when fan-out jobs explode under bursty traffic.
+- Debugging delayed failures without drowning in logs.
+
+## Trade-offs
+
+- Chose durability and clarity over maximum throughput.
+- Accepted slightly higher write amplification for a searchable event history.
+- Kept the control plane intentionally small instead of adopting a full workflow product too early.
+
+## What I learned
+
+- Idempotency is a product feature, not an implementation detail.
+- Observable state beats clever retries.
+- Start with a narrow execution model; generalize after real workloads appear.

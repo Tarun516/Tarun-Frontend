@@ -1,0 +1,36 @@
+---
+kind: "project"
+title: "Queue Semantics Lab"
+summary: "Small experiments comparing at-least-once, lease, and outbox patterns with measurable failure injection."
+role: "Research / notes"
+year: "2024"
+tags: ["Distributed systems", "Redis", "Postgres"]
+repoUrl: "https://github.com"
+---
+
+## Problem
+
+Queue tutorials hide the hard parts. I wanted a playground that surfaces retries, duplicates, and poison messages.
+
+## Architecture
+
+- Each pattern ships as a tiny service with the same workload generator.
+- Chaos hooks kill workers and delay acknowledgements on demand.
+
+## Tech choices
+
+### Shared workload harness
+
+Comparisons only matter if the load and failure model stay constant.
+
+## Challenges
+
+- Making failure modes visible without drowning in metrics.
+
+## Trade-offs
+
+- Clarity over production readiness.
+
+## What I learned
+
+- Most 'queue bugs' are ownership and idempotency bugs.

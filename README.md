@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Tarun-Frontend
+
+Personal portfolio built with Next.js 16 (App Router), React 19, TypeScript, and Tailwind CSS v4. No database, no backend — everything is statically generated.
+
+## Content architecture
+
+The site uses a **hybrid content model**:
+
+- `data/portfolio.ts` — global site facts only: identity, links, hero copy, about data, navigation, experience.
+- `content/projects/*.mdx` — long-form project case studies (frontmatter + markdown body).
+- `content/writing/*.mdx` — articles (frontmatter + markdown body).
+- `lib/content/` — typed content layer that loads the MDX collections, derives slugs/hrefs, and computes reading time.
+
+Rule of thumb: **store facts; derive everything derivable.** A file's filename becomes its slug, its route, and (for articles) the source of its reading-time estimate.
+
+### Writing a new article
+
+1. Create `content/writing/my-post.mdx` with frontmatter:
+
+   ```mdx
+   ---
+   title: "My post"
+   summary: "One-line summary."
+   date: "2026-08-23"
+   tags: ["Systems"]
+   ---
+
+   Body in markdown. Headings, code blocks, lists, tables, quotes,
+   and <Callout> components all work.
+   ```
+
+2. That's it. The article appears on `/writing`, the homepage, and gets statically prerendered at `/writing/my-post`.
+
+Set `published: false` in frontmatter to keep a draft out of the site entirely.
+
+### Writing a new project / case study
+
+Create `content/projects/my-project.mdx`. Frontmatter supports `kind` (`project` or `case-study`), `title`, `summary`, `role`, `year`, `tags`, `featured`, `repoUrl`, `liveUrl`, `metrics`, and `diagram` (id keyed in `components/diagrams`). The body is free-form markdown rendered below the page header — use `## Problem`, `## Architecture`, `## Tech choices`, `## Challenges`, `## Trade-offs`, `## What I learned` as section conventions.
+
+### MDX components
+
+Global MDX component mappings live in `mdx-components.tsx`; reusable blocks (`Callout`, `CodeBlock`) live in `components/mdx/`. Typography for rendered markdown is scoped under `.mdx-body` in `app/globals.css`.
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+pnpm run lint   # eslint
+pnpm run build  # production build (also type-checks)
+```

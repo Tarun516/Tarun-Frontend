@@ -5,7 +5,11 @@ import { Container } from "@/components/Container";
 import { ContentDiagram, isDiagramId } from "@/components/diagrams";
 import { Footer } from "@/components/Footer";
 import { Navbar } from "@/components/Navbar";
-import { getArticle, getPublishedArticles } from "@/data/portfolio";
+import {
+  getPublishedArticles,
+  getArticleIncludingDrafts,
+} from "@/lib/content";
+import { articleTypeLabel } from "@/lib/content/types";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -15,12 +19,14 @@ export async function generateStaticParams() {
   return getPublishedArticles().map((article) => ({ slug: article.slug }));
 }
 
+export const dynamicParams = false;
+
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const article = getArticle(slug);
-  if (!article || !article.published) return {};
+  const article = getArticleIncludingDrafts(slug);
+  if (!article || article.draft) return {};
   return {
     title: article.title,
     description: article.summary,
@@ -29,9 +35,9 @@ export async function generateMetadata({
 
 export default async function ArticlePage({ params }: PageProps) {
   const { slug } = await params;
-  const article = getArticle(slug);
+  const article = getArticleIncludingDrafts(slug);
 
-  if (!article || !article.published) notFound();
+  if (!article || article.draft) notFound();
 
   const diagramId =
     article.diagram && isDiagramId(article.diagram.id)
@@ -39,13 +45,19 @@ export default async function ArticlePage({ params }: PageProps) {
       : null;
   const diagramCaption = article.diagram?.caption;
 
+  // Article bodies are authored as MDX under content/writing/.
+  const { default: ArticleBody } = await import(
+    `@/content/writing/${slug}.mdx`
+  );
+
   return (
     <div className="flex min-h-full flex-1 flex-col">
       <Navbar />
 
       <main className="flex-1">
         <Container className="pt-10 pb-16 sm:pt-16 sm:pb-24">
-          <div className="max-w-3xl">
+          {/* Articles are reading-first: narrow measure, generous leading. */}
+          <div className="max-w-[44rem]">
             <Link
               href="/writing"
               className="inline-flex items-center gap-2 text-sm text-secondary transition-colors duration-200 ease-out hover:text-foreground"
@@ -54,17 +66,21 @@ export default async function ArticlePage({ params }: PageProps) {
             </Link>
 
             <header className="mt-6 border-b border-border pb-8 sm:mt-8 sm:pb-10">
-              <p className="font-mono text-xs text-muted">
-                {article.date} · {article.readingTime}
+              <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-muted">
+                {articleTypeLabel(article.type)} ·{" "}
+                <time dateTime={article.date}>
+                  {new Date(`${article.date}T00:00:00`).toLocaleDateString(
+                    "en-US",
+                    { year: "numeric", month: "long", day: "numeric" },
+                  )}
+                </time>{" "}
+                · {article.readingTime}
               </p>
-              <h1 className="mt-3 font-display text-[1.75rem] leading-[1.15] font-medium tracking-[-0.03em] text-foreground sm:mt-4 sm:text-4xl sm:leading-[1.1]">
+              <h1 className="mt-4 font-display text-[1.75rem] leading-[1.15] font-medium tracking-[-0.03em] text-foreground sm:mt-5 sm:text-4xl sm:leading-[1.1]">
                 {article.title}
               </h1>
               <p className="mt-4 max-w-prose text-[15px] leading-relaxed text-secondary sm:text-base">
                 {article.summary}
-              </p>
-              <p className="mt-5 text-sm leading-relaxed text-muted sm:mt-6">
-                {article.tags.join("  ·  ")}
               </p>
             </header>
 
@@ -74,17 +90,9 @@ export default async function ArticlePage({ params }: PageProps) {
               </section>
             ) : null}
 
-            {article.body?.length ? (
-              <div className="space-y-5 pt-10 text-[15px] leading-relaxed text-secondary sm:text-base">
-                {article.body.map((paragraph) => (
-                  <p key={paragraph}>{paragraph}</p>
-                ))}
-              </div>
-            ) : (
-              <p className="pt-10 text-[15px] text-muted">
-                Full write-up coming soon.
-              </p>
-            )}
+            <article className="mdx-body pt-10">
+              <ArticleBody />
+            </article>
           </div>
         </Container>
       </main>

@@ -1,0 +1,54 @@
+---
+kind: "case-study"
+title: "Context Memory Service"
+summary: "A retrieval layer that stores, ranks, and injects long-term context for multi-agent systems without blowing the prompt window."
+role: "Backend & retrieval"
+year: "2025"
+tags: ["Embeddings", "Node.js", "Vector search"]
+featured: true
+repoUrl: "https://github.com"
+metrics:
+  - label: "Avg tokens saved"
+    value: "48%"
+  - label: "p95 retrieval"
+    value: "90ms"
+diagram:
+  id: "context-memory"
+  caption: "Corpus → embed → budget-aware rank → inject."
+---
+
+## Problem
+
+Agents either forgot useful prior context or stuffed the prompt until latency and cost collapsed. The system needed selective memory with predictable budgets.
+
+## Architecture
+
+- Documents are chunked, embedded, and stored with provenance metadata.
+- A ranking stage combines recency, relevance, and policy filters before injection.
+- Hot paths use a cache tier; cold paths fall back to vector search.
+- Every injected snippet is attributed so agents can cite what they used.
+
+## Tech choices
+
+### Hybrid ranking
+
+Pure vector similarity missed temporal and permission constraints.
+
+### Token budgets as first-class input
+
+Downstream models vary; the memory service must pack under a hard limit.
+
+## Challenges
+
+- Stale or contradictory memories polluting agent decisions.
+- Keeping retrieval latency stable as the corpus grew.
+
+## Trade-offs
+
+- Preferred deterministic ranking rules over opaque rerankers for early debugging.
+- Accepted approximate recall for much better latency at the edge.
+
+## What I learned
+
+- Memory quality depends more on selection policy than on embedding model choice.
+- Attribution makes trust and evaluation possible.

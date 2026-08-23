@@ -7,21 +7,23 @@ import { ContentDiagram, isDiagramId } from "@/components/diagrams";
 import { Footer } from "@/components/Footer";
 import { MetricCard } from "@/components/MetricCard";
 import { Navbar } from "@/components/Navbar";
-import { getAllCaseStudies, getCaseStudy } from "@/data/portfolio";
+import { getProject, getProjectSlugs } from "@/lib/content";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
 };
 
 export async function generateStaticParams() {
-  return getAllCaseStudies().map((project) => ({ slug: project.slug }));
+  return getProjectSlugs().map((slug) => ({ slug }));
 }
+
+export const dynamicParams = false;
 
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const project = getCaseStudy(slug);
+  const project = getProject(slug);
   if (!project) return {};
   return {
     title: project.title,
@@ -31,7 +33,7 @@ export async function generateMetadata({
 
 export default async function ProjectPage({ params }: PageProps) {
   const { slug } = await params;
-  const project = getCaseStudy(slug);
+  const project = getProject(slug);
 
   if (!project) notFound();
 
@@ -40,6 +42,11 @@ export default async function ProjectPage({ params }: PageProps) {
       ? project.diagram.id
       : null;
   const diagramCaption = project.diagram?.caption;
+
+  // Long-form case-study content is authored as MDX under content/projects/.
+  const { default: CaseStudyBody } = await import(
+    `@/content/projects/${slug}.mdx`
+  );
 
   return (
     <div className="flex min-h-full flex-1 flex-col">
@@ -56,10 +63,10 @@ export default async function ProjectPage({ params }: PageProps) {
             </Link>
 
             <header className="mt-6 border-b border-border pb-8 sm:mt-8 sm:pb-10">
-              <p className="font-mono text-xs text-muted">
-                {project.year} · {project.role}
+              <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-muted">
+                {project.year} / {project.role}
               </p>
-              <h1 className="mt-3 font-display text-[1.75rem] leading-[1.15] font-medium tracking-[-0.03em] text-foreground sm:mt-4 sm:text-4xl sm:leading-[1.1]">
+              <h1 className="mt-4 font-display text-[1.75rem] leading-[1.15] font-medium tracking-[-0.03em] text-foreground sm:mt-5 sm:text-4xl sm:leading-[1.1]">
                 {project.title}
               </h1>
               <p className="mt-4 max-w-prose text-[15px] leading-relaxed text-secondary sm:text-base">
@@ -101,76 +108,14 @@ export default async function ProjectPage({ params }: PageProps) {
               </section>
             ) : null}
 
-            <CaseBlock title="Problem">{project.problem}</CaseBlock>
-            <CaseList title="Architecture" items={project.architecture} />
-
-            <section className="border-b border-border py-10">
-              <h2 className="font-display text-sm font-medium tracking-[0.08em] text-muted uppercase">
-                Tech choices
-              </h2>
-              <ul className="mt-6 space-y-5">
-                {project.techChoices.map((item) => (
-                  <li key={item.choice}>
-                    <p className="font-medium text-foreground">{item.choice}</p>
-                    <p className="mt-1 text-sm leading-relaxed text-secondary">
-                      {item.why}
-                    </p>
-                  </li>
-                ))}
-              </ul>
-            </section>
-
-            <CaseList title="Challenges" items={project.challenges} />
-            <CaseList title="Trade-offs" items={project.tradeoffs} />
-            <CaseList title="Lessons" items={project.lessons} last />
+            <article className="mdx-body mdx-story pt-10">
+              <CaseStudyBody />
+            </article>
           </div>
         </Container>
       </main>
 
       <Footer />
     </div>
-  );
-}
-
-function CaseBlock({ title, children }: { title: string; children: string }) {
-  return (
-    <section className="border-b border-border py-10">
-      <h2 className="font-display text-sm font-medium tracking-[0.08em] text-muted uppercase">
-        {title}
-      </h2>
-      <p className="mt-4 text-base leading-relaxed text-secondary">{children}</p>
-    </section>
-  );
-}
-
-function CaseList({
-  title,
-  items,
-  last = false,
-}: {
-  title: string;
-  items: string[];
-  last?: boolean;
-}) {
-  return (
-    <section className={last ? "pt-10" : "border-b border-border py-10"}>
-      <h2 className="font-display text-sm font-medium tracking-[0.08em] text-muted uppercase">
-        {title}
-      </h2>
-      <ul className="mt-6 space-y-3">
-        {items.map((item) => (
-          <li
-            key={item}
-            className="flex gap-3 text-sm leading-relaxed text-secondary sm:text-base"
-          >
-            <span
-              aria-hidden="true"
-              className="mt-2 size-1.5 shrink-0 rounded-full bg-accent"
-            />
-            <span>{item}</span>
-          </li>
-        ))}
-      </ul>
-    </section>
   );
 }

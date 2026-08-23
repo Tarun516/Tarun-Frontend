@@ -1,0 +1,17 @@
+---
+title: "Why Context Windows Are The Wrong Abstraction"
+summary: "My thoughts on long-term memory for AI systems, and why stuffing the prompt is not a strategy."
+date: "2026-02-10"
+type: "deep-dive"
+featured: true
+tags: ["AI", "Memory"]
+diagram:
+  id: "context-memory"
+  caption: "Selection policy matters more than raw window size."
+---
+
+Context windows feel like progress because they are measurable. Bigger number, more room, problem solved.
+
+In practice, stuffing more text into a prompt rarely creates better long-horizon behavior. It creates noisier attention, higher cost, and systems that cannot explain what they used.
+
+A better abstraction is memory with a budget: store broadly, retrieve narrowly, and cite what entered the prompt. The window is a packing constraint, not the product.

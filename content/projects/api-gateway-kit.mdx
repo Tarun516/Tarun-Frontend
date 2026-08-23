@@ -1,0 +1,36 @@
+---
+kind: "project"
+title: "Typed API Gateway Kit"
+summary: "A starter for authenticated internal APIs with rate limits, schema validation, and structured error envelopes."
+role: "Open source kit"
+year: "2024"
+tags: ["Node.js", "Zod", "Auth", "OpenAPI"]
+repoUrl: "https://github.com"
+---
+
+## Problem
+
+Internal services repeatedly reinvented auth middleware and inconsistent error shapes.
+
+## Architecture
+
+- Request validation at the edge, typed handlers in the middle, uniform errors out.
+- OpenAPI generated from the same schemas used at runtime.
+
+## Tech choices
+
+### Schema-first contracts
+
+One definition for validation, docs, and client generation.
+
+## Challenges
+
+- Keeping generated docs honest as handlers evolve.
+
+## Trade-offs
+
+- Slightly more boilerplate early; much less ambiguity later.
+
+## What I learned
+
+- Contracts beat tribal knowledge.

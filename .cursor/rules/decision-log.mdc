@@ -1,0 +1,40 @@
+---
+description: Keep docs/decisions.md updated with brief notes on structural, architectural, and standards-changing decisions
+globs: "**/*"
+alwaysApply: true
+---
+
+# Decision logging (required)
+
+Whenever a change affects this project's structure, architecture, conventions, or standards, append a brief one-line note to `docs/decisions.md`.
+
+## Format
+
+```
+- YYYY-MM-DD — decision — one-line why.
+```
+
+Newest entries first at the top of the list.
+
+## Rules
+
+- Brief is fine — one line per decision, not an essay.
+- Log the decision in the same change that introduces it. Do not leave it for later or batch it up.
+- Before finalizing a change, read `docs/architecture.md` and `docs/content-authoring.md` and follow their patterns; if your change deviates from them, that deviation is exactly what must be logged.
+
+## What to log
+
+- New content-layer rules or changes to frontmatter contracts
+- New dependencies, tooling, or build steps
+- Renamed routes, sections, or collections (`content/`, `lib/content/`, etc.)
+- Changed styling approach or design-token conventions
+- Altered verification workflow (lint/build/test expectations)
+- Any deliberate deviation from an existing documented pattern
+
+## What NOT to log
+
+- Routine content edits (adding/editing an MDX file, fixing copy or typos)
+- Mechanical refactors with no architectural impact
+- Bug fixes that don't change conventions
+
+Also keep `AGENTS.md` in sync if a rule there becomes stale.
