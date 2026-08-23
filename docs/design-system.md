@@ -6,6 +6,42 @@ The visual rules this site follows. Locked 2026-08-23 — deviate only with a lo
 
 **Hierarchy comes from size, space, weight and position — before borders, boxes, uppercase or color.** Whitespace > lines.
 
+## Color identity
+
+One brand across both modes: light = warm paper, dark = warm charcoal. Never OLED black, never neon accents.
+
+| Token | Light | Dark |
+| --- | --- | --- |
+| background | `#f7f7f5` | `#11110f` |
+| surface | `#ffffff` | `#171714` |
+| border / border-bright | `#e6e6e2` / `#d4d4d0` | `#262622` / `#343430` |
+| foreground | `#141414` | `#ecece8` |
+| secondary | `#525252` | `#b2b2aa` |
+| muted | `#737373` | `#7e7e76` |
+| accent (steel blue) | `#667f98` | `#8ea1b4` |
+
+Accent rules:
+
+- The single accent is a **muted steel-blue**, used sparingly: links/hover states, diagram highlights, focus rings, interactive details.
+- Never use bright purple, neon green, orange, pink, or gradients as accents. Purple reads "generic AI SaaS" and is banned.
+
+## Selection (locked)
+
+Selection is utility feedback — monochrome, never accent-colored:
+
+```css
+::selection        { background: #1a1a1a; color: #ffffff; }
+.dark ::selection  { background: #eeeeee; color: #111111; }
+```
+
+## Backgrounds & surfaces
+
+- Glow is nearly invisible (`--glow` at 0.03–0.05 alpha).
+- The dark-mode 48px grid exists only on home and index pages, at near-invisible alpha (`--grid-line` ≤ 0.008). Reading pages — project detail, article detail, about — opt out entirely via the `data-reading-page` attribute on their root div (CSS: `.dark body:has([data-reading-page]) { background-image: none; }`). Any new reading-focused page must set this attribute.
+- `--surface` is for real containers only: code blocks, diagrams, callouts, demos. Page content sits directly on `--background`. Don't wrap everything in bordered surface cards.
+- Hover behavior: text moves secondary → foreground with an underline where applicable; do not recolor body/nav text to the accent on hover.
+
+
 ## Fonts
 
 | Purpose | Font |
@@ -50,6 +86,35 @@ Reading measures narrow as the reader goes deeper.
 ## MDX body styling
 
 All rendered markdown is styled by the scoped `.mdx-body` rules in `app/globals.css`. Headings have no borders or numbering — separation is whitespace. One hairline rule separates a page header from its body; that's the exception, not the pattern.
+
+## Motion grammar (locked)
+
+One system for the whole site. Personality: **quiet, precise, fast, intentional.** CSS only — no Framer Motion.
+
+Timings (single easing curve everywhere: `cubic-bezier(0.22, 1, 0.36, 1)`, already `--ease-out-soft`):
+
+| Interaction | Duration |
+| --- | ---: |
+| Text/nav hover | 150–200ms (`duration-200`) |
+| Arrow movement | 200ms, max 4px (`group-hover:translate-x-1`) |
+| Button background/border | 200ms; the button itself never moves or scales — only its state changes |
+| Card/image hover | 200–280ms, subtle border/opacity response only |
+| Page entrance | once on load, fade + 6–8px rise (`animate-enter`, hero only) |
+
+Arrow rules:
+
+- Arrows are **always visible** at `opacity-45`; hover clears them to full opacity and nudges 4px. Never hide an arrow and reveal it on hover — it's an affordance, especially for touch devices.
+- Movement is at most `translate-x-1` (4px). No long arrow travel.
+- Direction language: internal navigation `→`, external destination `↗`, back navigation `←`.
+
+Hover color rules:
+
+- Titles/text stay foreground (or shift to secondary at most). Do not recolor titles to accent on hover.
+- The accent appears in focus rings, diagram highlights, and quiet underlines — not as a title hover color.
+
+Nav links and brand use a grow-from-left underline (`after:` pseudo-element, `origin-left scale-x-0 → scale-x-100`, 200ms); the active page keeps a persistent full underline.
+
+Banned motion: scale pop, bounce/spring, rotation, glowing buttons, large parallax, scroll-triggered fade-ins on sections/cards/headings. A reader should never wait for the website.
 
 ## Content rules
 

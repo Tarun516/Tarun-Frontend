@@ -18,7 +18,7 @@ export type Metric = {
   value: string;
 };
 
-/** Unified list item consumed by EntryCard. */
+/** Unified list item consumed by EntryCard / ProjectCard. */
 export type ContentEntry = {
   id: string;
   kind: EntryKind;
@@ -27,6 +27,8 @@ export type ContentEntry = {
   year: string;
   href: string;
   featured?: boolean;
+  tags?: string[];
+  repoUrl?: string;
 };
 
 export type ProjectFrontmatter = {
@@ -37,6 +39,11 @@ export type ProjectFrontmatter = {
   year: string;
   tags: string[];
   featured?: boolean;
+  /**
+   * Explicit homepage placement: 1 = primary/hero project,
+   * 2-5 = secondary grid, absent = projects page only.
+   */
+  homeOrder?: number;
   metrics?: Metric[];
   diagram?: { id: string; caption?: string };
   repoUrl?: string;
@@ -101,6 +108,8 @@ export function toProjectEntry(project: ProjectContent): ContentEntry {
     year: project.year,
     href: `/projects/${project.href}`,
     featured: project.featured,
+    tags: project.tags,
+    repoUrl: project.repoUrl,
   };
 }
 

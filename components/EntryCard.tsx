@@ -6,6 +6,10 @@ type EntryCardProps = {
   entry: ContentEntry;
 };
 
+/**
+ * Article entry row. Motion grammar: arrow always visible at 45%,
+ * clears and nudges 4px on hover; title stays foreground.
+ */
 export function EntryCard({ entry }: EntryCardProps) {
   const meta = `${kindLabel(entry.kind)} · ${entry.year}`;
 
@@ -19,16 +23,13 @@ export function EntryCard({ entry }: EntryCardProps) {
         <p className="mt-2.5 max-w-prose text-sm leading-relaxed text-secondary">
           {entry.summary}
         </p>
-        <p className="mt-3 text-sm text-muted transition-colors duration-200 ease-out group-hover:text-foreground">
-          Read
-          <span
-            aria-hidden="true"
-            className="ml-1 inline-block transition-transform duration-200 ease-out group-hover:translate-x-0.5"
-          >
-            →
-          </span>
-        </p>
       </div>
+      <span
+        aria-hidden="true"
+        className="mt-1 shrink-0 opacity-45 transition-[transform,opacity] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-1 group-hover:opacity-100"
+      >
+        →
+      </span>
     </div>
   );
 

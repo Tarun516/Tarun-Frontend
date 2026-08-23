@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
+import { BackLink } from "@/components/BackLink";
 import { Container } from "@/components/Container";
 import { Footer } from "@/components/Footer";
 import { Navbar } from "@/components/Navbar";
 import { ProjectCard } from "@/components/ProjectCard";
-import { getAllProjects } from "@/lib/content";
+import { getProjectEntries } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Projects",
@@ -11,15 +12,7 @@ export const metadata: Metadata = {
 };
 
 export default function ProjectsPage() {
-  const projects = getAllProjects().map((project) => ({
-    id: `project-${project.slug}`,
-    kind: project.kind,
-    title: project.title,
-    summary: project.summary,
-    year: project.year,
-    href: `/projects/${project.href}`,
-    featured: project.featured,
-  }));
+  const projects = getProjectEntries();
 
   return (
     <div className="flex min-h-full flex-1 flex-col">
@@ -28,7 +21,8 @@ export default function ProjectsPage() {
         <Container className="pt-10 pb-16 sm:pt-16 sm:pb-24">
           {/* Browse column — wider than a reading measure, centered. */}
           <div className="mx-auto max-w-[56rem]">
-            <h1 className="font-display text-[2rem] font-medium tracking-[-0.03em] text-foreground sm:text-4xl">
+            <BackLink href="/" label="Home" />
+            <h1 className="mt-8 font-display text-[2rem] font-medium tracking-[-0.03em] text-foreground sm:text-4xl">
               Projects
             </h1>
             <p className="mt-3 max-w-prose text-lg leading-relaxed text-secondary">

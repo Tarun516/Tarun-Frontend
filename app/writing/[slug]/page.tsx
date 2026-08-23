@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
+import { BackLink } from "@/components/BackLink";
 import { Container } from "@/components/Container";
 import { ContentDiagram, isDiagramId } from "@/components/diagrams";
 import { Footer } from "@/components/Footer";
 import { Navbar } from "@/components/Navbar";
+import { PrevNextNav } from "@/components/PrevNextNav";
 import {
   getPublishedArticles,
   getArticleIncludingDrafts,
@@ -39,6 +40,12 @@ export default async function ArticlePage({ params }: PageProps) {
 
   if (!article || article.draft) notFound();
 
+  // Neighbours follow the same chronological order as /writing.
+  const all = getPublishedArticles();
+  const index = all.findIndex((item) => item.slug === article.slug);
+  const prev = index < all.length - 1 ? all[index + 1] : undefined;
+  const next = index > 0 ? all[index - 1] : undefined;
+
   const diagramId =
     article.diagram && isDiagramId(article.diagram.id)
       ? article.diagram.id
@@ -51,19 +58,14 @@ export default async function ArticlePage({ params }: PageProps) {
   );
 
   return (
-    <div className="flex min-h-full flex-1 flex-col">
+    <div className="flex min-h-full flex-1 flex-col" data-reading-page>
       <Navbar />
 
       <main className="flex-1">
         <Container className="pt-10 pb-16 sm:pt-16 sm:pb-24">
           {/* Articles are reading-first: centered narrow measure. */}
           <div className="mx-auto max-w-[44rem]">
-            <Link
-              href="/writing"
-              className="inline-flex items-center gap-2 text-sm text-secondary transition-colors duration-200 ease-out hover:text-foreground"
-            >
-              <span aria-hidden="true">←</span> Writing
-            </Link>
+            <BackLink href="/writing" label="Writing" />
 
             <header className="mt-10 sm:mt-12">
               <p className="text-[13px] text-muted">
@@ -93,6 +95,21 @@ export default async function ArticlePage({ params }: PageProps) {
             <article className="mdx-body mt-14 border-t border-border pt-12">
               <ArticleBody />
             </article>
+
+            <PrevNextNav
+              prev={
+                prev
+                  ? { href: `/writing/${prev.slug}`, label: prev.title }
+                  : undefined
+              }
+              next={
+                next
+                  ? { href: `/writing/${next.slug}`, label: next.title }
+                  : undefined
+              }
+              allHref="/writing"
+              allLabel="All writing"
+            />
           </div>
         </Container>
       </main>

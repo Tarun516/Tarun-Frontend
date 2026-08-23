@@ -1,0 +1,42 @@
+---
+description: Motion grammar rules for this portfolio — arrows, hovers, buttons, timing, easing
+globs: "{app/**,components/**}"
+alwaysApply: true
+---
+
+# Motion grammar (locked)
+
+Full spec in `docs/design-system.md` → "Motion grammar". Personality: quiet, precise, fast, intentional. CSS only — do not add Framer Motion or JS animation libraries.
+
+## Timing & easing
+
+- One easing curve everywhere: `ease-[cubic-bezier(0.22,1,0.36,1)]` (matches `--ease-out-soft`). Never `ease-in`, springs, or bounce curves.
+- Durations: text/nav hover 200ms; arrow movement 200ms; button state 200ms; card/visual border 200–280ms. Page entrance (`animate-enter`) runs once on load for hero content only.
+
+## Arrows
+
+- Always visible at `opacity-45`; on hover clear to full opacity and nudge at most `group-hover:translate-x-1` (4px). Never `opacity-0 → group-hover:opacity-100` (hiding an affordance), never travel beyond 4px.
+- Direction language: internal navigation `→`, external destination `↗`, back navigation `←`. Every external link must use ↗.
+- Standard arrow class:
+  ```
+  opacity-45 transition-[transform,opacity] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-1 group-hover:opacity-100
+  ```
+
+## Buttons
+
+- Buttons stay put; only their state animates (background/border/color). No scale, no translate on the button itself, no shadows/glow.
+- Filled buttons are reserved for genuinely primary actions (View projects, Contact). External actions (GitHub, Live) are quiet underlined text links with ↗.
+
+## Hover color
+
+- Titles and body text stay foreground on hover (secondary shift at most). Do not recolor titles to accent — accent is reserved for focus rings, diagram highlights, and quiet underlines.
+
+## Navigation underline
+
+- Header brand + nav links use a grow-from-left underline: `after:` pseudo-element with `origin-left after:scale-x-0 hover:after:scale-x-100 after:bg-current`, 200ms. Active page keeps a persistent full underline.
+
+## Banned
+
+Scale pop, bounce/spring, rotation, glowing buttons, parallax, scroll-triggered fade-ins on sections/cards/headings. A reader should never wait for the website.
+
+Any deviation must be logged as a one-line entry in docs/decisions.md in the same change.

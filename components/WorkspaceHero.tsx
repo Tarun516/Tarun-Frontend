@@ -26,7 +26,7 @@ export function WorkspaceHero() {
           </div>
 
           <div className="mt-8 space-y-4 motion-safe:animate-enter motion-safe:[animation-delay:120ms] sm:mt-9 sm:space-y-5">
-            <Button href="#projects" variant="primary">
+            <Button href="/projects" variant="primary">
               View projects
             </Button>
 

@@ -1,0 +1,35 @@
+---
+description: Color identity, selection, and background rules for this portfolio (warm charcoal dark mode, steel-blue accent)
+globs: "{app/**,components/**,app/globals.css}"
+alwaysApply: true
+---
+
+# Color & visual identity (locked)
+
+Full spec in `docs/design-system.md`. Hard rules:
+
+## Palette
+
+- Light mode: warm paper (`#f7f7f5` bg, `#ffffff` surface, `#141414` text). Dark mode: warm charcoal, NOT OLED black (`#11110f` bg, `#171714` surface, `#ecece8` text, `#b2b2aa` secondary).
+- The only accent is muted steel-blue: `#667f98` (light) / `#8ea1b4` (dark), via the `--accent` token. Use it sparingly: focus rings, diagram highlights, interactive details.
+- **Never** introduce bright purple, neon green, orange, pink, or gradient accents. The former purple `#6e56cf` is banned — it reads "generic AI SaaS".
+- Use design tokens (`text-foreground`, `text-secondary`, `border-border`, `bg-surface`, `bg-accent`, …), never raw hex values in components.
+
+## Selection
+
+Monochrome, locked:
+
+```css
+::selection       { background: #1a1a1a; color: #ffffff; }
+.dark ::selection { background: #eeeeee; color: #111111; }
+```
+
+Selection is utility feedback — never accent-colored, never restyled per-page.
+
+## Backgrounds & surfaces
+
+- Glow and grid are near-invisible by default. Reading pages (project detail, article detail, about) must be flat: set `data-reading-page` on the page's root div so `.dark body:has([data-reading-page])` removes grid/glow. New reading-focused pages must include this attribute.
+- `--surface` + border is for real containers only (code blocks, diagrams, callouts). Don't wrap ordinary content in surface cards.
+- Hover: text transitions secondary → foreground (+ underline where appropriate); don't recolor body or nav text to accent on hover.
+
+Light and dark must feel like the same editorial brand. Any deviation from these rules or docs/design-system.md must be logged as a one-line entry in docs/decisions.md in the same change.

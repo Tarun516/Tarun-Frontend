@@ -20,7 +20,7 @@ Newest entries first at the top of the list.
 
 - Brief is fine — one line per decision, not an essay.
 - Log the decision in the same change that introduces it. Do not leave it for later or batch it up.
-- Before finalizing a change, read `docs/architecture.md` and `docs/content-authoring.md` and follow their patterns; if your change deviates from them, that deviation is exactly what must be logged.
+- Before finalizing a change, read `docs/architecture.md`, `docs/content-authoring.md`, `docs/design-system.md` (incl. motion grammar), `docs/navigation.md`, and `docs/backlog.md` and follow their patterns; if your change deviates from them, that deviation is exactly what must be logged.
 
 ## What to log
 
@@ -28,6 +28,9 @@ Newest entries first at the top of the list.
 - New dependencies, tooling, or build steps
 - Renamed routes, sections, or collections (`content/`, `lib/content/`, etc.)
 - Changed styling approach or design-token conventions
+- Navigation, hierarchy, or content-correctness rule changes (docs/navigation.md)
+- Color, selection, or background treatment changes (docs/design-system.md color identity)
+- Motion/animation changes (docs/design-system.md motion grammar)
 - Altered verification workflow (lint/build/test expectations)
 - Any deliberate deviation from an existing documented pattern
 

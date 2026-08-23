@@ -9,6 +9,12 @@ type ButtonProps = {
   className?: string;
 };
 
+/**
+ * Motion grammar (see docs/design-system.md):
+ * - the button itself stays put; only its state animates
+ * - arrow nudges 4px max, 200ms, single soft easing curve
+ * - external destinations use ↗, internal use →
+ */
 export function Button({
   href,
   children,
@@ -17,7 +23,7 @@ export function Button({
   className = "",
 }: ButtonProps) {
   const base =
-    "group inline-flex items-center gap-2 rounded-md px-3.5 py-2 text-sm font-medium transition-colors duration-200 ease-out";
+    "group inline-flex items-center gap-2 rounded-md px-4 py-2.5 text-sm font-medium transition-[background-color,border-color,color] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)]";
 
   const styles =
     variant === "primary"
@@ -29,9 +35,9 @@ export function Button({
       <span>{children}</span>
       <span
         aria-hidden="true"
-        className="translate-x-0 transition-transform duration-200 ease-out group-hover:translate-x-0.5"
+        className="transition-transform duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-1"
       >
-        →
+        {external ? "↗" : "→"}
       </span>
     </>
   );

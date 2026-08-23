@@ -80,10 +80,9 @@ export const portfolio = {
     ] as { category: string; items: string[] }[],
   },
   nav: [
-    { label: "Projects", href: "/#projects" },
-    { label: "Writing", href: "/#writing" },
+    { label: "Projects", href: "/projects" },
+    { label: "Writing", href: "/writing" },
     { label: "About", href: "/about" },
-    { label: "GitHub", href: "https://github.com/Tarun516", external: true },
   ] as NavItem[],
   experience: [
     {

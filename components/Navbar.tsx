@@ -7,6 +7,13 @@ import { Container } from "@/components/Container";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { portfolio } from "@/data/portfolio";
 
+/**
+ * Underline that grows from left to right (after: scale-x-0 → 100).
+ * Active page keeps a full underline. Motion grammar: 200ms, soft ease.
+ */
+const growUnderline =
+  "relative after:absolute after:left-0 after:-bottom-1.5 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-current after:transition-transform after:duration-200 after:ease-[cubic-bezier(0.22,1,0.36,1)] hover:after:scale-x-100";
+
 export function Navbar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
@@ -39,7 +46,7 @@ export function Navbar() {
       <Container className="flex h-14 items-center justify-between gap-3">
         <Link
           href="/"
-          className="min-w-0 truncate font-display text-sm font-semibold tracking-tight text-foreground transition-colors duration-200 ease-out hover:text-secondary"
+          className={`min-w-0 truncate font-display text-sm font-semibold tracking-tight text-foreground ${growUnderline}`}
         >
           {portfolio.name}
         </Link>
@@ -50,7 +57,12 @@ export function Navbar() {
             className="hidden items-center gap-6 md:flex lg:gap-8"
           >
             {portfolio.nav.map((item) => (
-              <NavItem key={item.label} item={item} />
+              <NavItem
+                key={item.label}
+                item={item}
+                pathname={pathname}
+                growUnderline={growUnderline}
+              />
             ))}
           </nav>
 
@@ -79,6 +91,7 @@ export function Navbar() {
               <MobileNavItem
                 key={item.label}
                 item={item}
+                pathname={pathname}
                 onNavigate={() => setOpen(false)}
               />
             ))}
@@ -91,27 +104,41 @@ export function Navbar() {
 
 function NavItem({
   item,
+  pathname,
+  growUnderline,
 }: {
   item: (typeof portfolio.nav)[number];
+  pathname: string;
+  growUnderline: string;
 }) {
+  const active =
+    !item.external &&
+    (item.href === "/"
+      ? pathname === "/"
+      : pathname.startsWith(item.href));
+
+  // Active pages keep a persistent full underline; others animate it in.
   const className =
-    "text-[13px] text-secondary transition-colors duration-200 ease-out hover:text-foreground sm:text-sm";
+    active || item.external
+      ? `text-sm text-foreground ${
+          active ? "underline underline-offset-[5px]" : ""
+        } transition-colors duration-200`
+      : `text-sm text-secondary transition-colors duration-200 hover:text-foreground ${growUnderline}`;
 
   if (item.external) {
     return (
-      <a
-        href={item.href}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={className}
-      >
-        {item.label}
+      <a href={item.href} target="_blank" rel="noopener noreferrer" className={className}>
+        {item.label} ↗
       </a>
     );
   }
 
   return (
-    <Link href={item.href} className={className}>
+    <Link
+      href={item.href}
+      className={className}
+      aria-current={active ? "page" : undefined}
+    >
       {item.label}
     </Link>
   );
@@ -119,13 +146,22 @@ function NavItem({
 
 function MobileNavItem({
   item,
+  pathname,
   onNavigate,
 }: {
   item: (typeof portfolio.nav)[number];
+  pathname: string;
   onNavigate: () => void;
 }) {
-  const className =
-    "rounded-md px-3 py-3 text-base text-secondary transition-colors duration-200 ease-out hover:bg-surface hover:text-foreground";
+  const active =
+    !item.external &&
+    (item.href === "/"
+      ? pathname === "/"
+      : pathname.startsWith(item.href));
+
+  const className = `rounded-md px-3 py-3 text-base transition-colors duration-200 ease-out hover:bg-surface hover:text-foreground ${
+    active ? "text-foreground" : "text-secondary"
+  }`;
 
   if (item.external) {
     return (
@@ -136,7 +172,7 @@ function MobileNavItem({
         className={className}
         onClick={onNavigate}
       >
-        {item.label}
+        {item.label} ↗
       </a>
     );
   }

@@ -83,11 +83,12 @@ export function getAllEntries(): ContentEntry[] {
   );
 }
 
-/** Homepage: featured product/build projects. */
+/** Homepage: curated by `homeOrder` frontmatter (1 = hero, 2+ = secondary). */
 export function getHomeProjects(): ContentEntry[] {
-  return getAllEntries().filter(
-    (entry) => entry.featured && entry.kind === "project",
-  );
+  return getAllProjects()
+    .filter((project) => project.homeOrder !== undefined)
+    .sort((a, b) => (a.homeOrder ?? 99) - (b.homeOrder ?? 99))
+    .map(toProjectEntry);
 }
 
 /** Homepage: featured case studies + articles. */

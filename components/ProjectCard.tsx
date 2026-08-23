@@ -9,68 +9,115 @@ type ProjectCardProps = {
 };
 
 /**
- * Editorial project presentation.
- *
- * - `visual` (featured): kicker, title, summary, then the project's
- *   diagram as a large visual, ending with a quiet "View" affordance.
- * - default (secondary): much lighter — year, title, summary. No card
- *   chrome, no repeated "project" label.
+ * Motion grammar (docs/design-system.md):
+ * - arrows are always visible at 45% opacity; on hover they clear and
+ *   nudge 4px max — they never appear from nothing
+ * - titles stay foreground on hover (no accent recoloring)
+ * - external links use ↗
  */
+const arrowClass =
+  "opacity-45 transition-[transform,opacity] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-1 group-hover:opacity-100";
+
+const githubLinkClass =
+  "text-sm font-medium text-secondary underline decoration-border-bright underline-offset-4 transition-colors duration-200 ease-out hover:text-foreground hover:decoration-accent";
+
 export function ProjectCard({ entry, visual = false }: ProjectCardProps) {
   const slug = entry.id.replace(/^project-/, "");
 
   if (!visual) {
     return (
-      <Link href={entry.href} className="group block">
+      <div className="group">
         <p className="text-sm text-muted">{entry.year}</p>
-        <h3 className="mt-2 font-display flex items-baseline justify-between gap-4 text-lg font-medium tracking-[-0.02em] text-foreground transition-colors duration-200 ease-out group-hover:text-accent sm:text-xl">
-          <span>{entry.title}</span>
-          <span
-            aria-hidden="true"
-            className="shrink-0 opacity-0 transition-all duration-200 ease-out group-hover:translate-x-0.5 group-hover:opacity-100"
+        <h3 className="mt-2 flex items-baseline justify-between gap-4 font-display text-lg font-medium tracking-[-0.02em] text-foreground sm:text-xl">
+          <Link
+            href={entry.href}
+            className="transition-colors duration-200 hover:text-secondary"
           >
-            →
+            {entry.title}
+          </Link>
+          <span className="flex shrink-0 items-center gap-4">
+            <span aria-hidden="true" className={arrowClass}>
+              →
+            </span>
+            {entry.repoUrl ? (
+              <a
+                href={entry.repoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm font-medium text-secondary underline decoration-border-bright underline-offset-4 transition-colors duration-200 hover:text-foreground hover:decoration-accent"
+              >
+                GitHub ↗
+              </a>
+            ) : null}
           </span>
         </h3>
         <p className="mt-2 max-w-prose text-[15px] leading-relaxed text-secondary">
           {entry.summary}
         </p>
-      </Link>
+        {entry.tags?.length ? (
+          <p className="mt-2 text-[13px] text-muted">
+            {entry.tags.join(" · ")}
+          </p>
+        ) : null}
+      </div>
     );
   }
 
   return (
-    <Link href={entry.href} className="group block">
+    <div className="group">
       <p className="text-sm text-muted">
         {entry.year} ·{" "}
         {entry.kind === "case-study" ? "Case study" : "Project"}
       </p>
 
-      <h3 className="mt-3 font-display text-2xl font-medium tracking-[-0.02em] text-foreground transition-colors duration-200 ease-out group-hover:text-accent sm:text-[1.75rem]">
-        {entry.title}
+      <h3 className="mt-3 flex items-baseline justify-between gap-4 font-display text-2xl font-medium tracking-[-0.02em] text-foreground sm:text-[1.75rem]">
+        <Link
+          href={entry.href}
+          className="transition-colors duration-200 hover:text-secondary"
+        >
+          {entry.title}
+        </Link>
+        <span aria-hidden="true" className={`shrink-0 ${arrowClass}`}>
+          →
+        </span>
       </h3>
 
       <p className="mt-3 max-w-prose text-base leading-relaxed text-secondary sm:text-lg">
         {entry.summary}
       </p>
 
+      <div className="mt-2 flex flex-wrap items-center gap-x-5 gap-y-1">
+        {entry.tags?.length ? (
+          <p className="text-sm text-muted">{entry.tags.join(" · ")}</p>
+        ) : null}
+        {entry.repoUrl ? (
+          <a
+            href={entry.repoUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={githubLinkClass}
+          >
+            GitHub ↗
+          </a>
+        ) : null}
+      </div>
+
       {isDiagramId(slug) ? (
-        <div className="mt-8 overflow-hidden rounded-xl border border-border bg-surface/60 p-4 transition-colors duration-200 ease-out group-hover:border-border-bright sm:p-6">
-          <div className="text-secondary transition-opacity duration-300 ease-out [&_svg]:mx-auto [&_svg]:block [&_svg]:h-auto [&_svg]:w-full [&_svg]:max-w-full [&_svg]:opacity-80 group-hover:[&_svg]:opacity-100">
+        <div className="mt-8 overflow-hidden rounded-xl border border-border bg-surface/60 p-4 transition-[border-color] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:border-border-bright sm:p-6">
+          <div className="text-secondary [&_svg]:mx-auto [&_svg]:block [&_svg]:h-auto [&_svg]:w-full [&_svg]:max-w-full [&_svg]:opacity-80 transition-opacity duration-200 group-hover:[&_svg]:opacity-100">
             <ContentDiagram id={slug} />
           </div>
         </div>
       ) : null}
 
-      <p className="mt-5 inline-flex items-center gap-1.5 text-sm text-secondary transition-colors duration-200 ease-out group-hover:text-foreground">
-        View
-        <span
-          aria-hidden="true"
-          className="inline-block transition-transform duration-200 ease-out group-hover:translate-x-0.5"
-        >
+      <p className="mt-5 inline-flex items-center gap-1.5 text-sm text-secondary">
+        <Link href={entry.href} className="underline decoration-transparent underline-offset-4 transition-colors duration-200 hover:text-foreground hover:decoration-current">
+          View case study
+        </Link>
+        <span aria-hidden="true" className={arrowClass}>
           →
         </span>
       </p>
-    </Link>
+    </div>
   );
 }

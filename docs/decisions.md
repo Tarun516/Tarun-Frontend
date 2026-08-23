@@ -30,6 +30,24 @@ Format: `- YYYY-MM-DD — decision — one-line why.`
 - 2026-08-23 — Secondary homepage projects render as borderless year/title/summary rows; ProjectCard has two modes (visual featured / light secondary).
 - 2026-08-23 — /writing switched from type-grouped headings to a single chronological feed with per-article meta line; type filters deferred until 15–20+ articles exist.
 
+---
+
+- 2026-08-23 — P0 bug fix: raw YAML frontmatter was rendering above MDX bodies (the `await import(...mdx)` path compiled the whole file while only gray-matter stripped frontmatter from the loader path). Fixed in the MDX pipeline itself via `remark-frontmatter` + `remark-mdx-frontmatter` in next.config.ts — never hide it with CSS.
+- 2026-08-23 — P0 content fix: removed all placeholder `repoUrl: "https://github.com"` values; repoUrl is reserved for real, useful repository URLs only.
+- 2026-08-23 — Header navigation locked to real routes (/projects, /writing, /about); GitHub removed from header (stays in hero + footer). Brand and nav links use 1px hover underline (offset 5px); active page keeps its underline via usePathname.
+- 2026-08-23 — Hero "View projects" now navigates to /projects (words predict behavior; a scroll CTA would be named differently).
+- 2026-08-23 — Homepage curation made explicit with `homeOrder` project frontmatter (1 = hero, 2-5 = secondary); homepage shows 1 primary + 3 secondary + "View all projects" link. Featured case studies are no longer silently excluded.
+- 2026-08-23 — One BackLink component enforces the back hierarchy (index←Home, detail←section); PrevNextNav gives project/article pages bottom prev/next + all links.
+- 2026-08-23 — Project detail: title/summary/meta first, then visual, then GitHub/Live actions below the visual (never in the header), then body.
+- 2026-08-23 — About rebuilt as personal narrative (lead, bio, "What I'm focused on" using portfolio.focus, experience, education, tools) in a centered 47.5rem column.
+- 2026-08-23 — Project cards show tags (passed through ContentEntry); /writing previews are fully clickable.
+
+- 2026-08-23 — Backlog captured in docs/backlog.md: remaining agreed items are Zod build-time frontmatter validation (P2) and SEO/discovery — sitemap, robots, canonical URLs, OG images, RSS (P3). All other instructions.txt items were completed and are listed there as resolved.
+
+- 2026-08-23 — Visual identity locked per instructions.txt (color pass): replaced purple accent `#6e56cf` with muted steel-blue (`#667f98` light / `#8ea1b4` dark); dark mode changed from OLED black + grid to warm charcoal (`#11110f` bg, `#171714` surface, `#ecece8` text); glow and grid toned to near-invisible; selection made monochrome (black-on-white / white-on-black inversion, never accent-colored); reading pages (project/article/about) opt out of grid/glow via `data-reading-page`; hover behavior is secondary→foreground with underline, not accent recoloring.
+
+- 2026-08-23 — Motion grammar locked per instructions.txt: one system site-wide — single easing `cubic-bezier(0.22,1,0.36,1)`, 200ms hovers, arrows always visible at opacity-45 that clear + nudge max 4px on hover (never hidden-then-revealed), buttons stay put and animate only state, external links use ↗ / internal → / back ←, nav underlines grow from left (after: scale-x), no accent recoloring of titles on hover, no scroll-triggered animations. CSS only; no Framer Motion.
+
 <!--
 Add future decisions here as one-liners when they change structure,
 conventions, or standards. Brief is fine.

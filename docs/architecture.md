@@ -69,7 +69,7 @@ content/**/*.mdx ──▶ lib/content loaders ──▶ typed metadata ──�
 
 ## Frontmatter contracts
 
-Project (`content/projects/`): `kind` ("project" | "case-study"), `title`, `summary`, `role`, `year`, `tags`, `featured?`, `repoUrl?`, `liveUrl?`, `metrics?` (label/value), `diagram?` (id + caption).
+Project (`content/projects/`): `kind` ("project" | "case-study"), `title`, `summary`, `role`, `year`, `tags`, `featured?`, `homeOrder?` (explicit homepage placement: 1 = hero project, 2-5 = secondary grid, absent = projects page only), `repoUrl?` (only a real, useful repo URL — never a placeholder), `liveUrl?`, `metrics?` (only genuinely measured numbers), `diagram?` (id + caption).
 
 Article (`content/writing/`): `title`, `summary`, `date` (ISO), `tags`, `type` (`deep-dive` | `note` | `build-log`, defaults to `note`), `published?` (false = hidden draft), `featured?`, `diagram?`.
 

@@ -1,0 +1,40 @@
+---
+description: Navigation, information hierarchy, and content-correctness rules for this portfolio
+globs: "{app/**,components/**,content/**,data/portfolio.ts}"
+alwaysApply: true
+---
+
+# Navigation & information design (locked)
+
+Read `docs/navigation.md` for the full spec. Summary of hard rules:
+
+## Site map & header
+
+- Site map: Home → Projects (/projects), Writing (/writing), About (/about); detail pages under Projects and Writing.
+- Header links use real routes only — never `/#section` anchors. No external links in the header; GitHub/LinkedIn/X/Resume belong in the hero and footer.
+- Brand name is the Home link. Brand + nav links: thin 1px hover underline (`underline-offset-[5px] hover:underline`). Active page keeps its underline — compute from `usePathname()`, passing pathname into NavItem as a prop.
+
+## Back & bottom navigation
+
+- Always use the shared `BackLink` component with the fixed hierarchy: /projects←Home, /projects/[slug]←Projects, /writing←Home, /writing/[slug]←Writing, /about←Home. Never hand-roll back links.
+- Detail pages end with the shared `PrevNextNav` (prev title · all link · next title), ordered like their index (projects year desc, articles date desc).
+
+## CTA semantics
+
+Words predict behavior. "View projects" → navigates to /projects. Scroll CTAs must be named "See selected work ↓" style.
+
+## Homepage curation
+
+Homepage placement is explicit: project frontmatter `homeOrder: 1` = hero card, 2–5 = secondary grid, absent = projects page only. Never let sorting decide what visitors see first. Sections end with "View all projects →"/"All writing →".
+
+## Project detail order
+
+Back link → title/summary/meta → visual → GitHub/Live actions BELOW the visual → metrics → body → PrevNextNav. Actions never appear in the header.
+
+## Content correctness (treat violations as build bugs)
+
+- Frontmatter must never render on a page. It is stripped by remark-frontmatter in next.config.ts and parsed by gray-matter in lib/content. If frontmatter text appears in output, fix the MDX pipeline — never hide it with CSS.
+- No placeholder URLs: omit `repoUrl` unless it's a real, useful repository link.
+- No unmeasured metrics: `metrics` is only for genuinely measured numbers.
+
+If any change deviates from these rules or docs/navigation.md, append a one-line entry to docs/decisions.md in the same change.

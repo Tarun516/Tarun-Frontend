@@ -1,0 +1,23 @@
+---
+description: Outstanding backlog items and content-safety rules for this portfolio (validation, SEO)
+globs: "{lib/content/**,content/**,app/**,next.config.ts}"
+alwaysApply: true
+---
+
+# Backlog & content safety
+
+Check `docs/backlog.md` before starting any new work — it lists agreed-but-unbuilt items so work isn't duplicated or invented.
+
+## Known open items (do these before new feature work)
+
+1. **Build-time frontmatter validation** — loaders currently use TypeScript assertions that validate nothing at runtime. Plan: add `zod`, define schemas mirroring `ProjectFrontmatter` / `ArticleFrontmatter` (prefer `z.infer` so types stay single-source), validate at load time in `lib/content/`, and make malformed frontmatter fail `pnpm run build` loudly with the offending slug + field.
+2. **SEO/discovery** — sitemap.ts, robots.ts, canonical URLs (needs metadataBase), per-project/article OG images, RSS. Use the installed Next.js docs in `node_modules/next/dist/docs/` for file-convention syntax.
+
+## Content safety rules (always enforce)
+
+- Frontmatter must never appear in rendered output. It is stripped by remark-frontmatter in next.config.ts and parsed separately by gray-matter in lib/content. Visible frontmatter = build bug; fix the pipeline, never CSS-hide it.
+- No placeholder URLs (`repoUrl: "https://github.com"` with no repo path). Omit rather than fake.
+- No unmeasured metrics. If a number wasn't measured, don't render it.
+- Loader casts like `frontmatter as SomeType` are assertions, not validation — don't add new ones; prefer Zod schemas once introduced.
+
+Any deviation from these rules or from docs/backlog.md plans must be logged as a one-line entry in docs/decisions.md in the same change.

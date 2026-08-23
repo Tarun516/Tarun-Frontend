@@ -8,7 +8,13 @@ const nextConfig: NextConfig = {
 
 const withMDX = createMDX({
   options: {
-    remarkPlugins: ["remark-gfm"],
+    remarkPlugins: [
+      "remark-gfm",
+      // Strip YAML frontmatter out of the compiled MDX body. Without
+      // this, the `---` block renders as raw text above the content.
+      "remark-frontmatter",
+      ["remark-mdx-frontmatter", { name: "frontmatter" }],
+    ],
     rehypePlugins: [],
   },
 });

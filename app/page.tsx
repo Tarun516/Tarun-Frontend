@@ -9,16 +9,16 @@ import { getHomeProjects, getPublishedArticles } from "@/lib/content";
 
 function SectionLabel({ children }: { children: ReactNode }) {
   return (
-    <p className="font-display text-sm font-medium tracking-[-0.01em] text-muted">
+    <p className="font-display text-xl font-medium tracking-[-0.02em] text-foreground sm:text-2xl">
       {children}
     </p>
   );
 }
 
 export default function Home() {
-  const featuredProjects = getHomeProjects();
-  const primary = featuredProjects[0];
-  const secondary = featuredProjects.slice(1, 3);
+  const homeProjects = getHomeProjects();
+  const primary = homeProjects[0];
+  const secondary = homeProjects.slice(1, 5);
   const writing = getPublishedArticles().slice(0, 3);
 
   return (
@@ -57,6 +57,21 @@ export default function Home() {
                   ))}
                 </div>
               ) : null}
+
+              <p className="mt-14">
+                <Link
+                  href="/projects"
+                  className="group inline-flex items-center gap-1.5 text-sm text-secondary transition-colors duration-200 ease-out hover:text-foreground"
+                >
+                  View all projects
+                  <span
+                    aria-hidden="true"
+                    className="inline-block opacity-45 transition-[transform,opacity] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-1 group-hover:opacity-100"
+                  >
+                    →
+                  </span>
+                </Link>
+              </p>
             </section>
 
             <section
@@ -82,11 +97,11 @@ export default function Home() {
                       )}
                     </time>
                     <span className="min-w-0 flex-1">
-                      <span className="font-display block text-base font-medium tracking-[-0.02em] text-foreground transition-colors duration-200 ease-out group-hover:text-accent sm:text-lg">
+                      <span className="font-display block text-base font-medium tracking-[-0.02em] text-foreground transition-colors duration-200 ease-out group-hover:text-secondary sm:text-lg">
                         {article.title}
                         <span
                           aria-hidden="true"
-                          className="ml-2 inline-block opacity-0 transition-all duration-200 ease-out group-hover:translate-x-0.5 group-hover:opacity-100"
+                          className="ml-2 inline-block opacity-45 transition-[transform,opacity] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-1 group-hover:opacity-100"
                         >
                           →
                         </span>
@@ -107,7 +122,7 @@ export default function Home() {
                   All writing
                   <span
                     aria-hidden="true"
-                    className="inline-block transition-transform duration-200 ease-out group-hover:translate-x-0.5"
+                    className="inline-block opacity-45 transition-[transform,opacity] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-1 group-hover:opacity-100"
                   >
                     →
                   </span>
