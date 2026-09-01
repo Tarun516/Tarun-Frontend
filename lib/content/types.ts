@@ -29,6 +29,7 @@ export type ContentEntry = {
   featured?: boolean;
   tags?: string[];
   repoUrl?: string;
+  diagram?: { id: string; caption?: string };
 };
 
 export type ProjectFrontmatter = {
@@ -110,6 +111,7 @@ export function toProjectEntry(project: ProjectContent): ContentEntry {
     featured: project.featured,
     tags: project.tags,
     repoUrl: project.repoUrl,
+    diagram: project.diagram,
   };
 }
 

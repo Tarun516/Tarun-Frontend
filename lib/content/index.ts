@@ -1,5 +1,6 @@
 import { readAllMdx } from "./fs";
 import { estimateReadingTime } from "./reading-time";
+import { parseArticleFrontmatter, parseProjectFrontmatter } from "./validation";
 import {
   toArticleEntry,
   toProjectEntry,
@@ -13,13 +14,26 @@ import {
  * Slug and href are derived from the filename.
  */
 export function getAllProjects(): ProjectContent[] {
-  return readAllMdx("projects")
+  const projects = readAllMdx("projects")
     .map(({ slug, frontmatter }) => ({
       slug,
       href: slug,
-      ...(frontmatter as Omit<ProjectContent, "slug" | "href">),
+      ...parseProjectFrontmatter(frontmatter, slug),
     }))
     .sort((a, b) => b.year.localeCompare(a.year));
+
+  const homeOrders = new Map<number, string>();
+  for (const project of projects) {
+    if (project.homeOrder === undefined) continue;
+    const duplicate = homeOrders.get(project.homeOrder);
+    if (duplicate) {
+      throw new Error(
+        `Duplicate project homeOrder ${project.homeOrder}: ${duplicate}.mdx and ${project.slug}.mdx.`,
+      );
+    }
+    homeOrders.set(project.homeOrder, project.slug);
+  }
+  return projects;
 }
 
 export function getProject(slug: string): ProjectContent | undefined {
@@ -39,9 +53,8 @@ export function getAllArticles(): ArticleContent[] {
     .map(({ slug, frontmatter, content }) => ({
       slug,
       href: slug,
-      published: true as boolean,
       readingTime: estimateReadingTime(content),
-      ...(frontmatter as Omit<ArticleContent, "slug" | "href" | "readingTime" | "published">),
+      ...parseArticleFrontmatter(frontmatter, slug),
     }))
     .filter((article) => article.published !== false)
     .sort((a, b) => b.date.localeCompare(a.date));
@@ -56,12 +69,12 @@ export function getArticleIncludingDrafts(
   slug: string,
 ): (ArticleContent & { draft: boolean }) | undefined {
   const all = readAllMdx("writing").map(({ slug: s, frontmatter, content }) => ({
-    ...frontmatter,
+    ...parseArticleFrontmatter(frontmatter, s),
     slug: s,
     href: s,
     readingTime: estimateReadingTime(content),
     draft: frontmatter.published === false,
-  })) as Array<ArticleContent & { draft: boolean }>;
+  }));
   return all.find((article) => article.slug === slug);
 }
 

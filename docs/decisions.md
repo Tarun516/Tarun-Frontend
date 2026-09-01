@@ -6,6 +6,19 @@ Format: `- YYYY-MM-DD — decision — one-line why.`
 
 ---
 
+- 2026-09-01 — Tightened homepage section rhythm to roughly 80–112px and removed stacked hero/section gaps — the previous 120–160px target created dead space in this lower-density composition.
+- 2026-09-01 — Made the desktop Navbar a transparent borderless 72px three-column layout outside the reading-width constraint — navigation now has balanced horizontal spacing without visual chrome.
+
+- 2026-09-01 — Increased the shared editorial rhythm to 120–160px desktop section spacing and 72–96px mobile spacing — whitespace now carries more hierarchy than rules or containers.
+- 2026-09-01 — Added scroll-direction-aware Navbar visibility with a 120px top zone, 14px hysteresis, focus reveal, and CSS transform motion — navigation stays available without occupying the reading viewport continuously.
+- 2026-09-01 — Reframed About as a narrative progression and replaced the utility footer with a large contact close — personal context and next actions now have deliberate hierarchy.
+- 2026-09-01 — Added dedicated footer color tokens for a warm-charcoal closing section in both themes — avoids raw one-off colors while preserving one light/dark brand.
+
+- 2026-09-01 — Added dependency-free build-time frontmatter validation with strict field, URL, diagram, and homepage-order checks — malformed MDX now fails with a file-specific error instead of leaking into UI through type assertions.
+- 2026-09-01 — Added environment-based canonical metadata, sitemap, robots, and a static writing RSS feed — content remains filesystem-backed and fully prerendered.
+- 2026-09-01 — Project cards now use declared `diagram.id` metadata rather than assuming diagram ids match filenames — content authors can choose the appropriate registered visual.
+- 2026-09-01 — Removed Resume actions until a real `/public/resume.pdf` exists — broken external-facing CTAs are not rendered.
+
 - 2026-08-23 — Adopted hybrid content architecture (`data/portfolio.ts` for site facts + `content/**/*.mdx` for long-form content) instead of migrating to Astro, adding a CMS, or a database. Existing Next.js App Router setup was already structurally sound; only the content layer needed to change.
 - 2026-08-23 — Chose MDX via `@next/mdx` (with `gray-matter` + `remark-gfm`) over MDX-in-page-routes. Content files live outside `app/` so routes stay thin and slugs are derived from filenames.
 - 2026-08-23 — Removed hand-written `readingTime` and stored `href`s; both are now derived (word count / filename). Rule: store facts, derive everything derivable.

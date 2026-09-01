@@ -22,7 +22,7 @@ const githubLinkClass =
   "text-sm font-medium text-secondary underline decoration-border-bright underline-offset-4 transition-colors duration-200 ease-out hover:text-foreground hover:decoration-accent";
 
 export function ProjectCard({ entry, visual = false }: ProjectCardProps) {
-  const slug = entry.id.replace(/^project-/, "");
+  const diagramId = entry.diagram?.id;
 
   if (!visual) {
     return (
@@ -51,7 +51,7 @@ export function ProjectCard({ entry, visual = false }: ProjectCardProps) {
             ) : null}
           </span>
         </h3>
-        <p className="mt-2 max-w-prose text-[15px] leading-relaxed text-secondary">
+        <p className="mt-3 max-w-prose text-[15px] leading-[1.7] text-secondary">
           {entry.summary}
         </p>
         {entry.tags?.length ? (
@@ -82,7 +82,7 @@ export function ProjectCard({ entry, visual = false }: ProjectCardProps) {
         </span>
       </h3>
 
-      <p className="mt-3 max-w-prose text-base leading-relaxed text-secondary sm:text-lg">
+      <p className="mt-4 max-w-prose text-base leading-[1.7] text-secondary sm:text-lg">
         {entry.summary}
       </p>
 
@@ -102,17 +102,17 @@ export function ProjectCard({ entry, visual = false }: ProjectCardProps) {
         ) : null}
       </div>
 
-      {isDiagramId(slug) ? (
+      {diagramId && isDiagramId(diagramId) ? (
         <div className="mt-8 overflow-hidden rounded-xl border border-border bg-surface/60 p-4 transition-[border-color] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:border-border-bright sm:p-6">
           <div className="text-secondary [&_svg]:mx-auto [&_svg]:block [&_svg]:h-auto [&_svg]:w-full [&_svg]:max-w-full [&_svg]:opacity-80 transition-opacity duration-200 group-hover:[&_svg]:opacity-100">
-            <ContentDiagram id={slug} />
+            <ContentDiagram id={diagramId} />
           </div>
         </div>
       ) : null}
 
-      <p className="mt-5 inline-flex items-center gap-1.5 text-sm text-secondary">
+      <p className="mt-6 inline-flex items-center gap-1.5 text-sm text-secondary">
         <Link href={entry.href} className="underline decoration-transparent underline-offset-4 transition-colors duration-200 hover:text-foreground hover:decoration-current">
-          View case study
+          View {entry.kind === "case-study" ? "case study" : "project"}
         </Link>
         <span aria-hidden="true" className={arrowClass}>
           →

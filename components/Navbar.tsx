@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Container } from "@/components/Container";
@@ -17,12 +17,9 @@ const growUnderline =
 export function Navbar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
-  const [menuPath, setMenuPath] = useState(pathname);
-
-  if (pathname !== menuPath) {
-    setMenuPath(pathname);
-    if (open) setOpen(false);
-  }
+  const [hidden, setHidden] = useState(false);
+  const lastScrollY = useRef(0);
+  const scrollDelta = useRef(0);
 
   useEffect(() => {
     if (!open) return;
@@ -41,31 +38,73 @@ export function Navbar() {
     };
   }, [open]);
 
+  useEffect(() => {
+    const revealNearTop = 120;
+    const directionThreshold = 14;
+
+    const onScroll = () => {
+      const currentY = Math.max(window.scrollY, 0);
+      const delta = currentY - lastScrollY.current;
+      lastScrollY.current = currentY;
+
+      if (currentY <= revealNearTop || open) {
+        scrollDelta.current = 0;
+        setHidden(false);
+        return;
+      }
+
+      if (
+        (delta > 0 && scrollDelta.current < 0) ||
+        (delta < 0 && scrollDelta.current > 0)
+      ) {
+        scrollDelta.current = 0;
+      }
+      scrollDelta.current += delta;
+
+      if (scrollDelta.current > directionThreshold) {
+        setHidden(true);
+        scrollDelta.current = 0;
+      } else if (scrollDelta.current < -directionThreshold) {
+        setHidden(false);
+        scrollDelta.current = 0;
+      }
+    };
+
+    lastScrollY.current = window.scrollY;
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [open]);
+
   return (
-    <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur-md">
-      <Container className="flex h-14 items-center justify-between gap-3">
+    <header
+      className={`sticky top-0 z-40 transition-transform duration-[240ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
+        hidden ? "-translate-y-full" : "translate-y-0"
+      }`}
+      onFocusCapture={() => setHidden(false)}
+    >
+      <Container className="grid h-[4.5rem] grid-cols-[1fr_auto] items-center gap-3 md:max-w-none md:grid-cols-[1fr_auto_1fr] md:px-10 lg:px-14 xl:px-20">
         <Link
           href="/"
-          className={`min-w-0 truncate font-display text-sm font-semibold tracking-tight text-foreground ${growUnderline}`}
+          className={`min-w-0 justify-self-start truncate font-display text-sm font-medium tracking-tight text-foreground ${growUnderline}`}
         >
           {portfolio.name}
         </Link>
 
-        <div className="flex items-center gap-1 sm:gap-2">
-          <nav
-            aria-label="Primary"
-            className="hidden items-center gap-6 md:flex lg:gap-8"
-          >
-            {portfolio.nav.map((item) => (
-              <NavItem
-                key={item.label}
-                item={item}
-                pathname={pathname}
-                growUnderline={growUnderline}
-              />
-            ))}
-          </nav>
+        <nav
+          aria-label="Primary"
+          className="hidden items-center gap-9 md:flex lg:gap-10"
+        >
+          {portfolio.nav.map((item) => (
+            <NavItem
+              key={item.label}
+              item={item}
+              pathname={pathname}
+              growUnderline={growUnderline}
+            />
+          ))}
+        </nav>
 
+        <div className="flex items-center justify-self-end gap-1 sm:gap-2">
           <ThemeToggle />
 
           <button
@@ -178,7 +217,12 @@ function MobileNavItem({
   }
 
   return (
-    <Link href={item.href} className={className} onClick={onNavigate}>
+    <Link
+      href={item.href}
+      className={className}
+      onClick={onNavigate}
+      aria-current={active ? "page" : undefined}
+    >
       {item.label}
     </Link>
   );

@@ -10,27 +10,23 @@ import portrait from "@/assets/Tarun.jpeg";
  * not delay the LCP element. No entrance animations here.
  */
 export function WorkspaceHero() {
-  const blurb = portfolio.about.bio.slice(0, 2);
-
   return (
-    <section className="pt-8 pb-10 sm:pt-12 sm:pb-14 lg:pt-16 lg:pb-16">
+    <section className="pt-14 pb-10 sm:pt-16 sm:pb-12 lg:pt-20 lg:pb-14">
       <div className="grid items-start gap-8 sm:gap-10 lg:grid-cols-[minmax(0,1fr)_280px] lg:gap-14">
         <div className="order-2 min-w-0 lg:order-1">
-          <h1 className="font-display text-[2rem] leading-[1.1] font-medium tracking-[-0.04em] text-foreground sm:text-4xl sm:leading-[1.05] lg:text-5xl">
+          <h1 className="font-display text-[2.375rem] leading-[1.06] font-medium tracking-[-0.04em] text-foreground sm:text-5xl lg:text-[3.5rem]">
             {portfolio.hero.greeting}
           </h1>
 
-          <p className="mt-3 max-w-lg text-base leading-snug text-secondary sm:mt-4 sm:text-lg lg:text-xl">
+          <p className="mt-5 max-w-xl text-lg leading-[1.5] text-secondary sm:mt-6 sm:text-xl lg:text-[1.375rem]">
             {portfolio.hero.tagline}
           </p>
 
-          <div className="mt-6 max-w-prose space-y-4 text-[15px] leading-relaxed text-secondary sm:mt-8 sm:text-base">
-            {blurb.map((paragraph) => (
-              <p key={paragraph}>{paragraph}</p>
-            ))}
-          </div>
+          <p className="mt-8 max-w-xl text-base leading-[1.7] text-secondary sm:mt-10 sm:text-[17px]">
+            {portfolio.focus}
+          </p>
 
-          <div className="mt-8 space-y-4 sm:mt-9 sm:space-y-5">
+          <div className="mt-9 space-y-5 sm:mt-10">
             <Button href="/projects" variant="primary">
               View projects
             </Button>
@@ -40,10 +36,8 @@ export function WorkspaceHero() {
               className="flex flex-wrap items-center gap-x-1 gap-y-2 text-[13px] text-muted"
             >
               {[
-                { label: "GitHub", href: portfolio.github, external: true },
-                { label: "LinkedIn", href: portfolio.linkedin, external: true },
-                { label: "X", href: portfolio.twitter, external: true },
-                { label: "Resume", href: portfolio.resumeUrl, external: true },
+                { label: "GitHub ↗", href: portfolio.github, external: true },
+                { label: "LinkedIn ↗", href: portfolio.linkedin, external: true },
                 { label: "About", href: "/about", external: false },
               ].map((item, index) => (
                 <span key={item.label} className="inline-flex items-center">

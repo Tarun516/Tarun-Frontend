@@ -3,6 +3,7 @@ import { Inter, Inter_Tight, JetBrains_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { ThemeScript } from "@/components/theme-script";
 import { portfolio } from "@/data/portfolio";
+import { siteUrl } from "@/lib/site-url";
 import "./globals.css";
 
 const inter = Inter({
@@ -24,6 +25,7 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: siteUrl,
   title: {
     default: portfolio.name,
     template: `%s · ${portfolio.name}`,
@@ -37,10 +39,19 @@ export const metadata: Metadata = {
     "distributed systems",
   ],
   authors: [{ name: portfolio.name }],
+  alternates: { canonical: "/" },
+  category: "technology",
   openGraph: {
     title: portfolio.name,
     description: portfolio.hero.subtitle,
     type: "website",
+    url: "/",
+    siteName: portfolio.name,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: portfolio.name,
+    description: portfolio.hero.subtitle,
   },
 };
 

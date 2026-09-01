@@ -40,25 +40,25 @@ export default function Home() {
 
             <section
               id="projects"
-              className="scroll-mt-20 border-t border-border pt-12 sm:scroll-mt-24 sm:pt-16"
+              className="scroll-mt-20 pt-8 sm:scroll-mt-24 sm:pt-10 lg:pt-12"
             >
               <SectionLabel>Selected work</SectionLabel>
 
               {primary ? (
-                <div className="mt-10">
+                <div className="mt-10 sm:mt-12">
                   <ProjectCard entry={primary} visual />
                 </div>
               ) : null}
 
               {secondary.length > 0 ? (
-                <div className="mt-16 grid gap-x-14 gap-y-10 sm:grid-cols-2 sm:gap-y-12">
+                <div className="mt-14 grid gap-x-16 gap-y-10 sm:mt-16 sm:grid-cols-2 sm:gap-y-12">
                   {secondary.map((entry) => (
                     <ProjectCard key={entry.id} entry={entry} />
                   ))}
                 </div>
               ) : null}
 
-              <p className="mt-14">
+              <p className="mt-12 sm:mt-14">
                 <Link
                   href="/projects"
                   className="group inline-flex items-center gap-1.5 text-sm text-secondary transition-colors duration-200 ease-out hover:text-foreground"
@@ -76,27 +76,27 @@ export default function Home() {
 
             <section
               id="writing"
-              className="mt-20 scroll-mt-20 border-t border-border pt-12 sm:mt-24 sm:scroll-mt-24 sm:pt-16"
+              className="mt-20 scroll-mt-20 sm:mt-24 sm:scroll-mt-24 lg:mt-28"
             >
               <SectionLabel>Writing</SectionLabel>
 
-              <div className="mt-6">
+              <div className="mt-7 space-y-6 sm:mt-8 sm:space-y-7">
                 {writing.map((article) => (
                   <Link
                     key={article.slug}
                     href={`/writing/${article.href}`}
-                    className="group flex items-baseline gap-x-8 border-b border-border py-5 last:border-b-0"
+                    className="group grid gap-2 sm:grid-cols-[6.5rem_minmax(0,1fr)_auto] sm:items-baseline sm:gap-x-6"
                   >
                     <time
                       dateTime={article.date}
-                      className="shrink-0 w-24 text-sm text-muted"
+                      className="text-sm text-muted"
                     >
                       {new Date(`${article.date}T00:00:00`).toLocaleDateString(
                         "en-US",
                         { month: "short", day: "numeric" },
                       )}
                     </time>
-                    <span className="min-w-0 flex-1">
+                    <span className="min-w-0">
                       <span className="font-display block text-base font-medium tracking-[-0.02em] text-foreground transition-colors duration-200 ease-out group-hover:text-secondary sm:text-lg">
                         {article.title}
                         <span
@@ -106,15 +106,18 @@ export default function Home() {
                           →
                         </span>
                       </span>
-                      <span className="mt-1 text-[13px] text-muted">
-                        {article.tags.join(" · ")} · {article.readingTime}
+                      <span className="mt-1.5 block text-[13px] text-muted">
+                        {article.tags.join(" · ")}
                       </span>
+                    </span>
+                    <span className="pl-[6.5rem] text-[13px] text-muted sm:pl-0">
+                      {article.readingTime}
                     </span>
                   </Link>
                 ))}
               </div>
 
-              <p className="mt-8">
+              <p className="mt-10">
                 <Link
                   href="/writing"
                   className="group inline-flex items-center gap-1.5 text-sm text-secondary transition-colors duration-200 ease-out hover:text-foreground"

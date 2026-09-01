@@ -33,6 +33,7 @@ content/
 lib/content/
 ├── types.ts              ContentEntry / ProjectContent / ArticleContent types
 ├── fs.ts                 Server-only MDX reading (gray-matter)
+├── validation.ts         Runtime frontmatter contracts; malformed MDX fails the build
 ├── reading-time.ts       Word-count → "N min" estimate
 └── index.ts              Collection loaders used by all pages
 
@@ -74,6 +75,14 @@ Project (`content/projects/`): `kind` ("project" | "case-study"), `title`, `summ
 Article (`content/writing/`): `title`, `summary`, `date` (ISO), `tags`, `type` (`deep-dive` | `note` | `build-log`, defaults to `note`), `published?` (false = hidden draft), `featured?`, `diagram?`.
 
 `diagram.id` must be a key in `components/diagrams` (validated by `isDiagramId`).
+Unknown frontmatter keys, invalid field types, placeholder URLs, duplicate
+`homeOrder` values, and unknown diagram ids fail with a file-specific error.
+
+## Discovery
+
+Next.js metadata routes generate `/sitemap.xml` and `/robots.txt`; `/rss.xml`
+is generated statically from published writing. Set `NEXT_PUBLIC_SITE_URL` to
+the canonical production origin (Vercel URL variables are fallbacks).
 
 ## Styling conventions
 

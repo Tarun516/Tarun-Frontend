@@ -17,6 +17,7 @@ How to write and maintain the content that powers the site.
 3. **Drafts**: set `published: false` in an article's frontmatter. Drafts are excluded from all lists, prerendering, and return 404.
 4. **Diagrams** are referenced by id: `diagram: { id: "execution-engine", caption: "..." }`. The id must exist in `components/diagrams`.
 5. **Case-study body sections** (convention, not enforced): `## Problem`, `## Architecture`, `## Tech choices` (one `###` per choice with a short "why"), `## Challenges`, `## Trade-offs`, `## What I learned`.
+6. **Frontmatter is validated at build time.** Unknown fields and invalid types fail with the offending filename. Project `homeOrder` values must be unique.
 
 ## Project frontmatter
 
@@ -28,6 +29,7 @@ role: "What I did"
 year: "2026"
 tags: ["TypeScript", "Postgres"]
 featured: true            # optional — homepage placement
+homeOrder: 1              # optional, unique 1–5; explicit homepage order
 repoUrl: "https://github.com/..."
 liveUrl: "https://..."
 metrics:                  # optional

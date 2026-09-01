@@ -28,6 +28,13 @@ export async function generateMetadata({
   return {
     title: project.title,
     description: project.summary,
+    alternates: { canonical: `/projects/${project.slug}` },
+    openGraph: {
+      title: project.title,
+      description: project.summary,
+      type: "article",
+      url: `/projects/${project.slug}`,
+    },
   };
 }
 
@@ -60,12 +67,12 @@ export default async function ProjectPage({ params }: PageProps) {
       <Navbar />
 
       <main className="flex-1">
-        <Container className="pt-10 pb-16 sm:pt-16 sm:pb-24">
+        <Container className="pt-12 pb-20 sm:pt-20 sm:pb-32">
           {/* Reading column, centered in the page shell; text stays left-aligned. */}
           <div className="mx-auto max-w-[47.5rem]">
             <BackLink href="/projects" label="Projects" />
 
-            <header className="mt-8 sm:mt-10">
+            <header className="mt-10 sm:mt-14">
               <h1 className="font-display text-[2rem] leading-[1.12] font-medium tracking-[-0.03em] text-foreground sm:text-[2.5rem]">
                 {project.title}
               </h1>
@@ -127,7 +134,7 @@ export default async function ProjectPage({ params }: PageProps) {
               </section>
             ) : null}
 
-            <article className="mdx-body mt-14 border-t border-border pt-12">
+            <article className="mdx-body mt-20 sm:mt-24">
               <CaseStudyBody />
             </article>
 

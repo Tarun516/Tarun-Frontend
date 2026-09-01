@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { BackLink } from "@/components/BackLink";
-import { Button } from "@/components/Button";
 import { Container } from "@/components/Container";
 import { Footer } from "@/components/Footer";
 import { Navbar } from "@/components/Navbar";
@@ -11,6 +10,7 @@ import portrait from "@/assets/Tarun.jpeg";
 export const metadata: Metadata = {
   title: "About",
   description: `About ${portfolio.name}`,
+  alternates: { canonical: "/about" },
 };
 
 export default function AboutPage() {
@@ -18,107 +18,122 @@ export default function AboutPage() {
     <div className="flex min-h-full flex-1 flex-col" data-reading-page>
       <Navbar />
       <main className="flex-1">
-        <Container className="pt-10 pb-16 sm:pt-16 sm:pb-24">
+        <Container className="pt-12 pb-20 sm:pt-20 sm:pb-32">
           {/* Personal-narrative reading column, centered. */}
           <div className="mx-auto max-w-[47.5rem]">
             <BackLink href="/" label="Home" />
 
-            <header className="mt-10 flex items-start gap-4 sm:mt-12 sm:gap-5">
+            <header className="mt-12 sm:mt-16">
+              <p className="text-sm text-muted">
+                {portfolio.role} · {portfolio.location}
+              </p>
+              <h1 className="mt-4 font-display text-[2.5rem] leading-[1.05] font-medium tracking-[-0.04em] text-foreground sm:text-[3.25rem]">
+                About
+              </h1>
+              <p className="mt-7 max-w-2xl font-display text-xl leading-[1.55] tracking-[-0.015em] text-foreground sm:text-[1.375rem]">
+                I build reliable systems and products around AI,
+                infrastructure, and developer experience.
+              </p>
+            </header>
+
+            <div className="mt-12 grid items-start gap-8 sm:mt-16 sm:grid-cols-[11rem_minmax(0,1fr)] sm:gap-12">
               <Image
                 src={portrait}
                 alt={portfolio.name}
-                width={80}
-                height={80}
-                className="size-14 shrink-0 rounded-full object-cover object-top sm:size-20"
+                width={352}
+                height={352}
+                className="aspect-square w-36 rounded-xl object-cover object-top sm:w-44"
                 priority
               />
-              <div className="min-w-0 pt-1">
-                <h1 className="font-display text-[2rem] font-medium tracking-[-0.03em] text-foreground sm:text-4xl">
-                  About me
-                </h1>
-                <p className="mt-2 text-sm text-muted">
-                  {portfolio.role} · {portfolio.location}
-                </p>
+              <div className="space-y-5 text-[17px] leading-[1.7] text-secondary sm:text-lg">
+                {portfolio.about.bio.map((paragraph) => (
+                  <p key={paragraph}>{paragraph}</p>
+                ))}
               </div>
-            </header>
-
-            <p className="mt-8 font-display text-lg leading-relaxed tracking-[-0.01em] text-foreground sm:text-xl">
-              {portfolio.hero.subtitle}
-            </p>
-
-            <div className="mt-6 space-y-5 text-[17px] leading-[1.75] text-secondary">
-              {portfolio.about.bio.map((paragraph) => (
-                <p key={paragraph}>{paragraph}</p>
-              ))}
             </div>
 
-            <section className="mt-16 border-t border-border pt-10">
-              <h2 className="font-display text-[1.375rem] font-medium tracking-[-0.02em] text-foreground">
-                What I&apos;m focused on
+            <section className="mt-20 sm:mt-24">
+              <h2 className="font-display text-[1.75rem] font-medium tracking-[-0.025em] text-foreground">
+                My path
               </h2>
-              <p className="mt-4 text-[17px] leading-[1.75] text-secondary">
+              <p className="mt-6 text-[17px] leading-[1.75] text-secondary sm:text-lg">
+                {portfolio.about.path}
+              </p>
+            </section>
+
+            <section className="mt-16 sm:mt-20">
+              <h2 className="font-display text-[1.75rem] font-medium tracking-[-0.025em] text-foreground">
+                Today
+              </h2>
+              <p className="mt-6 text-[17px] leading-[1.75] text-secondary sm:text-lg">
                 {portfolio.focus}
               </p>
             </section>
 
-            <section className="mt-14 border-t border-border pt-10">
-              <h2 className="font-display text-[1.375rem] font-medium tracking-[-0.02em] text-foreground">
+            <section className="mt-20 sm:mt-24">
+              <h2 className="font-display text-[1.75rem] font-medium tracking-[-0.025em] text-foreground">
                 Experience
               </h2>
-              <ul className="mt-7 space-y-9">
+              <ol className="mt-9 space-y-12 sm:space-y-14">
                 {portfolio.experience.map((item) => (
                   <li key={`${item.company}-${item.role}-${item.period}`}>
-                    <p className="font-display text-lg font-medium tracking-[-0.01em] text-foreground">
-                      {item.role}
-                    </p>
-                    <p className="mt-1 text-sm text-muted">
-                      {item.company} · {item.period}
-                    </p>
-                    {item.highlights.length > 0 ? (
-                      <ul className="mt-3 space-y-2">
-                        {item.highlights.slice(0, 3).map((h) => (
-                          <li
-                            key={h}
-                            className="flex gap-3 text-[15px] leading-relaxed text-secondary"
-                          >
-                            <span
-                              aria-hidden="true"
-                              className="mt-2.5 size-1 shrink-0 rounded-full bg-border-bright"
-                            />
-                            <span>{h}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    ) : null}
+                    <div className="sm:grid sm:grid-cols-[9rem_minmax(0,1fr)] sm:gap-8">
+                      <p className="text-sm text-muted">{item.period}</p>
+                      <div className="mt-2 sm:mt-0">
+                        <h3 className="font-display text-xl font-medium tracking-[-0.015em] text-foreground">
+                          {item.company}
+                        </h3>
+                        <p className="mt-1 text-[15px] text-muted">{item.role}</p>
+                        {item.highlights.length > 0 ? (
+                          <ul className="mt-5 space-y-3">
+                            {item.highlights.slice(0, 2).map((highlight) => (
+                              <li key={highlight} className="text-base leading-[1.7] text-secondary">
+                                {highlight}
+                              </li>
+                            ))}
+                          </ul>
+                        ) : (
+                          <p className="mt-4 text-base leading-[1.7] text-secondary">
+                            {portfolio.about.currentRole.summary}
+                          </p>
+                        )}
+                      </div>
+                    </div>
                   </li>
                 ))}
-              </ul>
+              </ol>
             </section>
 
-            <section className="mt-14 border-t border-border pt-10">
-              <h2 className="font-display text-[1.375rem] font-medium tracking-[-0.02em] text-foreground">
+            <section className="mt-20 sm:mt-24">
+              <h2 className="font-display text-[1.75rem] font-medium tracking-[-0.025em] text-foreground">
                 Education
               </h2>
-              <p className="mt-5 font-display text-lg font-medium tracking-[-0.01em] text-foreground">
+              <p className="mt-7 font-display text-xl font-medium tracking-[-0.015em] text-foreground">
                 {portfolio.about.education.degree}
               </p>
-              <p className="mt-1 text-sm text-muted">
-                {portfolio.about.education.school} ·{" "}
-                {portfolio.about.education.period}
+              <p className="mt-2 text-[15px] text-muted">
+                {portfolio.about.education.school} · {portfolio.about.education.period}
               </p>
             </section>
 
-            <section className="mt-14 border-t border-border pt-10">
-              <h2 className="font-display text-[1.375rem] font-medium tracking-[-0.02em] text-foreground">
-                Things I work with
+            <section className="mt-16 sm:mt-20">
+              <h2 className="font-display text-[1.75rem] font-medium tracking-[-0.025em] text-foreground">
+                Beyond the current build
               </h2>
-              <ul className="mt-6 space-y-5">
+              <p className="mt-6 text-[17px] leading-[1.75] text-secondary sm:text-lg">
+                {portfolio.about.beyond}
+              </p>
+            </section>
+
+            <section className="mt-16 sm:mt-20">
+              <h2 className="font-display text-[1.75rem] font-medium tracking-[-0.025em] text-foreground">
+                Tools and technologies
+              </h2>
+              <ul className="mt-8 grid gap-x-12 gap-y-7 sm:grid-cols-2">
                 {portfolio.about.tools.map((group) => (
                   <li key={group.category}>
-                    <p className="text-sm font-medium text-foreground">
-                      {group.category}
-                    </p>
-                    <p className="mt-1.5 text-[15px] leading-relaxed text-secondary">
+                    <p className="text-sm font-medium text-foreground">{group.category}</p>
+                    <p className="mt-2 text-[15px] leading-[1.7] text-secondary">
                       {group.items.join(" · ")}
                     </p>
                   </li>
@@ -126,14 +141,13 @@ export default function AboutPage() {
               </ul>
             </section>
 
-            <div className="mt-16 flex flex-wrap gap-3 border-t border-border pt-10">
-              <Button href={`mailto:${portfolio.email}`} variant="primary">
-                Email me
-              </Button>
-              <Button href={portfolio.resumeUrl} external>
-                Resume
-              </Button>
-            </div>
+            <a
+              href={`mailto:${portfolio.email}`}
+              className="group mt-20 inline-flex items-center gap-2 text-accent underline decoration-border-bright underline-offset-4 transition-colors duration-200 hover:text-foreground sm:mt-24"
+            >
+              Email me
+              <span aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1">↗</span>
+            </a>
           </div>
         </Container>
       </main>

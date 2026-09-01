@@ -10,6 +10,10 @@ import { articleTypeLabel } from "@/lib/content/types";
 export const metadata: Metadata = {
   title: "Writing",
   description: "Engineering notes and systems deep dives.",
+  alternates: {
+    canonical: "/writing",
+    types: { "application/rss+xml": "/rss.xml" },
+  },
 };
 
 export default function WritingPage() {
@@ -19,11 +23,11 @@ export default function WritingPage() {
     <div className="flex min-h-full flex-1 flex-col">
       <Navbar />
       <main className="flex-1">
-        <Container className="pt-10 pb-16 sm:pt-16 sm:pb-24">
+        <Container className="pt-12 pb-20 sm:pt-20 sm:pb-32">
           {/* Chronological feed, centered reading column. */}
           <div className="mx-auto max-w-[47.5rem]">
             <BackLink href="/" label="Home" />
-            <h1 className="mt-8 font-display text-[2rem] font-medium tracking-[-0.03em] text-foreground sm:text-4xl">
+            <h1 className="mt-10 font-display text-[2.25rem] font-medium tracking-[-0.03em] text-foreground sm:text-[2.75rem]">
               Writing
             </h1>
             <p className="mt-3 max-w-prose text-lg leading-relaxed text-secondary">
@@ -31,12 +35,12 @@ export default function WritingPage() {
               products.
             </p>
 
-            <div className="mt-14">
+            <div className="mt-14 sm:mt-16">
               {articles.map((article) => (
                 <Link
                   key={article.slug}
                   href={`/writing/${article.href}`}
-                  className="group mb-12 block last:mb-0"
+                  className="group mb-12 block last:mb-0 sm:mb-14"
                 >
                   {/* Whole preview is clickable. */}
                   <p className="text-sm text-muted">

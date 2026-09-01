@@ -27,17 +27,20 @@ export const portfolio = {
   github: "https://github.com/Tarun516",
   linkedin: "https://www.linkedin.com/in/c-v-tarun-19448124b/",
   twitter: "https://x.com/TarunAwsom28989",
-  resumeUrl: "/resume.pdf",
   hero: {
     greeting: "Hey, I'm Tarun.",
-    tagline: "engineering systems, AI infrastructure, and developer tools.",
+    tagline: "I build AI systems, realtime software, and developer infrastructure.",
     subtitle:
       "I build backend infrastructure, AI agents, and products focused on developer experience.",
   },
   /** One human sentence, not a buzzword list. */
   focus:
-    "Currently building Memory OS while exploring execution runtimes, context engineering, and AI infrastructure.",
+    "Currently building Memory OS while exploring agent runtimes, voice AI, context engineering, and production AI infrastructure.",
   about: {
+    path:
+      "",
+    beyond:
+      "Away from immediate product deadlines, I like studying the ideas that make complex systems easier to reason about—memory and retrieval, distributed execution, realtime interaction, and developer tools that make failure visible.",
     bio: [
       "I care about systems that stay correct under load: clear interfaces, intentional trade-offs, and failure modes you can reason about.",
       "Most of my time goes into backend services, execution pipelines, and the glue that makes AI features reliable in production.",

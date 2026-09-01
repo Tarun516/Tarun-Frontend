@@ -31,6 +31,15 @@ export async function generateMetadata({
   return {
     title: article.title,
     description: article.summary,
+    alternates: { canonical: `/writing/${article.slug}` },
+    openGraph: {
+      title: article.title,
+      description: article.summary,
+      type: "article",
+      publishedTime: `${article.date}T00:00:00.000Z`,
+      tags: article.tags,
+      url: `/writing/${article.slug}`,
+    },
   };
 }
 
@@ -62,12 +71,12 @@ export default async function ArticlePage({ params }: PageProps) {
       <Navbar />
 
       <main className="flex-1">
-        <Container className="pt-10 pb-16 sm:pt-16 sm:pb-24">
+        <Container className="pt-12 pb-20 sm:pt-20 sm:pb-32">
           {/* Articles are reading-first: centered narrow measure. */}
           <div className="mx-auto max-w-[44rem]">
             <BackLink href="/writing" label="Writing" />
 
-            <header className="mt-10 sm:mt-12">
+            <header className="mt-12 sm:mt-16">
               <p className="text-[13px] text-muted">
                 {articleTypeLabel(article.type)} ·{" "}
                 <time dateTime={article.date}>
@@ -92,7 +101,7 @@ export default async function ArticlePage({ params }: PageProps) {
               </figure>
             ) : null}
 
-            <article className="mdx-body mt-14 border-t border-border pt-12">
+            <article className="mdx-body mt-20 sm:mt-24">
               <ArticleBody />
             </article>
 

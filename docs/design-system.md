@@ -78,9 +78,10 @@ Reading measures narrow as the reader goes deeper.
 
 ## Spacing
 
-- Major sections: 96–120px (`mt-20`–`mt-24`+)
-- Subsections: 56–72px
-- Heading → body: 16–24px
+- Major homepage sections: 80–112px desktop, 64–80px mobile
+- Hero vertical padding: 64–80px desktop, 56–64px mobile
+- Subsections: 48–72px, with narrative page chapters up to 80–96px
+- Heading → body: 24–40px
 - Paragraph rhythm: body line-height handles it; avoid extra margins
 
 ## MDX body styling
@@ -113,6 +114,22 @@ Hover color rules:
 - The accent appears in focus rings, diagram highlights, and quiet underlines — not as a title hover color.
 
 Nav links and brand use a grow-from-left underline (`after:` pseudo-element, `origin-left scale-x-0 → scale-x-100`, 200ms); the active page keeps a persistent full underline.
+
+The sticky navbar is direction-aware after 120px of scroll. It accumulates 14px
+of movement before reacting, translates upward while scrolling down, and returns
+while scrolling up or receiving keyboard focus. It never leaves layout flow and
+reduced-motion rules collapse the transition.
+
+The desktop header is transparent, borderless, and 72px tall. Its wide
+three-column composition keeps the brand left, primary navigation truly
+centered, and theme control right; it does not inherit the narrower page shell.
+
+## Footer
+
+The footer is a full contact section, not a utility strip. Light mode closes on
+warm charcoal; dark mode uses the elevated charcoal surface. It uses generous
+64–112px vertical padding, a single email CTA, internal route links with `→`, and
+external profile links with `↗`.
 
 Banned motion: scale pop, bounce/spring, rotation, glowing buttons, large parallax, scroll-triggered fade-ins on sections/cards/headlines. A reader should never wait for the website.
 

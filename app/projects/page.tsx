@@ -9,6 +9,7 @@ import { getProjectEntries } from "@/lib/content";
 export const metadata: Metadata = {
   title: "Projects",
   description: "Projects and case studies.",
+  alternates: { canonical: "/projects" },
 };
 
 export default function ProjectsPage() {
@@ -18,11 +19,11 @@ export default function ProjectsPage() {
     <div className="flex min-h-full flex-1 flex-col">
       <Navbar />
       <main className="flex-1">
-        <Container className="pt-10 pb-16 sm:pt-16 sm:pb-24">
+        <Container className="pt-12 pb-20 sm:pt-20 sm:pb-32">
           {/* Browse column — wider than a reading measure, centered. */}
           <div className="mx-auto max-w-[56rem]">
             <BackLink href="/" label="Home" />
-            <h1 className="mt-8 font-display text-[2rem] font-medium tracking-[-0.03em] text-foreground sm:text-4xl">
+            <h1 className="mt-10 font-display text-[2.25rem] font-medium tracking-[-0.03em] text-foreground sm:text-[2.75rem]">
               Projects
             </h1>
             <p className="mt-3 max-w-prose text-lg leading-relaxed text-secondary">
@@ -30,7 +31,7 @@ export default function ProjectsPage() {
               learned from.
             </p>
 
-            <div className="mt-14 grid gap-x-12 gap-y-16 sm:grid-cols-2">
+            <div className="mt-14 grid gap-x-14 gap-y-16 sm:mt-16 sm:grid-cols-2 sm:gap-y-20">
               {projects.map((entry) => (
                 <ProjectCard key={entry.id} entry={entry} visual />
               ))}
