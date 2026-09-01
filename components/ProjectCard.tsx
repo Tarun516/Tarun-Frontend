@@ -13,13 +13,10 @@ type ProjectCardProps = {
  * - arrows are always visible at 45% opacity; on hover they clear and
  *   nudge 4px max — they never appear from nothing
  * - titles stay foreground on hover (no accent recoloring)
- * - external links use ↗
+ * Homepage cards intentionally expose one decision: open the project.
  */
 const arrowClass =
   "opacity-45 transition-[transform,opacity] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-1 group-hover:opacity-100";
-
-const githubLinkClass =
-  "text-sm font-medium text-secondary underline decoration-border-bright underline-offset-4 transition-colors duration-200 ease-out hover:text-foreground hover:decoration-accent";
 
 export function ProjectCard({ entry, visual = false }: ProjectCardProps) {
   const diagramId = entry.diagram?.id;
@@ -35,20 +32,8 @@ export function ProjectCard({ entry, visual = false }: ProjectCardProps) {
           >
             {entry.title}
           </Link>
-          <span className="flex shrink-0 items-center gap-4">
-            <span aria-hidden="true" className={arrowClass}>
-              →
-            </span>
-            {entry.repoUrl ? (
-              <a
-                href={entry.repoUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm font-medium text-secondary underline decoration-border-bright underline-offset-4 transition-colors duration-200 hover:text-foreground hover:decoration-accent"
-              >
-                GitHub ↗
-              </a>
-            ) : null}
+          <span aria-hidden="true" className={`shrink-0 ${arrowClass}`}>
+            →
           </span>
         </h3>
         <p className="mt-3 max-w-prose text-[15px] leading-[1.7] text-secondary">
@@ -86,21 +71,9 @@ export function ProjectCard({ entry, visual = false }: ProjectCardProps) {
         {entry.summary}
       </p>
 
-      <div className="mt-2 flex flex-wrap items-center gap-x-5 gap-y-1">
-        {entry.tags?.length ? (
-          <p className="text-sm text-muted">{entry.tags.join(" · ")}</p>
-        ) : null}
-        {entry.repoUrl ? (
-          <a
-            href={entry.repoUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={githubLinkClass}
-          >
-            GitHub ↗
-          </a>
-        ) : null}
-      </div>
+      {entry.tags?.length ? (
+        <p className="mt-2 text-sm text-muted">{entry.tags.join(" · ")}</p>
+      ) : null}
 
       {diagramId && isDiagramId(diagramId) ? (
         <div className="mt-8 overflow-hidden rounded-xl border border-border bg-surface/60 p-4 transition-[border-color] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:border-border-bright sm:p-6">

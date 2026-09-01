@@ -1,26 +1,21 @@
 import type { Metadata } from "next";
-import { Inter, Inter_Tight, JetBrains_Mono } from "next/font/google";
+import { JetBrains_Mono, Manrope } from "next/font/google";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { ThemeScript } from "@/components/theme-script";
 import { portfolio } from "@/data/portfolio";
 import { siteUrl } from "@/lib/site-url";
 import "./globals.css";
 
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-});
-
-const interTight = Inter_Tight({
-  variable: "--font-inter-tight",
+const manrope = Manrope({
+  variable: "--font-manrope",
   subsets: ["latin"],
 });
 
 const jetbrains = JetBrains_Mono({
   variable: "--font-jetbrains",
   subsets: ["latin"],
-  // Code font isn't needed above the fold — don't compete with Inter /
-  // Inter Tight during initial load (performance rule, design-system.md).
+  // Code font isn't needed above the fold — don't compete with Manrope
+  // during initial load (performance rule, design-system.md).
   preload: false,
 });
 
@@ -63,7 +58,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${interTight.variable} ${jetbrains.variable} h-full`}
+      className={`${manrope.variable} ${jetbrains.variable} h-full`}
       suppressHydrationWarning
     >
       <head>

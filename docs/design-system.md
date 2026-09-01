@@ -46,8 +46,8 @@ Selection is utility feedback — monochrome, never accent-colored:
 
 | Purpose | Font |
 | --- | --- |
-| Hero / H1 / H2 / H3 / project & article titles | Inter Tight (`font-display`) |
-| Body text, navigation, buttons, dates, metadata | Inter (`font-sans`) |
+| Hero / H1 / H2 / H3 / project & article titles | Manrope (`font-display`) |
+| Body text, navigation, buttons, dates, metadata | Manrope (`font-sans`) |
 | Code blocks, inline code, technical values | JetBrains Mono (`font-mono`) |
 
 JetBrains Mono is for actual code and technical data — never for section labels or metadata "because developer portfolio".
@@ -63,7 +63,7 @@ JetBrains Mono is for actual code and technical data — never for section label
 
 Weights: regular 400 and medium 500. Semibold only occasionally; bold almost never.
 
-No ALL-CAPS labels. Kickers read like `2026 · Systems design` — sentence case, Inter, muted color.
+No ALL-CAPS labels. Kickers read like `2026 · Systems design` — sentence case, Manrope, muted color.
 
 ## Content widths
 
@@ -138,7 +138,7 @@ Banned motion: scale pop, bounce/spring, rotation, glowing buttons, large parall
 From Lighthouse guidance (2026-08-23): FCP 0.9s / TBT 50ms / CLS 0 were already good; the target was LCP < 2.5s and Speed Index. These rules protect that:
 
 1. **Never animate above-the-fold content into existence.** No `animate-enter` (or any opacity/transform entrance) on the hero H1, tagline, portrait, bio, or CTAs — the LCP element must be immediately visible. Motion rewards interaction; it does not delay content.
-2. **Font loading**: Inter + Inter Tight preload; `JetBrains_Mono({ preload: false })` in app/layout.tsx (code font isn't needed above the fold). Don't add more preloaded families.
+2. **Font loading**: Manrope is the single preloaded editorial/UI family; `JetBrains_Mono({ preload: false })` in app/layout.tsx because code font is not needed above the fold.
 3. **Images**: keep `next/image` with explicit width/height, `priority` only for the true LCP image, and responsive `sizes`. Below-fold imagery defaults to lazy loading.
 4. **Always benchmark production builds** (`pnpm run build && pnpm start`), never `next dev`, and run Lighthouse 3× taking the median.
 
@@ -150,3 +150,4 @@ Do NOT "optimize" further without evidence: no React/MDX architecture changes, d
 - Metrics frontmatter is reserved for genuinely measured numbers. If it wasn't measured, it doesn't ship.
 - Project bodies choose their own ~4–5 narrative headings per project; there is no fixed section template.
 - Secondary project presentations are borderless rows (year, title, summary) with no repeated kind label and no trailing "Project →".
+- Homepage project presentations contain no repository actions. They expose one internal path into the project; GitHub and live actions belong on detail pages below the main visual.

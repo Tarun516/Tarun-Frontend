@@ -6,6 +6,10 @@ Format: `- YYYY-MM-DD — decision — one-line why.`
 
 ---
 
+- 2026-09-01 — Replaced Inter + Inter Tight with Manrope as the single UI/editorial family while retaining JetBrains Mono for code — one family now provides a consistent typographic voice across display and body text.
+- 2026-09-01 — Removed GitHub actions from homepage project presentations — cards now offer one clear internal path, while repository/live actions remain below the visual on detail pages.
+- 2026-09-01 — Unified active and hover Navbar underlines on the same scale-based pseudo-element — navigation now uses one interaction language in every state.
+
 - 2026-09-01 — Tightened homepage section rhythm to roughly 80–112px and removed stacked hero/section gaps — the previous 120–160px target created dead space in this lower-density composition.
 - 2026-09-01 — Made the desktop Navbar a transparent borderless 72px three-column layout outside the reading-width constraint — navigation now has balanced horizontal spacing without visual chrome.
 

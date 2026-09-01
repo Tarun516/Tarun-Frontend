@@ -157,12 +157,9 @@ function NavItem({
       : pathname.startsWith(item.href));
 
   // Active pages keep a persistent full underline; others animate it in.
-  const className =
-    active || item.external
-      ? `text-sm text-foreground ${
-          active ? "underline underline-offset-[5px]" : ""
-        } transition-colors duration-200`
-      : `text-sm text-secondary transition-colors duration-200 hover:text-foreground ${growUnderline}`;
+  const className = `text-sm transition-colors duration-200 hover:text-foreground ${growUnderline} ${
+    active ? "text-foreground after:scale-x-100" : "text-secondary"
+  }`;
 
   if (item.external) {
     return (

@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import { Button } from "@/components/Button";
 import { portfolio } from "@/data/portfolio";
 import portrait from "@/assets/Tarun.jpeg";
@@ -32,13 +31,12 @@ export function WorkspaceHero() {
             </Button>
 
             <nav
-              aria-label="Profiles and resume"
+              aria-label="Profiles"
               className="flex flex-wrap items-center gap-x-1 gap-y-2 text-[13px] text-muted"
             >
               {[
-                { label: "GitHub ↗", href: portfolio.github, external: true },
-                { label: "LinkedIn ↗", href: portfolio.linkedin, external: true },
-                { label: "About", href: "/about", external: false },
+                { label: "GitHub ↗", href: portfolio.github },
+                { label: "LinkedIn ↗", href: portfolio.linkedin },
               ].map((item, index) => (
                 <span key={item.label} className="inline-flex items-center">
                   {index > 0 ? (
@@ -49,23 +47,14 @@ export function WorkspaceHero() {
                       ·
                     </span>
                   ) : null}
-                  {item.external ? (
-                    <a
-                      href={item.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="transition-colors duration-200 ease-out hover:text-foreground"
-                    >
-                      {item.label}
-                    </a>
-                  ) : (
-                    <Link
-                      href={item.href}
-                      className="transition-colors duration-200 ease-out hover:text-foreground"
-                    >
-                      {item.label}
-                    </Link>
-                  )}
+                  <a
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="transition-colors duration-200 ease-out hover:text-foreground"
+                  >
+                    {item.label}
+                  </a>
                 </span>
               ))}
             </nav>

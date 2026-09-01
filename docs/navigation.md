@@ -15,8 +15,8 @@ HOME
 
 - Brand (`C V Tarun`) is the Home link, with a thin hover underline.
 - Nav links: Projects → `/projects`, Writing → `/writing`, About → `/about`. Real routes, never `/#section` anchors.
-- No external links in the header. GitHub/LinkedIn/X/Resume live in the hero and footer only. The header answers "where can I go inside the site?"
-- Hover affordance: 1px underline with `underline-offset-[5px]` (via Tailwind `underline-offset-[5px] hover:underline`). The currently active page keeps the underline (computed from `usePathname()`; detail pages count as active for their section).
+- No external links in the header. GitHub and LinkedIn live in the hero; broader profiles live in the footer. Resume returns only when a real `public/resume.pdf` is present. The header answers "where can I go inside the site?"
+- Hover affordance: a 1px pseudo-element underline grows left-to-right. Active routes use that same pseudo-element at full scale permanently; detail pages count as active for their section.
 - Scroll behavior: always visible within 120px of the top; after that, 14px of accumulated downward movement hides it with `translateY(-100%)`, while upward movement reveals it. Keyboard focus and an open mobile menu always reveal it.
 - Desktop composition is a transparent, borderless 72px three-column header with wider viewport padding: brand left, primary routes centered, theme control right.
 
