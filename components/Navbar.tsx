@@ -77,7 +77,7 @@ export function Navbar() {
 
   return (
     <header
-      className={`sticky top-0 z-40 transition-transform duration-[240ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
+      className={`sticky top-0 z-40 border-b border-border/50 bg-background/90 backdrop-blur-sm transition-transform duration-[240ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
         hidden ? "-translate-y-full" : "translate-y-0"
       }`}
       onFocusCapture={() => setHidden(false)}

@@ -27,6 +27,7 @@ export const portfolio = {
   github: "https://github.com/Tarun516",
   linkedin: "https://www.linkedin.com/in/c-v-tarun-19448124b/",
   twitter: "https://x.com/TarunAwsom28989",
+  resumeUrl: "",
   hero: {
     greeting: "Hey, I'm Tarun.",
     tagline: "I build AI systems, realtime software, and developer infrastructure.",
@@ -60,7 +61,7 @@ export const portfolio = {
       "Agent runtimes & orchestration",
       "Memory systems & retrieval",
       "Distributed execution",
-      "Developer tooling",
+      "Developer tooling",  
     ],
     /** Quiet tools list, shown on /about only. */
     tools: [
@@ -83,9 +84,9 @@ export const portfolio = {
     ] as { category: string; items: string[] }[],
   },
   nav: [
+    { label: "About", href: "/about" },
     { label: "Projects", href: "/projects" },
     { label: "Writing", href: "/writing" },
-    { label: "About", href: "/about" },
   ] as NavItem[],
   experience: [
     {

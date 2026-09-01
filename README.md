@@ -35,7 +35,7 @@ Set `published: false` in frontmatter to keep a draft out of the site entirely.
 
 ### Writing a new project / case study
 
-Create `content/projects/my-project.mdx`. Frontmatter supports `kind` (`project` or `case-study`), `title`, `summary`, `role`, `year`, `tags`, `featured`, `repoUrl`, `liveUrl`, `metrics`, and `diagram` (id keyed in `components/diagrams`). The body is free-form markdown rendered below the page header — use `## Problem`, `## Architecture`, `## Tech choices`, `## Challenges`, `## Trade-offs`, `## What I learned` as section conventions.
+Create `content/projects/my-project.mdx`. Frontmatter supports `kind` (`project` or `case-study`), `title`, `summary`, `role`, `year`, `tags`, `homeOrder` (homepage placement: 1 = hero, 2-5 = secondary), `repoUrl`, `liveUrl`, `metrics`, and `diagram` (id keyed in `components/diagrams`). The body is free-form markdown rendered below the page header — content determines the story, there is no fixed section template.
 
 ### MDX components
 

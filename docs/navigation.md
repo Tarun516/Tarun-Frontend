@@ -19,6 +19,7 @@ HOME
 - Hover affordance: a 1px pseudo-element underline grows left-to-right. Active routes use that same pseudo-element at full scale permanently; detail pages count as active for their section.
 - Scroll behavior: always visible within 120px of the top; after that, 14px of accumulated downward movement hides it with `translateY(-100%)`, while upward movement reveals it. Keyboard focus and an open mobile menu always reveal it.
 - Desktop composition is a transparent, borderless 72px three-column header with wider viewport padding: brand left, primary routes centered, theme control right.
+- The header has a semi-opaque background (`bg-background/90 backdrop-blur-sm`) to keep text legible when revealed over page content.
 
 ## Back navigation — one rule
 
@@ -36,7 +37,7 @@ Never hand-roll an ad-hoc back link.
 
 ## Bottom navigation
 
-Detail pages must not dead-end into the footer. Every project/article detail page ends with `PrevNextNav` (components/PrevNextNav.tsx): `← Previous title · All projects/writing · Next title →`, ordered consistently with its index page (projects by year desc, articles by date desc).
+Detail pages must not dead-end into the footer. Every project/article detail page ends with `PrevNextNav` (components/PrevNextNav.tsx): `← Previous title · All projects/writing · Next title →`, ordered consistently with its index page (projects by year desc, articles by date desc). On mobile, the nav stacks vertically to avoid awkward wrapping.
 
 ## CTA semantics
 
@@ -64,7 +65,7 @@ Never rely on filesystem or year sorting to decide what recruiters see first. Th
 
 ## About page
 
-Personal narrative, not résumé data: intro lead paragraph, bio, "What I'm focused on" (uses `portfolio.focus`), Experience, Education, Things I work with, then Email/Resume buttons. Centered at 47.5rem like other reading pages.
+Personal narrative, not résumé data: intro lead paragraph, bio, "Today" (uses `portfolio.focus`), Experience, Education, Beyond the current build, Tools and technologies. Centered at 47.5rem like other reading pages. No duplicate Email CTA (the footer provides this).
 
 ## Content correctness rules
 

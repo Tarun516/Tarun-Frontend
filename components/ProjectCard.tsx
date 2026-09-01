@@ -25,7 +25,7 @@ export function ProjectCard({ entry, visual = false }: ProjectCardProps) {
     return (
       <div className="group">
         <p className="text-sm text-muted">{entry.year}</p>
-        <h3 className="mt-2 flex items-baseline justify-between gap-4 font-display text-lg font-medium tracking-[-0.02em] text-foreground sm:text-xl">
+        <h3 className="mt-2 flex items-baseline justify-between gap-4 font-display text-lg font-medium tracking-[-0.01em] text-foreground sm:text-xl">
           <Link
             href={entry.href}
             className="transition-colors duration-200 hover:text-secondary"
@@ -55,7 +55,7 @@ export function ProjectCard({ entry, visual = false }: ProjectCardProps) {
         {entry.kind === "case-study" ? "Case study" : "Project"}
       </p>
 
-      <h3 className="mt-3 flex items-baseline justify-between gap-4 font-display text-2xl font-medium tracking-[-0.02em] text-foreground sm:text-[1.75rem]">
+      <h3 className="mt-3 flex items-baseline justify-between gap-4 font-display text-2xl font-medium tracking-[-0.01em] text-foreground sm:text-[1.75rem]">
         <Link
           href={entry.href}
           className="transition-colors duration-200 hover:text-secondary"
@@ -76,21 +76,10 @@ export function ProjectCard({ entry, visual = false }: ProjectCardProps) {
       ) : null}
 
       {diagramId && isDiagramId(diagramId) ? (
-        <div className="mt-8 overflow-hidden rounded-xl border border-border bg-surface/60 p-4 transition-[border-color] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:border-border-bright sm:p-6">
-          <div className="text-secondary [&_svg]:mx-auto [&_svg]:block [&_svg]:h-auto [&_svg]:w-full [&_svg]:max-w-full [&_svg]:opacity-80 transition-opacity duration-200 group-hover:[&_svg]:opacity-100">
-            <ContentDiagram id={diagramId} />
-          </div>
+        <div className="mt-8 transition-[border-color] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:border-border-bright">
+          <ContentDiagram id={diagramId} />
         </div>
       ) : null}
-
-      <p className="mt-6 inline-flex items-center gap-1.5 text-sm text-secondary">
-        <Link href={entry.href} className="underline decoration-transparent underline-offset-4 transition-colors duration-200 hover:text-foreground hover:decoration-current">
-          View {entry.kind === "case-study" ? "case study" : "project"}
-        </Link>
-        <span aria-hidden="true" className={arrowClass}>
-          →
-        </span>
-      </p>
     </div>
   );
 }

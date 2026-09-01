@@ -63,7 +63,7 @@ export default async function ProjectPage({ params }: PageProps) {
   );
 
   return (
-    <div className="flex min-h-full flex-1 flex-col" data-reading-page>
+    <div className="flex min-h-full flex-1 flex-col">
       <Navbar />
 
       <main className="flex-1">
@@ -73,7 +73,7 @@ export default async function ProjectPage({ params }: PageProps) {
             <BackLink href="/projects" label="Projects" />
 
             <header className="mt-10 sm:mt-14">
-              <h1 className="font-display text-[2rem] leading-[1.12] font-medium tracking-[-0.03em] text-foreground sm:text-[2.5rem]">
+              <h1 className="font-display text-[2rem] leading-[1.12] font-medium tracking-[-0.015em] text-foreground sm:text-[2.5rem]">
                 {project.title}
               </h1>
               <p className="mt-5 max-w-prose text-lg leading-relaxed text-secondary">
@@ -86,16 +86,7 @@ export default async function ProjectPage({ params }: PageProps) {
 
             {diagramId ? (
               <figure className="mt-12">
-                <div className="overflow-hidden rounded-xl border border-border bg-surface/60 p-5 sm:p-8">
-                  <div className="text-secondary [&_svg]:mx-auto [&_svg]:block [&_svg]:h-auto [&_svg]:w-full [&_svg]:max-w-full">
-                    <ContentDiagram id={diagramId} />
-                  </div>
-                </div>
-                {diagramCaption ? (
-                  <figcaption className="mt-3 text-sm text-muted">
-                    {diagramCaption}
-                  </figcaption>
-                ) : null}
+                <ContentDiagram id={diagramId} caption={diagramCaption} />
               </figure>
             ) : null}
 

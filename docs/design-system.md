@@ -17,8 +17,8 @@ One brand across both modes: light = warm paper, dark = warm charcoal. Never OLE
 | border / border-bright | `#e6e6e2` / `#d4d4d0` | `#262622` / `#343430` |
 | foreground | `#141414` | `#ecece8` |
 | secondary | `#525252` | `#b2b2aa` |
-| muted | `#737373` | `#7e7e76` |
-| accent (steel blue) | `#667f98` | `#8ea1b4` |
+| muted | `#6f6f6b` | `#7e7e76` |
+| accent (steel blue) | `#526d87` | `#8ea1b4` |
 
 Accent rules:
 
@@ -37,7 +37,7 @@ Selection is utility feedback — monochrome, never accent-colored:
 ## Backgrounds & surfaces
 
 - Glow is nearly invisible (`--glow` at 0.03–0.05 alpha).
-- The dark-mode 48px grid exists only on home and index pages, at near-invisible alpha (`--grid-line` ≤ 0.008). Reading pages — project detail, article detail, about — opt out entirely via the `data-reading-page` attribute on their root div (CSS: `.dark body:has([data-reading-page]) { background-image: none; }`). Any new reading-focused page must set this attribute.
+- Both light and dark modes use a flat background. No grid, no permanent developer-grid background.
 - `--surface` is for real containers only: code blocks, diagrams, callouts, demos. Page content sits directly on `--background`. Don't wrap everything in bordered surface cards.
 - Hover behavior: text moves secondary → foreground with an underline where applicable; do not recolor body/nav text to the accent on hover.
 
@@ -54,12 +54,13 @@ JetBrains Mono is for actual code and technical data — never for section label
 
 ## Type scale
 
-- Hero: 48–56px
-- Page / project / article H1: 40–44px (mobile ~32px)
-- H2: 26–28px
-- H3: 19–20px
-- Body: 16–17px, line-height ~1.75
-- Metadata: 13–14px
+- Hero: 48–56px, weight 500, tracking -0.015em to -0.02em
+- Page / project / article H1: 40–48px desktop, 32–36px mobile, tracking -0.015em
+- H2: 27–30px, tracking -0.01em
+- H3: 19–21px, tracking normal to -0.01em
+- Body: 16–17px, weight 400, line-height 1.7–1.75, tracking normal
+- Metadata: 13–14px, weight 400, tracking normal
+- Navbar: 14–15px, weight 400/500, tracking normal
 
 Weights: regular 400 and medium 500. Semibold only occasionally; bold almost never.
 
@@ -78,11 +79,20 @@ Reading measures narrow as the reader goes deeper.
 
 ## Spacing
 
-- Major homepage sections: 80–112px desktop, 64–80px mobile
-- Hero vertical padding: 64–80px desktop, 56–64px mobile
-- Subsections: 48–72px, with narrative page chapters up to 80–96px
-- Heading → body: 24–40px
-- Paragraph rhythm: body line-height handles it; avoid extra margins
+Desktop:
+- Major homepage boundary: 144–160px
+- Major narrative/page chapters: 88–104px
+- Content groups: 40–56px
+- Heading → copy: 20–32px
+- Paragraph rhythm: 20–24px
+
+Mobile:
+- Major homepage boundary: 88–96px
+- Page chapters: 64–72px
+- Content groups: 32–40px
+- Heading → copy: 16–24px
+
+Do not achieve spacing by randomly stacking `pb-14 + pt-12 + mt-20`. Define/reuse understandable spacing tokens or consistent utilities.
 
 ## MDX body styling
 
@@ -100,7 +110,6 @@ Timings (single easing curve everywhere: `cubic-bezier(0.22, 1, 0.36, 1)`, alrea
 | Arrow movement | 200ms, max 4px (`group-hover:translate-x-1`) |
 | Button background/border | 200ms; the button itself never moves or scales — only its state changes |
 | Card/image hover | 200–280ms, subtle border/opacity response only |
-| Page entrance | once on load, fade + 6–8px rise (`animate-enter`, hero only) |
 
 Arrow rules:
 
@@ -128,8 +137,8 @@ centered, and theme control right; it does not inherit the narrower page shell.
 
 The footer is a full contact section, not a utility strip. Light mode closes on
 warm charcoal; dark mode uses the elevated charcoal surface. It uses generous
-64–112px vertical padding, a single email CTA, internal route links with `→`, and
-external profile links with `↗`.
+128–144px desktop / 80–96px mobile vertical padding, a single email CTA, internal route links (no arrows),
+and external profile links with `↗`.
 
 Banned motion: scale pop, bounce/spring, rotation, glowing buttons, large parallax, scroll-triggered fade-ins on sections/cards/headlines. A reader should never wait for the website.
 
@@ -137,7 +146,7 @@ Banned motion: scale pop, bounce/spring, rotation, glowing buttons, large parall
 
 From Lighthouse guidance (2026-08-23): FCP 0.9s / TBT 50ms / CLS 0 were already good; the target was LCP < 2.5s and Speed Index. These rules protect that:
 
-1. **Never animate above-the-fold content into existence.** No `animate-enter` (or any opacity/transform entrance) on the hero H1, tagline, portrait, bio, or CTAs — the LCP element must be immediately visible. Motion rewards interaction; it does not delay content.
+1. **Never animate above-the-fold content into existence.** No opacity/transform entrance animations on the hero H1, tagline, portrait, bio, or CTAs — the LCP element must be immediately visible. Motion rewards interaction; it does not delay content.
 2. **Font loading**: Manrope is the single preloaded editorial/UI family; `JetBrains_Mono({ preload: false })` in app/layout.tsx because code font is not needed above the fold.
 3. **Images**: keep `next/image` with explicit width/height, `priority` only for the true LCP image, and responsive `sizes`. Below-fold imagery defaults to lazy loading.
 4. **Always benchmark production builds** (`pnpm run build && pnpm start`), never `next dev`, and run Lighthouse 3× taking the median.

@@ -40,9 +40,9 @@ export default function Home() {
 
             <section
               id="projects"
-              className="scroll-mt-20 pt-8 sm:scroll-mt-24 sm:pt-10 lg:pt-12"
+              className="scroll-mt-20 pt-20 sm:scroll-mt-24 sm:pt-24 lg:pt-28"
             >
-              <SectionLabel>Selected work</SectionLabel>
+              <SectionLabel>Projects</SectionLabel>
 
               {primary ? (
                 <div className="mt-10 sm:mt-12">
@@ -76,7 +76,7 @@ export default function Home() {
 
             <section
               id="writing"
-              className="mt-20 scroll-mt-20 sm:mt-24 sm:scroll-mt-24 lg:mt-28"
+              className="mt-28 scroll-mt-20 sm:mt-32 sm:scroll-mt-24 lg:mt-36"
             >
               <SectionLabel>Writing</SectionLabel>
 

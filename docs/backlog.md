@@ -12,5 +12,6 @@ items that need a real asset or publishing decision remain here.
 
 ## Resolved (do not redo)
 
-Everything else from the redesign brief was completed across the 2026-08-23
-and 2026-09-01 passes. See `docs/decisions.md` for the implementation record.
+Everything else from the redesign brief was completed across the 2026-08-23,
+2026-09-01, and 2026-09-01 (final design + content-system consistency pass)
+iterations. See `docs/decisions.md` for the implementation record.

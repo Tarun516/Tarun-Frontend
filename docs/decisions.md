@@ -6,6 +6,36 @@ Format: `- YYYY-MM-DD — decision — one-line why.`
 
 ---
 
+- 2026-09-01 — Removed dark-mode 48px grid and global glow — both light and dark modes now use flat backgrounds; visual personality belongs in project visuals, diagrams, typography, and interactions, not a permanent developer-grid background.
+- 2026-09-01 — Removed `data-reading-page` attribute and conditional grid opt-out — with the grid removed, the opt-out is dead code.
+- 2026-09-01 — Removed `animate-enter` keyframes and CSS variable — no entrance animations exist on the site; the rule is "never animate above-the-fold content into existence."
+- 2026-09-01 — Removed unused `featured` field from project/article frontmatter, types, and validation — homepage placement is now exclusively via `homeOrder`; `featured` had no remaining behavior.
+- 2026-09-01 — Removed `getHomeWriting()` from lib/content — homepage now uses recent published articles chronologically; the featured-writing helper was dead code.
+- 2026-09-01 — Removed unused `EntryCard` component and starter SVG assets (file.svg, globe.svg, next.svg, vercel.svg, window.svg) — no references remained.
+- 2026-09-01 — Fixed diagram component ownership: `ContentDiagram` → `Diagram` now owns the single figure, border, padding, and caption; project detail and article detail call `ContentDiagram` directly without nested containers.
+- 2026-09-01 — Changed diagram caption typography from JetBrains Mono 11px to Manrope 13px — JetBrains Mono is for code only; captions are editorial text.
+- 2026-09-01 — Fixed light-mode accessibility: accent darkened to #526d87 and muted to #6f6f6b for ≥4.5:1 contrast against #f7f7f5 background.
+- 2026-09-01 — Retuned Manrope tracking: reduced aggressive -0.04em tracking to -0.015em/-0.02em range — inherited Inter Tight values were too tight for Manrope.
+- 2026-09-01 — Locked spacing rhythm: homepage major sections 144–160px desktop / 88–96px mobile; nested page chapters 88–104px; content groups 40–56px — resolves contradictory 80–112px vs 120–160px historical rules.
+- 2026-09-01 — Simplified /projects to two-level layout: selected projects (with diagrams) in a grid, remaining projects as borderless rows under "More projects" — no empty visual areas or fake placeholders.
+- 2026-09-01 — Removed redundant "View project →" CTA from ProjectCard — title/arrow is the single navigation action; no nested links.
+- 2026-09-01 — Removed standalone "Email me" CTA from About page — the global contact footer already provides this action.
+- 2026-09-01 — Removed empty "My path" section from About page — `portfolio.about.path` is empty; never render empty content sections.
+- 2026-09-01 — Changed context-windows article type from "deep-dive" to "note" — the content is a short thought, not a substantial deep dive.
+- 2026-09-01 — Made Navbar background semi-opaque (bg-background/90 + backdrop-blur-sm) — keeps text legible when the sticky navbar reappears over page content.
+- 2026-09-01 — Fixed primary button hover: changed from opacity transition to background-color (hover:bg-foreground/85) — avoids the opacity transition mismatch.
+- 2026-09-01 — Made all buttons rounded-full (pill-like) — the hero CTA and all buttons now have a consistent pill shape.
+- 2026-09-01 — Increased footer vertical padding to 128–144px desktop / 80–96px mobile — more breathing room for the closing contact section.
+- 2026-09-01 — Removed arrows from internal footer links (Projects, Writing, About) — only external links use ↗.
+- 2026-09-01 — Made footer brand name ("C V Tarun") link to / — consistent with the header brand behavior.
+- 2026-09-01 — Added my-6 vertical rhythm to CodeBlock — code blocks now have proper spacing in MDX content.
+- 2026-09-01 — Removed "use client" from Callout component — it contains no state, effects, or browser APIs; it's a Server Component.
+- 2026-09-01 — Improved PrevNextNav mobile layout: stacked on mobile, horizontal on desktop — avoids awkward three-column wrapping with long titles.
+- 2026-09-01 — Aligned @next/mdx version with next (16.2.11) — no reason to maintain minor-version skew.
+- 2026-09-01 — Updated docs to reflect new spacing rhythm, content rules, and removed features — one current truth in docs.
+
+---
+
 - 2026-09-01 — Replaced Inter + Inter Tight with Manrope as the single UI/editorial family while retaining JetBrains Mono for code — one family now provides a consistent typographic voice across display and body text.
 - 2026-09-01 — Removed GitHub actions from homepage project presentations — cards now offer one clear internal path, while repository/live actions remain below the visual on detail pages.
 - 2026-09-01 — Unified active and hover Navbar underlines on the same scale-based pseudo-element — navigation now uses one interaction language in every state.

@@ -104,15 +104,6 @@ export function getHomeProjects(): ContentEntry[] {
     .map(toProjectEntry);
 }
 
-/** Homepage: featured case studies + articles. */
-export function getHomeWriting(): ContentEntry[] {
-  return getAllEntries().filter(
-    (entry) =>
-      entry.featured &&
-      (entry.kind === "case-study" || entry.kind === "article"),
-  );
-}
-
 export function getProjectEntries(): ContentEntry[] {
   return getAllEntries().filter(
     (entry) => entry.kind === "project" || entry.kind === "case-study",

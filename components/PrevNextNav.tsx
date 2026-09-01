@@ -15,7 +15,7 @@ export function PrevNextNav({ prev, next, allHref, allLabel }: PrevNextNavProps)
   return (
     <nav
       aria-label="More content"
-      className="mt-20 flex flex-wrap items-center justify-between gap-x-8 gap-y-3 border-t border-border pt-6 text-sm"
+      className="mt-20 flex flex-col gap-4 border-t border-border pt-6 text-sm sm:flex-row sm:items-center sm:justify-between sm:gap-x-8"
     >
       {prev ? (
         <Link
@@ -36,7 +36,7 @@ export function PrevNextNav({ prev, next, allHref, allLabel }: PrevNextNavProps)
 
       <Link
         href={allHref}
-        className="text-muted transition-colors duration-200 ease-out hover:text-foreground"
+        className="text-muted transition-colors duration-200 ease-out hover:text-foreground sm:order-none"
       >
         {allLabel}
       </Link>
@@ -44,7 +44,7 @@ export function PrevNextNav({ prev, next, allHref, allLabel }: PrevNextNavProps)
       {next ? (
         <Link
           href={next.href}
-          className="group inline-flex min-w-0 items-center gap-2 text-secondary transition-colors duration-200 ease-out hover:text-foreground"
+          className="group inline-flex min-w-0 items-center justify-end gap-2 text-secondary transition-colors duration-200 ease-out hover:text-foreground"
         >
           <span className="truncate">{next.label}</span>
           <span

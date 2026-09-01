@@ -16,7 +16,7 @@ export function Diagram({ children, caption, className = "" }: DiagramProps) {
         </div>
       </div>
       {caption ? (
-        <figcaption className="mt-3 text-center font-mono text-[11px] leading-relaxed text-muted sm:text-left">
+        <figcaption className="mt-3 font-sans text-[13px] leading-[1.6] text-muted sm:text-left">
           {caption}
         </figcaption>
       ) : null}

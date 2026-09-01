@@ -42,7 +42,7 @@ data/portfolio.ts         Global site facts only
 components/
 ├── mdx/                  Callout, CodeBlock — reusable blocks inside MDX
 ├── diagrams/             SVG architecture diagrams, keyed by id in frontmatter
-└── ...                   Navbar, Footer, EntryCard, MetricCard, etc.
+└── ...                   Navbar, Footer, MetricCard, etc.
 
 mdx-components.tsx        Required by @next/mdx; global MDX component map
 ```
@@ -61,18 +61,18 @@ Never hand-maintain a value that can be computed.
 ## Data flow
 
 ```
-content/**/*.mdx ──▶ lib/content loaders ──▶ typed metadata ──▶ pages / EntryCard
+content/**/*.mdx ──▶ lib/content loaders ──▶ typed metadata ──▶ pages / ProjectCard
                  └──▶ dynamic MDX import ──▶ rendered body (styled by .mdx-body)
 ```
 
-- Index pages and the homepage use `getAllProjects()`, `getPublishedArticles()`, `getAllEntries()`, `getHomeProjects()`, `getHomeWriting()` from `lib/content`.
+- Index pages and the homepage use `getAllProjects()`, `getPublishedArticles()`, `getAllEntries()`, `getHomeProjects()`, `getProjectEntries()` from `lib/content`.
 - Detail pages render the body with `await import(`@/content/.../${slug}.mdx`)` and set `dynamicParams = false`, so unknown slugs 404 and every page is statically generated via `generateStaticParams`.
 
 ## Frontmatter contracts
 
-Project (`content/projects/`): `kind` ("project" | "case-study"), `title`, `summary`, `role`, `year`, `tags`, `featured?`, `homeOrder?` (explicit homepage placement: 1 = hero project, 2-5 = secondary grid, absent = projects page only), `repoUrl?` (only a real, useful repo URL — never a placeholder), `liveUrl?`, `metrics?` (only genuinely measured numbers), `diagram?` (id + caption).
+Project (`content/projects/`): `kind` ("project" | "case-study"), `title`, `summary`, `role`, `year`, `tags`, `homeOrder?` (explicit homepage placement: 1 = hero project, 2-5 = secondary grid, absent = projects page only), `repoUrl?` (only a real, useful repo URL — never a placeholder), `liveUrl?`, `metrics?` (only genuinely measured numbers), `diagram?` (id + caption).
 
-Article (`content/writing/`): `title`, `summary`, `date` (ISO), `tags`, `type` (`deep-dive` | `note` | `build-log`, defaults to `note`), `published?` (false = hidden draft), `featured?`, `diagram?`.
+Article (`content/writing/`): `title`, `summary`, `date` (ISO), `tags`, `type` (`deep-dive` | `note` | `build-log`, defaults to `note`), `published?` (false = hidden draft), `diagram?`.
 
 `diagram.id` must be a key in `components/diagrams` (validated by `isDiagramId`).
 Unknown frontmatter keys, invalid field types, placeholder URLs, duplicate
@@ -92,9 +92,9 @@ the canonical production origin (Vercel URL variables are fallbacks).
 
 ## Adding content
 
-- New article: create `content/writing/<slug>.mdx`. It appears on `/writing`, the homepage (if `featured`), and is prerendered automatically.
+- New article: create `content/writing/<slug>.mdx`. It appears on `/writing`, the homepage, and is prerendered automatically.
 - New project: create `content/projects/<slug>.mdx`.
-- Section conventions for case-study bodies: `## Problem`, `## Architecture`, `## Tech choices`, `## Challenges`, `## Trade-offs`, `## What I learned`.
+- Project bodies choose their own ~4–5 narrative headings; there is no fixed section template.
 
 ## Verification
 

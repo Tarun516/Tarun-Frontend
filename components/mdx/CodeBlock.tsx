@@ -6,7 +6,7 @@ import type { ReactNode } from "react";
  */
 export function CodeBlock({ children }: { children?: ReactNode }) {
   return (
-    <pre className="overflow-x-auto rounded-lg border border-border bg-surface p-4 font-mono text-[13px] leading-relaxed text-secondary">
+    <pre className="my-6 overflow-x-auto rounded-lg border border-border bg-surface p-4 font-mono text-[13px] leading-relaxed text-secondary">
       {children}
     </pre>
   );

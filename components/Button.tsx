@@ -23,11 +23,11 @@ export function Button({
   className = "",
 }: ButtonProps) {
   const base =
-    "group inline-flex items-center gap-2 rounded-md px-4 py-2.5 text-sm font-medium transition-[background-color,border-color,color] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)]";
+    "group inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-sm font-medium transition-[background-color,border-color,color] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)]";
 
   const styles =
     variant === "primary"
-      ? "bg-foreground text-background hover:opacity-90"
+      ? "bg-foreground text-background hover:bg-foreground/85"
       : "border border-border bg-transparent text-foreground hover:border-border-bright hover:bg-surface";
 
   const content = (

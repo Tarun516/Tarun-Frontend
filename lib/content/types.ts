@@ -26,7 +26,6 @@ export type ContentEntry = {
   summary: string;
   year: string;
   href: string;
-  featured?: boolean;
   tags?: string[];
   repoUrl?: string;
   diagram?: { id: string; caption?: string };
@@ -39,7 +38,6 @@ export type ProjectFrontmatter = {
   role: string;
   year: string;
   tags: string[];
-  featured?: boolean;
   /**
    * Explicit homepage placement: 1 = primary/hero project,
    * 2-5 = secondary grid, absent = projects page only.
@@ -73,7 +71,6 @@ export type ArticleFrontmatter = {
   /** deep-dive | note | build-log — defaults to note. */
   type?: ArticleType;
   published?: boolean;
-  featured?: boolean;
   tags: string[];
   diagram?: { id: string; caption?: string };
 };
@@ -108,7 +105,6 @@ export function toProjectEntry(project: ProjectContent): ContentEntry {
     summary: project.summary,
     year: project.year,
     href: `/projects/${project.href}`,
-    featured: project.featured,
     tags: project.tags,
     repoUrl: project.repoUrl,
     diagram: project.diagram,
@@ -123,6 +119,5 @@ export function toArticleEntry(article: ArticleContent): ContentEntry {
     summary: article.summary,
     year: article.date.slice(0, 4),
     href: `/writing/${article.href}`,
-    featured: article.featured,
   };
 }

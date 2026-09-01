@@ -15,7 +15,6 @@ const PROJECT_FIELDS = new Set([
   "role",
   "year",
   "tags",
-  "featured",
   "homeOrder",
   "metrics",
   "diagram",
@@ -29,7 +28,6 @@ const ARTICLE_FIELDS = new Set([
   "date",
   "type",
   "published",
-  "featured",
   "tags",
   "diagram",
 ]);
@@ -164,7 +162,6 @@ export function parseProjectFrontmatter(data: Frontmatter, slug: string): Projec
     role: text(data, "role", collection, slug),
     year,
     tags: tags(data, collection, slug),
-    featured: optionalBoolean(data, "featured", collection, slug),
     homeOrder: homeOrder as number | undefined,
     metrics,
     diagram: optionalDiagram(data, collection, slug),
@@ -191,7 +188,6 @@ export function parseArticleFrontmatter(data: Frontmatter, slug: string): Articl
     date,
     type: type as ArticleType,
     published: optionalBoolean(data, "published", collection, slug) ?? true,
-    featured: optionalBoolean(data, "featured", collection, slug),
     tags: tags(data, collection, slug),
     diagram: optionalDiagram(data, collection, slug),
   };

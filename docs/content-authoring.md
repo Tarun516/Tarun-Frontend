@@ -16,7 +16,7 @@ How to write and maintain the content that powers the site.
 2. **Reading time is computed**, never written. It comes from the body word count.
 3. **Drafts**: set `published: false` in an article's frontmatter. Drafts are excluded from all lists, prerendering, and return 404.
 4. **Diagrams** are referenced by id: `diagram: { id: "execution-engine", caption: "..." }`. The id must exist in `components/diagrams`.
-5. **Case-study body sections** (convention, not enforced): `## Problem`, `## Architecture`, `## Tech choices` (one `###` per choice with a short "why"), `## Challenges`, `## Trade-offs`, `## What I learned`.
+5. **Content determines the story. There is no fixed case-study heading template.** Each project chooses its own ~4–5 narrative headings.
 6. **Frontmatter is validated at build time.** Unknown fields and invalid types fail with the offending filename. Project `homeOrder` values must be unique.
 
 ## Project frontmatter
@@ -28,7 +28,6 @@ summary: "One or two sentences."
 role: "What I did"
 year: "2026"
 tags: ["TypeScript", "Postgres"]
-featured: true            # optional — homepage placement
 homeOrder: 1              # optional, unique 1–5; explicit homepage order
 repoUrl: "https://github.com/..."
 liveUrl: "https://..."
@@ -49,7 +48,6 @@ date: "2026-08-23"        # ISO date; drives ordering + year grouping
 type: "deep-dive"         # deep-dive | note | build-log (defaults to note)
 tags: ["Systems"]
 published: false          # omit for published posts
-featured: true
 diagram:
   id: "execution-engine"
   caption: "..."

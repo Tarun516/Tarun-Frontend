@@ -67,7 +67,7 @@ export default async function ArticlePage({ params }: PageProps) {
   );
 
   return (
-    <div className="flex min-h-full flex-1 flex-col" data-reading-page>
+    <div className="flex min-h-full flex-1 flex-col">
       <Navbar />
 
       <main className="flex-1">
@@ -87,7 +87,7 @@ export default async function ArticlePage({ params }: PageProps) {
                 </time>{" "}
                 · {article.readingTime}
               </p>
-              <h1 className="mt-5 font-display text-[2rem] leading-[1.15] font-medium tracking-[-0.03em] text-foreground sm:text-[2.375rem] sm:leading-[1.1]">
+              <h1 className="mt-5 font-display text-[2rem] leading-[1.15] font-medium tracking-[-0.015em] text-foreground sm:text-[2.375rem] sm:leading-[1.1]">
                 {article.title}
               </h1>
               <p className="mt-5 text-lg leading-relaxed text-secondary">

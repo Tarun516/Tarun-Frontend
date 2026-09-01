@@ -27,7 +27,7 @@ export default function WritingPage() {
           {/* Chronological feed, centered reading column. */}
           <div className="mx-auto max-w-[47.5rem]">
             <BackLink href="/" label="Home" />
-            <h1 className="mt-10 font-display text-[2.25rem] font-medium tracking-[-0.03em] text-foreground sm:text-[2.75rem]">
+            <h1 className="mt-10 font-display text-[2.25rem] font-medium tracking-[-0.015em] text-foreground sm:text-[2.75rem]">
               Writing
             </h1>
             <p className="mt-3 max-w-prose text-lg leading-relaxed text-secondary">

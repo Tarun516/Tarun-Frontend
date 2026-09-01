@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="flex min-h-full flex-1 flex-col" data-reading-page>
+    <div className="flex min-h-full flex-1 flex-col">
       <Navbar />
       <main className="flex-1">
         <Container className="pt-12 pb-20 sm:pt-20 sm:pb-32">
@@ -27,7 +27,7 @@ export default function AboutPage() {
               <p className="text-sm text-muted">
                 {portfolio.role} · {portfolio.location}
               </p>
-              <h1 className="mt-4 font-display text-[2.5rem] leading-[1.05] font-medium tracking-[-0.04em] text-foreground sm:text-[3.25rem]">
+              <h1 className="mt-4 font-display text-[2.5rem] leading-[1.05] font-medium tracking-[-0.015em] text-foreground sm:text-[3.25rem]">
                 About
               </h1>
               <p className="mt-7 max-w-2xl font-display text-xl leading-[1.55] tracking-[-0.015em] text-foreground sm:text-[1.375rem]">
@@ -53,16 +53,7 @@ export default function AboutPage() {
             </div>
 
             <section className="mt-20 sm:mt-24">
-              <h2 className="font-display text-[1.75rem] font-medium tracking-[-0.025em] text-foreground">
-                My path
-              </h2>
-              <p className="mt-6 text-[17px] leading-[1.75] text-secondary sm:text-lg">
-                {portfolio.about.path}
-              </p>
-            </section>
-
-            <section className="mt-16 sm:mt-20">
-              <h2 className="font-display text-[1.75rem] font-medium tracking-[-0.025em] text-foreground">
+              <h2 className="font-display text-[1.75rem] font-medium tracking-[-0.015em] text-foreground">
                 Today
               </h2>
               <p className="mt-6 text-[17px] leading-[1.75] text-secondary sm:text-lg">
@@ -71,7 +62,7 @@ export default function AboutPage() {
             </section>
 
             <section className="mt-20 sm:mt-24">
-              <h2 className="font-display text-[1.75rem] font-medium tracking-[-0.025em] text-foreground">
+              <h2 className="font-display text-[1.75rem] font-medium tracking-[-0.015em] text-foreground">
                 Experience
               </h2>
               <ol className="mt-9 space-y-12 sm:space-y-14">
@@ -116,8 +107,8 @@ export default function AboutPage() {
               </p>
             </section>
 
-            <section className="mt-16 sm:mt-20">
-              <h2 className="font-display text-[1.75rem] font-medium tracking-[-0.025em] text-foreground">
+            <section className="mt-20 sm:mt-24">
+              <h2 className="font-display text-[1.75rem] font-medium tracking-[-0.015em] text-foreground">
                 Beyond the current build
               </h2>
               <p className="mt-6 text-[17px] leading-[1.75] text-secondary sm:text-lg">
@@ -141,13 +132,6 @@ export default function AboutPage() {
               </ul>
             </section>
 
-            <a
-              href={`mailto:${portfolio.email}`}
-              className="group mt-20 inline-flex items-center gap-2 text-accent underline decoration-border-bright underline-offset-4 transition-colors duration-200 hover:text-foreground sm:mt-24"
-            >
-              Email me
-              <span aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1">↗</span>
-            </a>
           </div>
         </Container>
       </main>

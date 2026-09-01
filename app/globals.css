@@ -36,7 +36,6 @@
   --radius-lg: 12px;
 
   --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
-  --animate-enter: enter 500ms var(--ease-out-soft) both;
 }
 
 :root {
@@ -46,8 +45,8 @@
   --border-bright: #d4d4d0;
   --foreground: #141414;
   --secondary: #525252;
-  --muted: #737373;
-  --accent: #667f98;
+  --muted: #6f6f6b;
+  --accent: #526d87;
   --grid-line: rgb(20 20 20 / 0.045);
   --glow: rgb(102 127 152 / 0.05);
   --photo-ring: rgb(20 20 20 / 0.04);
@@ -77,16 +76,6 @@
   --footer-border: #343430;
 }
 
-@keyframes enter {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 
 @layer base {
   html {
@@ -108,20 +97,11 @@
   }
 
   .dark body {
-    background-image:
-      radial-gradient(ellipse 80% 50% at 50% -20%, var(--glow), transparent 55%),
-      linear-gradient(var(--grid-line) 1px, transparent 1px),
-      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-    background-size:
-      auto,
-      48px 48px,
-      48px 48px;
-    background-attachment: fixed;
-  }
-
-  /* Reading pages stay flat: no grid, no glow. Reading should feel quiet. */
-  .dark body:has([data-reading-page]) {
-    background-image: none;
+    background-image: radial-gradient(
+      ellipse 80% 50% at 50% -20%,
+      var(--glow),
+      transparent 55%
+    );
   }
 
   /* Selection is utility feedback — monochrome, never accent-colored. */
