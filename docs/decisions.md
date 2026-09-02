@@ -6,7 +6,7 @@ Format: `- YYYY-MM-DD — decision — one-line why.`
 
 ---
 
-- 2026-09-02 — Removed hero portrait from homepage (WorkspaceHero) — user requested image removal; about page portrait stays.
+- 2026-09-02 — Removed hero portrait from homepage (WorkspaceHero) and all site images — about page bio is now text-only in a single column.
 - 2026-09-01 — Removed dark-mode 48px grid and global glow — both light and dark modes now use flat backgrounds; visual personality belongs in project visuals, diagrams, typography, and interactions, not a permanent developer-grid background.
 - 2026-09-01 — Removed `data-reading-page` attribute and conditional grid opt-out — with the grid removed, the opt-out is dead code.
 - 2026-09-01 — Removed `animate-enter` keyframes and CSS variable — no entrance animations exist on the site; the rule is "never animate above-the-fold content into existence."

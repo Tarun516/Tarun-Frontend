@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { BackLink } from "@/components/BackLink";
 import { Container } from "@/components/Container";
 import { Footer } from "@/components/Footer";
 import { Navbar } from "@/components/Navbar";
 import { portfolio } from "@/data/portfolio";
-import portrait from "@/assets/Tarun.jpeg";
 
 export const metadata: Metadata = {
   title: "About",
@@ -36,20 +34,10 @@ export default function AboutPage() {
               </p>
             </header>
 
-            <div className="mt-12 grid items-start gap-8 sm:mt-16 sm:grid-cols-[11rem_minmax(0,1fr)] sm:gap-12">
-              <Image
-                src={portrait}
-                alt={portfolio.name}
-                width={352}
-                height={352}
-                className="aspect-square w-36 rounded-xl object-cover object-top sm:w-44"
-                priority
-              />
-              <div className="space-y-5 text-[17px] leading-[1.7] text-secondary sm:text-lg">
-                {portfolio.about.bio.map((paragraph) => (
-                  <p key={paragraph}>{paragraph}</p>
-                ))}
-              </div>
+            <div className="mt-12 space-y-5 text-[17px] leading-[1.7] text-secondary sm:mt-16 sm:text-lg">
+              {portfolio.about.bio.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
             </div>
 
             <section className="mt-20 sm:mt-24">
