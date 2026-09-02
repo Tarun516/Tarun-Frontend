@@ -1,6 +1,4 @@
-import Image from "next/image";
 import { portfolio } from "@/data/portfolio";
-import portrait from "@/assets/Tarun.jpeg";
 
 const socialLinks = [
   {
@@ -40,8 +38,8 @@ const socialLinks = [
 export function WorkspaceHero() {
   return (
     <section className="pt-14 pb-10 sm:pt-16 sm:pb-12 lg:pt-20 lg:pb-14">
-      <div className="grid items-start gap-8 sm:gap-10 lg:grid-cols-[minmax(0,1fr)_280px] lg:gap-14">
-        <div className="order-2 min-w-0 lg:order-1">
+      <div className="grid items-start gap-8 sm:gap-10">
+        <div className="min-w-0">
           <h1 className="font-display text-[2.375rem] leading-[1.06] font-medium tracking-[-0.015em] text-foreground sm:text-5xl lg:text-[3.5rem]">
             {portfolio.hero.greeting}
           </h1>
@@ -55,7 +53,6 @@ export function WorkspaceHero() {
           </p>
 
           <div className="mt-9 space-y-5 sm:mt-10">
-
             <nav
               aria-label="Profiles"
               className="flex items-center gap-3"
@@ -96,20 +93,6 @@ export function WorkspaceHero() {
                 </a>
               ) : null}
             </nav>
-          </div>
-        </div>
-
-        <div className="order-1 mx-auto w-full max-w-[200px] sm:max-w-[240px] lg:order-2 lg:mx-0 lg:max-w-none lg:justify-self-end">
-          <div className="overflow-hidden rounded-xl border border-border bg-surface shadow-[0_0_0_1px_var(--photo-ring)] sm:rounded-2xl">
-            <Image
-              src={portrait}
-              alt={portfolio.name}
-              width={560}
-              height={560}
-              className="aspect-square w-full object-cover object-top brightness-[0.92] contrast-[1.05]"
-              priority
-              sizes="(max-width: 1024px) 240px, 280px"
-            />
           </div>
         </div>
       </div>

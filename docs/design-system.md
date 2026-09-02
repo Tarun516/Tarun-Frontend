@@ -146,7 +146,7 @@ Banned motion: scale pop, bounce/spring, rotation, glowing buttons, large parall
 
 From Lighthouse guidance (2026-08-23): FCP 0.9s / TBT 50ms / CLS 0 were already good; the target was LCP < 2.5s and Speed Index. These rules protect that:
 
-1. **Never animate above-the-fold content into existence.** No opacity/transform entrance animations on the hero H1, tagline, portrait, bio, or CTAs — the LCP element must be immediately visible. Motion rewards interaction; it does not delay content.
+1. **Never animate above-the-fold content into existence.** No opacity/transform entrance animations on the hero H1, tagline, bio, or CTAs — the LCP element must be immediately visible. Motion rewards interaction; it does not delay content.
 2. **Font loading**: Manrope is the single preloaded editorial/UI family; `JetBrains_Mono({ preload: false })` in app/layout.tsx because code font is not needed above the fold.
 3. **Images**: keep `next/image` with explicit width/height, `priority` only for the true LCP image, and responsive `sizes`. Below-fold imagery defaults to lazy loading.
 4. **Always benchmark production builds** (`pnpm run build && pnpm start`), never `next dev`, and run Lighthouse 3× taking the median.
