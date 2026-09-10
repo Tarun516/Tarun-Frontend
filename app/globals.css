@@ -11,10 +11,6 @@
   --color-secondary: var(--secondary);
   --color-muted: var(--muted);
   --color-accent: var(--accent);
-  --color-footer: var(--footer);
-  --color-footer-foreground: var(--footer-foreground);
-  --color-footer-secondary: var(--footer-secondary);
-  --color-footer-border: var(--footer-border);
 
   --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
@@ -50,10 +46,6 @@
   --grid-line: rgb(20 20 20 / 0.045);
   --glow: rgb(102 127 152 / 0.05);
   --photo-ring: rgb(20 20 20 / 0.04);
-  --footer: #11110f;
-  --footer-foreground: #ecece8;
-  --footer-secondary: #b2b2aa;
-  --footer-border: #343430;
 }
 
 /* Warm charcoal — same editorial identity as light mode, not OLED black.
@@ -70,10 +62,6 @@
   --grid-line: rgb(255 255 255 / 0.008);
   --glow: rgb(142 161 180 / 0.03);
   --photo-ring: rgb(255 255 255 / 0.035);
-  --footer: #171714;
-  --footer-foreground: #ecece8;
-  --footer-secondary: #b2b2aa;
-  --footer-border: #343430;
 }
 
 

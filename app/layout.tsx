@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { JetBrains_Mono, Manrope } from "next/font/google";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { ThemeScript } from "@/components/theme-script";
+import { Navbar } from "@/components/Navbar";
 import { portfolio } from "@/data/portfolio";
 import { siteUrl } from "@/lib/site-url";
 import "./globals.css";
@@ -65,7 +66,18 @@ export default function RootLayout({
         <ThemeScript />
       </head>
       <body className="flex min-h-full flex-col">
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <a
+            href="#main"
+            className="sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[60] focus:rounded-md focus:border focus:border-border focus:bg-surface focus:px-3 focus:py-2 focus:text-sm lg:focus:left-[14rem]"
+          >
+            Skip to content
+          </a>
+          <Navbar />
+          <div className="flex min-h-full flex-1 flex-col lg:pl-52">
+            {children}
+          </div>
+        </ThemeProvider>
       </body>
     </html>
   );

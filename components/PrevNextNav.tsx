@@ -9,7 +9,7 @@ type PrevNextNavProps = {
 
 /**
  * Bottom-of-page navigation so detail pages never dead-end into the
- * footer. Renders `← Previous · All X · Next →` as one quiet row.
+ * page end. Renders `← Previous · All X · Next →` as one quiet row.
  */
 export function PrevNextNav({ prev, next, allHref, allLabel }: PrevNextNavProps) {
   return (

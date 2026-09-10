@@ -84,6 +84,7 @@ export const portfolio = {
     ] as { category: string; items: string[] }[],
   },
   nav: [
+    { label: "Home", href: "/" },
     { label: "About", href: "/about" },
     { label: "Projects", href: "/projects" },
     { label: "Writing", href: "/writing" },

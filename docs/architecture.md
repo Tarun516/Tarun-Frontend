@@ -40,12 +40,19 @@ lib/content/
 data/portfolio.ts         Global site facts only
 
 components/
+├── Navbar.tsx            Responsive site chrome: desktop rail + mobile drawer
 ├── mdx/                  Callout, CodeBlock — reusable blocks inside MDX
 ├── diagrams/             SVG architecture diagrams, keyed by id in frontmatter
-└── ...                   Navbar, Footer, MetricCard, etc.
+└── ...                   Navbar, MetricCard, ProjectCard, etc.
 
 mdx-components.tsx        Required by @next/mdx; global MDX component map
 ```
+
+The root `app/layout.tsx` owns the shared site shell. It renders the navigation
+once and offsets the page region by the desktop rail width; route pages own
+their main content. The navigation is the narrow client boundary
+because pathname state and the accessible mobile drawer require browser-side
+interaction, while layouts and route content remain Server Components.
 
 ## Core principle
 

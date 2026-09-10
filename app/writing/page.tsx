@@ -1,9 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { BackLink } from "@/components/BackLink";
 import { Container } from "@/components/Container";
-import { Footer } from "@/components/Footer";
-import { Navbar } from "@/components/Navbar";
 import { getPublishedArticles } from "@/lib/content";
 import { articleTypeLabel } from "@/lib/content/types";
 
@@ -21,13 +18,11 @@ export default function WritingPage() {
 
   return (
     <div className="flex min-h-full flex-1 flex-col">
-      <Navbar />
-      <main className="flex-1">
+      <main id="main" className="flex-1">
         <Container className="pt-12 pb-20 sm:pt-20 sm:pb-32">
           {/* Chronological feed, centered reading column. */}
           <div className="mx-auto max-w-[47.5rem]">
-            <BackLink href="/" label="Home" />
-            <h1 className="mt-10 font-display text-[2.25rem] font-medium tracking-[-0.015em] text-foreground sm:text-[2.75rem]">
+            <h1 className="font-display text-[2.25rem] font-medium tracking-[-0.015em] text-foreground sm:text-[2.75rem]">
               Writing
             </h1>
             <p className="mt-3 max-w-prose text-lg leading-relaxed text-secondary">
@@ -76,7 +71,6 @@ export default function WritingPage() {
           </div>
         </Container>
       </main>
-      <Footer />
     </div>
   );
 }

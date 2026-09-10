@@ -6,6 +6,13 @@ Format: `- YYYY-MM-DD — decision — one-line why.`
 
 ---
 
+- 2026-09-10 — Left-aligned the homepage hero heading, copy, and profile actions with the Projects/Writing composition column — gives the right-hand homepage one consistent visual axis while keeping deep reading pages centered.
+- 2026-09-10 — Added Home as the first explicit primary-nav item and 80–112px of homepage bottom padding — the brand is no longer the only discoverable Home route, and the final “All writing” action has a complete page-ending rhythm.
+- 2026-09-10 — Removed the global contact footer and its dedicated color tokens — the heavy closing surface conflicts with the persistent editorial rail; contact actions remain in the homepage hero and detail pages end with PrevNextNav.
+- 2026-09-10 — Narrowed the desktop identity rail from 256px to 208px and forced the brand onto one line — reduces unused horizontal space while retaining readable navigation labels.
+- 2026-09-10 — Replaced the repeated horizontal Navbar with root-layout site chrome: a fixed 256px desktop identity rail and an accessible mobile drawer — navigation stays persistent without borrowing the reference site's documentation-style tree.
+- 2026-09-10 — Removed redundant Home back-links from About, Projects, and Writing indexes while retaining shared BackLink navigation on detail pages — the sidebar/mobile brand now provides a persistent Home route.
+
 - 2026-09-02 — Removed hero portrait from homepage (WorkspaceHero) and all site images — about page bio is now text-only in a single column.
 - 2026-09-01 — Removed dark-mode 48px grid and global glow — both light and dark modes now use flat backgrounds; visual personality belongs in project visuals, diagrams, typography, and interactions, not a permanent developer-grid background.
 - 2026-09-01 — Removed `data-reading-page` attribute and conditional grid opt-out — with the grid removed, the opt-out is dead code.

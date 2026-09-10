@@ -68,11 +68,14 @@ No ALL-CAPS labels. Kickers read like `2026 · Systems design` — sentence case
 
 ## Content widths
 
-Columns are centered in the page shell (`mx-auto`) while text stays left-aligned:
+Columns are centered in the page shell (`mx-auto`) while text stays left-aligned.
+The homepage hero shares the 65rem composition column with Projects and Writing,
+and its heading, copy, and profile actions align to that column's left edge.
 
 - Homepage composition column: `max-w-[65rem]`
 - Projects index: `max-w-[56rem]`
 - Project detail + Writing index: `max-w-[47.5rem]`
+- About: `max-w-[47.5rem]`
 - Article detail: `max-w-[44rem]`
 
 Reading measures narrow as the reader goes deeper.
@@ -122,23 +125,25 @@ Hover color rules:
 - Titles/text stay foreground (or shift to secondary at most). Do not recolor titles to accent on hover.
 - The accent appears in focus rings, diagram highlights, and quiet underlines — not as a title hover color.
 
-Nav links and brand use a grow-from-left underline (`after:` pseudo-element, `origin-left scale-x-0 → scale-x-100`, 200ms); the active page keeps a persistent full underline.
+The desktop brand retains the grow-from-left underline (`after:` pseudo-element,
+`origin-left scale-x-0 → scale-x-100`, 200ms). Vertical nav items use a short
+steel-blue left hairline for the active route and secondary → foreground text
+for hover. Do not introduce filled desktop nav pills or route icons.
 
-The sticky navbar is direction-aware after 120px of scroll. It accumulates 14px
-of movement before reacting, translates upward while scrolling down, and returns
-while scrolling up or receiving keyboard focus. It never leaves layout flow and
-reduced-motion rules collapse the transition.
+Desktop navigation is a fixed, full-height 208px editorial rail with one subtle
+right border. Identity sits at the top, routes below it, and the theme control
+at the bottom. Below `lg`, use a 72px sticky header and an off-canvas left drawer;
+the drawer moves for no more than 240ms on the standard soft easing. The page
+content does not animate when opening the drawer.
 
-The desktop header is transparent, borderless, and 72px tall. Its wide
-three-column composition keeps the brand left, primary navigation truly
-centered, and theme control right; it does not inherit the narrower page shell.
+## Page endings
 
-## Footer
-
-The footer is a full contact section, not a utility strip. Light mode closes on
-warm charcoal; dark mode uses the elevated charcoal surface. It uses generous
-128–144px desktop / 80–96px mobile vertical padding, a single email CTA, internal route links (no arrows),
-and external profile links with `↗`.
+There is no global footer. Index and About pages end with their content and
+deliberate bottom spacing. The homepage reserves 80px mobile / 96px tablet /
+112px desktop after its final “All writing” link so the action never sits against
+the viewport edge. Project and article detail pages end with the shared
+`PrevNextNav`, so readers retain a clear next action without a heavy closing
+surface.
 
 Banned motion: scale pop, bounce/spring, rotation, glowing buttons, large parallax, scroll-triggered fade-ins on sections/cards/headlines. A reader should never wait for the website.
 

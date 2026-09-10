@@ -39,23 +39,23 @@ export function WorkspaceHero() {
   return (
     <section className="pt-14 pb-10 sm:pt-16 sm:pb-12 lg:pt-20 lg:pb-14">
       <div className="grid items-start gap-8 sm:gap-10">
-        <div className="min-w-0 text-center">
-          <h1 className="mx-auto font-display text-[2.375rem] leading-[1.06] font-medium tracking-[-0.015em] text-foreground sm:text-5xl lg:text-[3.5rem]">
+        <div className="min-w-0 text-left">
+          <h1 className="font-display text-[2.375rem] leading-[1.06] font-medium tracking-[-0.015em] text-foreground sm:text-5xl lg:text-[3.5rem]">
             {portfolio.hero.greeting}
           </h1>
 
-          <p className="mx-auto mt-5 max-w-xl text-lg leading-[1.5] text-secondary sm:mt-6 sm:text-xl lg:text-[1.375rem]">
+          <p className="mt-5 max-w-xl text-lg leading-[1.5] text-secondary sm:mt-6 sm:text-xl lg:text-[1.375rem]">
             {portfolio.hero.tagline}
           </p>
 
-          <p className="mx-auto mt-8 max-w-xl text-base leading-[1.7] text-secondary sm:mt-10 sm:text-[17px]">
+          <p className="mt-8 max-w-xl text-base leading-[1.7] text-secondary sm:mt-10 sm:text-[17px]">
             {portfolio.focus}
           </p>
 
           <div className="mt-9 space-y-5 sm:mt-10">
             <nav
               aria-label="Profiles"
-              className="flex items-center justify-center gap-3"
+              className="flex items-center justify-start gap-3"
             >
               {socialLinks.map((link) => (
                 <a

@@ -1,8 +1,6 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { Container } from "@/components/Container";
-import { Footer } from "@/components/Footer";
-import { Navbar } from "@/components/Navbar";
 import { ProjectCard } from "@/components/ProjectCard";
 import { WorkspaceHero } from "@/components/WorkspaceHero";
 import { getHomeProjects, getPublishedArticles } from "@/lib/content";
@@ -23,17 +21,8 @@ export default function Home() {
 
   return (
     <div className="flex min-h-full flex-1 flex-col">
-      <a
-        href="#main"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-50 focus:rounded-md focus:border focus:border-border focus:bg-surface focus:px-3 focus:py-2 focus:text-sm"
-      >
-        Skip to content
-      </a>
-
-      <Navbar />
-
       <main id="main" className="flex-1">
-        <Container>
+        <Container className="pb-20 sm:pb-24 lg:pb-28">
           {/* Centered composition column; typography stays left-aligned. */}
           <div className="mx-auto max-w-[65rem]">
             <WorkspaceHero />
@@ -135,8 +124,6 @@ export default function Home() {
           </div>
         </Container>
       </main>
-
-      <Footer />
     </div>
   );
 }

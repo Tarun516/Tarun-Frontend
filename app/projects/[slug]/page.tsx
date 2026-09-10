@@ -3,9 +3,7 @@ import { notFound } from "next/navigation";
 import { BackLink } from "@/components/BackLink";
 import { Container } from "@/components/Container";
 import { ContentDiagram, isDiagramId } from "@/components/diagrams";
-import { Footer } from "@/components/Footer";
 import { MetricCard } from "@/components/MetricCard";
-import { Navbar } from "@/components/Navbar";
 import { PrevNextNav } from "@/components/PrevNextNav";
 import { getAllProjects, getProject, getProjectSlugs } from "@/lib/content";
 
@@ -64,9 +62,7 @@ export default async function ProjectPage({ params }: PageProps) {
 
   return (
     <div className="flex min-h-full flex-1 flex-col">
-      <Navbar />
-
-      <main className="flex-1">
+      <main id="main" className="flex-1">
         <Container className="pt-12 pb-20 sm:pt-20 sm:pb-32">
           {/* Reading column, centered in the page shell; text stays left-aligned. */}
           <div className="mx-auto max-w-[47.5rem]">
@@ -147,7 +143,6 @@ export default async function ProjectPage({ params }: PageProps) {
         </Container>
       </main>
 
-      <Footer />
     </div>
   );
 }

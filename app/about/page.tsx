@@ -1,8 +1,5 @@
 import type { Metadata } from "next";
-import { BackLink } from "@/components/BackLink";
 import { Container } from "@/components/Container";
-import { Footer } from "@/components/Footer";
-import { Navbar } from "@/components/Navbar";
 import { portfolio } from "@/data/portfolio";
 
 export const metadata: Metadata = {
@@ -14,14 +11,11 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <div className="flex min-h-full flex-1 flex-col">
-      <Navbar />
-      <main className="flex-1">
+      <main id="main" className="flex-1">
         <Container className="pt-12 pb-20 sm:pt-20 sm:pb-32">
-          {/* Personal-narrative reading column, centered. */}
+          {/* Personal-narrative reading column, centered in the page region. */}
           <div className="mx-auto max-w-[47.5rem]">
-            <BackLink href="/" label="Home" />
-
-            <header className="mt-12 sm:mt-16">
+            <header>
               <p className="text-sm text-muted">
                 {portfolio.role} · {portfolio.location}
               </p>
@@ -123,7 +117,6 @@ export default function AboutPage() {
           </div>
         </Container>
       </main>
-      <Footer />
     </div>
   );
 }

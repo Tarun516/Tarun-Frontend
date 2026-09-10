@@ -3,162 +3,202 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Container } from "@/components/Container";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { portfolio } from "@/data/portfolio";
 
-/**
- * Underline that grows from left to right (after: scale-x-0 → 100).
- * Active page keeps a full underline. Motion grammar: 200ms, soft ease.
- */
 const growUnderline =
   "relative after:absolute after:left-0 after:-bottom-1.5 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-current after:transition-transform after:duration-200 after:ease-[cubic-bezier(0.22,1,0.36,1)] hover:after:scale-x-100";
 
 export function Navbar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
-  const [hidden, setHidden] = useState(false);
-  const lastScrollY = useRef(0);
-  const scrollDelta = useRef(0);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const drawerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!open) return;
 
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setOpen(false);
-    };
+    const previousOverflow = document.body.style.overflow;
+    const drawer = drawerRef.current;
+    const focusable = drawer?.querySelectorAll<HTMLElement>(
+      'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+    );
 
-    document.addEventListener("keydown", onKeyDown);
-    const previous = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+    focusable?.[0]?.focus();
 
-    return () => {
-      document.removeEventListener("keydown", onKeyDown);
-      document.body.style.overflow = previous;
-    };
-  }, [open]);
-
-  useEffect(() => {
-    const revealNearTop = 120;
-    const directionThreshold = 14;
-
-    const onScroll = () => {
-      const currentY = Math.max(window.scrollY, 0);
-      const delta = currentY - lastScrollY.current;
-      lastScrollY.current = currentY;
-
-      if (currentY <= revealNearTop || open) {
-        scrollDelta.current = 0;
-        setHidden(false);
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+        triggerRef.current?.focus();
         return;
       }
 
-      if (
-        (delta > 0 && scrollDelta.current < 0) ||
-        (delta < 0 && scrollDelta.current > 0)
-      ) {
-        scrollDelta.current = 0;
-      }
-      scrollDelta.current += delta;
+      if (event.key !== "Tab" || !focusable?.length) return;
 
-      if (scrollDelta.current > directionThreshold) {
-        setHidden(true);
-        scrollDelta.current = 0;
-      } else if (scrollDelta.current < -directionThreshold) {
-        setHidden(false);
-        scrollDelta.current = 0;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
       }
     };
 
-    lastScrollY.current = window.scrollY;
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      document.body.style.overflow = previousOverflow;
+    };
   }, [open]);
 
-  return (
-    <header
-      className={`sticky top-0 z-40 border-b border-border/50 bg-background/90 backdrop-blur-sm transition-transform duration-[240ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
-        hidden ? "-translate-y-full" : "translate-y-0"
-      }`}
-      onFocusCapture={() => setHidden(false)}
-    >
-      <Container className="grid h-[4.5rem] grid-cols-[1fr_auto] items-center gap-3 md:max-w-none md:grid-cols-[1fr_auto_1fr] md:px-10 lg:px-14 xl:px-20">
-        <Link
-          href="/"
-          className={`min-w-0 justify-self-start truncate font-display text-sm font-medium tracking-tight text-foreground ${growUnderline}`}
-        >
-          {portfolio.name}
-        </Link>
+  const closeDrawer = () => setOpen(false);
 
-        <nav
-          aria-label="Primary"
-          className="hidden items-center gap-9 md:flex lg:gap-10"
-        >
+  return (
+    <>
+      <aside className="fixed inset-y-0 left-0 z-40 hidden w-52 flex-col border-r border-border bg-background lg:flex">
+        <div className="flex min-h-0 flex-1 flex-col px-7 py-10 xl:py-12">
+          <div>
+            <Link
+              href="/"
+              className={`inline-block whitespace-nowrap font-display text-lg font-medium tracking-[-0.02em] text-foreground ${growUnderline}`}
+            >
+              {portfolio.name}
+            </Link>
+            <p className="mt-2 text-sm leading-relaxed text-muted">
+              {portfolio.role} · {portfolio.location}
+            </p>
+          </div>
+
+          <nav aria-label="Primary" className="mt-20 flex flex-col items-start gap-5">
+            {portfolio.nav.map((item) => (
+              <DesktopNavItem key={item.href} item={item} pathname={pathname} />
+            ))}
+          </nav>
+
+          <div className="mt-auto flex items-center justify-between border-t border-border pt-6">
+            <span className="text-sm text-muted">Theme</span>
+            <ThemeToggle className="-mr-2" />
+          </div>
+        </div>
+      </aside>
+
+      <header className="sticky top-0 z-40 border-b border-border/70 bg-background/90 backdrop-blur-sm lg:hidden">
+        <div className="flex h-[4.5rem] items-center justify-between gap-4 px-4 sm:px-6">
+          <Link
+            href="/"
+            className={`truncate font-display text-sm font-medium tracking-tight text-foreground ${growUnderline}`}
+          >
+            {portfolio.name}
+          </Link>
+
+          <div className="flex items-center gap-1">
+            <ThemeToggle />
+            <button
+              ref={triggerRef}
+              type="button"
+              className="inline-flex size-9 items-center justify-center rounded-md text-secondary transition-colors duration-200 ease-out hover:bg-surface hover:text-foreground"
+              aria-expanded={open}
+              aria-controls="mobile-navigation"
+              aria-label="Open navigation"
+              onClick={() => setOpen(true)}
+            >
+              <MenuIcon />
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <button
+        type="button"
+        aria-label="Close navigation"
+        tabIndex={open ? 0 : -1}
+        className={`fixed inset-0 z-40 bg-foreground/20 backdrop-blur-[1px] transition-opacity duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] lg:hidden ${
+          open ? "opacity-100" : "pointer-events-none opacity-0"
+        }`}
+        onClick={closeDrawer}
+      />
+
+      <div
+        ref={drawerRef}
+        id="mobile-navigation"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Site navigation"
+        aria-hidden={!open}
+        inert={!open}
+        className={`fixed inset-y-0 left-0 z-50 flex w-[min(20rem,86vw)] flex-col border-r border-border bg-background px-6 py-7 shadow-xl transition-transform duration-[240ms] ease-[cubic-bezier(0.22,1,0.36,1)] lg:hidden ${
+          open ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <Link
+              href="/"
+              className="whitespace-nowrap font-display text-lg font-medium tracking-[-0.02em] text-foreground"
+              onClick={closeDrawer}
+            >
+              {portfolio.name}
+            </Link>
+            <p className="mt-2 text-sm text-muted">
+              {portfolio.role} · {portfolio.location}
+            </p>
+          </div>
+          <button
+            type="button"
+            className="-mr-2 inline-flex size-9 shrink-0 items-center justify-center rounded-md text-secondary transition-colors duration-200 hover:bg-surface hover:text-foreground"
+            aria-label="Close navigation"
+            onClick={() => {
+              closeDrawer();
+              triggerRef.current?.focus();
+            }}
+          >
+            <CloseIcon />
+          </button>
+        </div>
+
+        <nav aria-label="Primary" className="mt-16 flex flex-col gap-2">
           {portfolio.nav.map((item) => (
-            <NavItem
-              key={item.label}
+            <MobileNavItem
+              key={item.href}
               item={item}
               pathname={pathname}
-              growUnderline={growUnderline}
+              onNavigate={closeDrawer}
             />
           ))}
         </nav>
 
-        <div className="flex items-center justify-self-end gap-1 sm:gap-2">
-          <ThemeToggle />
-
-          <button
-            type="button"
-            className="inline-flex size-9 items-center justify-center rounded-md text-secondary transition-colors duration-200 ease-out hover:bg-surface hover:text-foreground md:hidden"
-            aria-expanded={open}
-            aria-controls="mobile-nav"
-            aria-label={open ? "Close menu" : "Open menu"}
-            onClick={() => setOpen((value) => !value)}
-          >
-            {open ? <CloseIcon /> : <MenuIcon />}
-          </button>
+        <div className="mt-auto flex items-center justify-between border-t border-border pt-5">
+          <span className="text-sm text-muted">Theme</span>
+          <ThemeToggle className="-mr-2" />
         </div>
-      </Container>
-
-      {open ? (
-        <div
-          id="mobile-nav"
-          className="border-t border-border bg-background md:hidden"
-        >
-          <Container className="flex flex-col gap-1 py-3">
-            {portfolio.nav.map((item) => (
-              <MobileNavItem
-                key={item.label}
-                item={item}
-                pathname={pathname}
-                onNavigate={() => setOpen(false)}
-              />
-            ))}
-          </Container>
-        </div>
-      ) : null}
-    </header>
+      </div>
+    </>
   );
 }
 
-function NavItem({
+function isActive(item: (typeof portfolio.nav)[number], pathname: string) {
+  return (
+    !item.external &&
+    (item.href === "/" ? pathname === "/" : pathname.startsWith(item.href))
+  );
+}
+
+function DesktopNavItem({
   item,
   pathname,
-  growUnderline,
 }: {
   item: (typeof portfolio.nav)[number];
   pathname: string;
-  growUnderline: string;
 }) {
-  const active =
-    !item.external &&
-    (item.href === "/"
-      ? pathname === "/"
-      : pathname.startsWith(item.href));
-
-  // Active pages keep a persistent full underline; others animate it in.
-  const className = `text-sm transition-colors duration-200 hover:text-foreground ${growUnderline} ${
-    active ? "text-foreground after:scale-x-100" : "text-secondary"
+  const active = isActive(item, pathname);
+  const className = `relative py-1 pl-4 text-[15px] transition-colors duration-200 before:absolute before:top-1/2 before:left-0 before:h-4 before:w-px before:-translate-y-1/2 before:bg-accent before:transition-opacity before:duration-200 ${
+    active
+      ? "text-foreground before:opacity-100"
+      : "text-secondary before:opacity-0 hover:text-foreground"
   }`;
 
   if (item.external) {
@@ -170,11 +210,7 @@ function NavItem({
   }
 
   return (
-    <Link
-      href={item.href}
-      className={className}
-      aria-current={active ? "page" : undefined}
-    >
+    <Link href={item.href} className={className} aria-current={active ? "page" : undefined}>
       {item.label}
     </Link>
   );
@@ -189,14 +225,11 @@ function MobileNavItem({
   pathname: string;
   onNavigate: () => void;
 }) {
-  const active =
-    !item.external &&
-    (item.href === "/"
-      ? pathname === "/"
-      : pathname.startsWith(item.href));
-
-  const className = `rounded-md px-3 py-3 text-base transition-colors duration-200 ease-out hover:bg-surface hover:text-foreground ${
-    active ? "text-foreground" : "text-secondary"
+  const active = isActive(item, pathname);
+  const className = `relative rounded-r-md py-3 pr-3 pl-4 text-base transition-colors duration-200 before:absolute before:top-1/2 before:left-0 before:h-5 before:w-px before:-translate-y-1/2 before:bg-accent ${
+    active
+      ? "bg-surface text-foreground before:opacity-100"
+      : "text-secondary before:opacity-0 hover:bg-surface hover:text-foreground"
   }`;
 
   if (item.external) {
@@ -252,7 +285,7 @@ function CloseIcon() {
       className="size-5"
       aria-hidden="true"
     >
-      <path d="M6 6l12 12M18 6L6 18" />
+      <path d="M6 6l12 12M18 6 6 18" />
     </svg>
   );
 }

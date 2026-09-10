@@ -1,9 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { BackLink } from "@/components/BackLink";
 import { Container } from "@/components/Container";
-import { Footer } from "@/components/Footer";
-import { Navbar } from "@/components/Navbar";
 import { ProjectCard } from "@/components/ProjectCard";
 import { getProjectEntries } from "@/lib/content";
 import { isDiagramId } from "@/components/diagrams";
@@ -29,12 +26,10 @@ export default function ProjectsPage() {
 
   return (
     <div className="flex min-h-full flex-1 flex-col">
-      <Navbar />
-      <main className="flex-1">
+      <main id="main" className="flex-1">
         <Container className="pt-12 pb-20 sm:pt-20 sm:pb-32">
           <div className="mx-auto max-w-[56rem]">
-            <BackLink href="/" label="Home" />
-            <h1 className="mt-10 font-display text-[2.25rem] font-medium tracking-[-0.015em] text-foreground sm:text-[2.75rem]">
+            <h1 className="font-display text-[2.25rem] font-medium tracking-[-0.015em] text-foreground sm:text-[2.75rem]">
               Projects
             </h1>
             <p className="mt-3 max-w-prose text-lg leading-relaxed text-secondary">
@@ -89,7 +84,6 @@ export default function ProjectsPage() {
           </div>
         </Container>
       </main>
-      <Footer />
     </div>
   );
 }
