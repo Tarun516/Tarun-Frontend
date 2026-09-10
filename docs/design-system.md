@@ -131,10 +131,12 @@ steel-blue left hairline for the active route and secondary → foreground text
 for hover. Do not introduce filled desktop nav pills or route icons.
 
 Desktop navigation is a fixed, full-height 208px editorial rail with one subtle
-right border. Identity sits at the top, routes below it, and the theme control
-at the bottom. Below `lg`, use a 72px sticky header and an off-canvas left drawer;
-the drawer moves for no more than 240ms on the standard soft easing. The page
-content does not animate when opening the drawer.
+right border. Identity sits at the top and routes below it; utility controls do
+not occupy the rail. On desktop, the theme toggle is fixed at the top-right of
+the page region with a quiet tokenized border and translucent background. Below
+`lg`, place it in the 72px sticky header beside the off-canvas drawer trigger;
+do not repeat it inside the drawer. The drawer moves for no more than 240ms on
+the standard soft easing. The page content does not animate when opening it.
 
 ## Page endings
 
@@ -146,6 +148,10 @@ the viewport edge. Project and article detail pages end with the shared
 surface.
 
 Banned motion: scale pop, bounce/spring, rotation, glowing buttons, large parallax, scroll-triggered fade-ins on sections/cards/headlines. A reader should never wait for the website.
+
+The root `<html>` keeps `data-scroll-behavior="smooth"` in sync with the global
+CSS rule. This lets Next.js temporarily use instant scrolling for route changes
+while preserving smooth behavior for in-page navigation.
 
 ## Performance rules (locked)
 

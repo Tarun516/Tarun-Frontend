@@ -78,13 +78,10 @@ export function Navbar() {
               <DesktopNavItem key={item.href} item={item} pathname={pathname} />
             ))}
           </nav>
-
-          <div className="mt-auto flex items-center justify-between border-t border-border pt-6">
-            <span className="text-sm text-muted">Theme</span>
-            <ThemeToggle className="-mr-2" />
-          </div>
         </div>
       </aside>
+
+      <ThemeToggle className="fixed top-6 right-6 z-40 hidden border border-border bg-background/90 backdrop-blur-sm lg:inline-flex xl:right-8" />
 
       <header className="sticky top-0 z-40 border-b border-border/70 bg-background/90 backdrop-blur-sm lg:hidden">
         <div className="flex h-[4.5rem] items-center justify-between gap-4 px-4 sm:px-6">
@@ -171,10 +168,6 @@ export function Navbar() {
           ))}
         </nav>
 
-        <div className="mt-auto flex items-center justify-between border-t border-border pt-5">
-          <span className="text-sm text-muted">Theme</span>
-          <ThemeToggle className="-mr-2" />
-        </div>
       </div>
     </>
   );

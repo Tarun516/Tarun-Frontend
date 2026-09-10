@@ -19,15 +19,19 @@ HOME
   `/#section` anchors.
 - At `lg` and above, navigation is a fixed 208px (`w-52`) full-height left
   rail. Identity sits at the top, primary routes form a vertical list, and the
-  theme control sits at the bottom. The root layout offsets the full page region
-  by the same width, so content never passes beneath the rail. The identity link
-  is kept on one line.
+  rail contains no utility controls. The root layout offsets the full page
+  region by the same width, so content never passes beneath the rail. The
+  identity link is kept on one line.
 - Desktop active routes use a short steel-blue hairline to the left of the
   label. Detail pages count as active for their parent section. Inactive items
   move from secondary to foreground on hover.
-- Below `lg`, the rail becomes a sticky 72px header with brand, theme control,
+- The desktop theme toggle is a fixed icon control in the page region's
+  top-right corner, inset 24px (32px at `xl`). Below `lg`, the rail becomes a
+  sticky 72px header with brand, theme control,
   and menu trigger. The trigger opens a left drawer sized to
   `min(20rem, 86vw)` over a quiet backdrop.
+- The mobile drawer contains identity and navigation only; it does not duplicate
+  the theme control already present in the header.
 - The mobile drawer locks body scrolling, traps keyboard focus, closes with
   Escape, backdrop click, its close control, or route selection, and restores
   focus to the menu trigger when explicitly dismissed.
