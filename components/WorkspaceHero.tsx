@@ -37,18 +37,18 @@ const socialLinks = [
  */
 export function WorkspaceHero() {
   return (
-    <section className="pt-14 pb-10 sm:pt-16 sm:pb-12 lg:pt-20 lg:pb-14">
+    <section className="pt-14 sm:pt-16 lg:pt-20">
       <div className="grid items-start gap-8 sm:gap-10">
         <div className="min-w-0 text-left">
-          <h1 className="font-display text-[2.375rem] leading-[1.06] font-medium tracking-[-0.015em] text-foreground sm:text-5xl lg:text-[3.5rem]">
+          <h1 className="font-display text-[2.375rem] leading-[1.06] font-medium tracking-[-0.015em] text-foreground sm:text-[2.75rem] lg:text-5xl">
             {portfolio.hero.greeting}
           </h1>
 
-          <p className="mt-5 max-w-xl text-lg leading-[1.5] text-secondary sm:mt-6 sm:text-xl lg:text-[1.375rem]">
+          <p className="mt-5 max-w-xl text-lg leading-[1.5] text-secondary sm:mt-6 sm:text-xl">
             {portfolio.hero.tagline}
           </p>
 
-          <p className="mt-8 max-w-xl text-base leading-[1.7] text-secondary sm:mt-10 sm:text-[17px]">
+          <p className="mt-8 max-w-xl text-[15px] leading-[1.7] text-secondary sm:mt-10 sm:text-base">
             {portfolio.focus}
           </p>
 

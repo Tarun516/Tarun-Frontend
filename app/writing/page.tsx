@@ -44,7 +44,7 @@ export default function WritingPage() {
                       { year: "numeric", month: "long", day: "numeric" },
                     )}
                   </p>
-                  <h2 className="font-display mt-2 flex items-baseline gap-x-3 text-xl font-medium tracking-[-0.02em] text-foreground sm:text-2xl">
+                  <h2 className="font-display mt-2 flex items-baseline gap-x-3 text-xl font-medium tracking-[-0.01em] text-foreground sm:text-2xl">
                     <span>{article.title}</span>
                     <span
                       aria-hidden="true"

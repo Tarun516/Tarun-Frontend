@@ -7,9 +7,9 @@ import { getHomeProjects, getPublishedArticles } from "@/lib/content";
 
 function SectionLabel({ children }: { children: ReactNode }) {
   return (
-    <p className="font-display text-xl font-medium tracking-[-0.02em] text-foreground sm:text-2xl">
+    <h2 className="text-sm font-medium text-muted">
       {children}
-    </p>
+    </h2>
   );
 }
 
@@ -24,12 +24,12 @@ export default function Home() {
       <main id="main" className="flex-1">
         <Container className="pb-20 sm:pb-24 lg:pb-28">
           {/* Centered composition column; typography stays left-aligned. */}
-          <div className="mx-auto max-w-[65rem]">
+          <div className="mx-auto max-w-[56rem]">
             <WorkspaceHero />
 
             <section
               id="projects"
-              className="scroll-mt-20 pt-20 sm:scroll-mt-24 sm:pt-24 lg:pt-28"
+              className="mt-20 scroll-mt-20 sm:mt-24 sm:scroll-mt-24 lg:mt-28"
             >
               <SectionLabel>Projects</SectionLabel>
 
@@ -65,7 +65,7 @@ export default function Home() {
 
             <section
               id="writing"
-              className="mt-28 scroll-mt-20 sm:mt-32 sm:scroll-mt-24 lg:mt-36"
+              className="mt-20 scroll-mt-20 sm:mt-24 sm:scroll-mt-24 lg:mt-28"
             >
               <SectionLabel>Writing</SectionLabel>
 
@@ -86,7 +86,7 @@ export default function Home() {
                       )}
                     </time>
                     <span className="min-w-0">
-                      <span className="font-display block text-base font-medium tracking-[-0.02em] text-foreground transition-colors duration-200 ease-out group-hover:text-secondary sm:text-lg">
+                      <span className="font-display block text-base font-medium text-foreground transition-colors duration-200 ease-out group-hover:text-secondary sm:text-lg">
                         {article.title}
                         <span
                           aria-hidden="true"

@@ -6,6 +6,8 @@ Format: `- YYYY-MM-DD — decision — one-line why.`
 
 ---
 
+- 2026-09-11 — Normalized the typography hierarchy and narrowed the homepage composition from 65rem to 56rem — clearer size steps, optical tracking, and denser alignment replace competing headings and unused horizontal space without changing the Manrope identity.
+- 2026-09-11 — Tightened homepage section boundaries to one 80/96/112px responsive margin and made Projects/Writing labels semantic h2 headings — removes stacked dead space while preserving the established editorial hierarchy.
 - 2026-09-10 — Declared `data-scroll-behavior="smooth"` on the root html element — allows Next.js 16 to disable the global smooth-scroll rule during route transitions and removes its runtime warning.
 - 2026-09-10 — Moved the theme toggle from the sidebar footer to a fixed desktop top-right control while retaining it in the mobile header — keeps the identity rail navigation-only and places the global display control in a conventional utility position.
 - 2026-09-10 — Left-aligned the homepage hero heading, copy, and profile actions with the Projects/Writing composition column — gives the right-hand homepage one consistent visual axis while keeping deep reading pages centered.

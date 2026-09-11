@@ -54,11 +54,14 @@ JetBrains Mono is for actual code and technical data — never for section label
 
 ## Type scale
 
-- Hero: 48–56px, weight 500, tracking -0.015em to -0.02em
-- Page / project / article H1: 40–48px desktop, 32–36px mobile, tracking -0.015em
-- H2: 27–30px, tracking -0.01em
-- H3: 19–21px, tracking normal to -0.01em
-- Body: 16–17px, weight 400, line-height 1.7–1.75, tracking normal
+- Hero: 48px desktop / 38px mobile, weight 500, tracking -0.015em
+- Index page H1: 44px desktop / 36px mobile, weight 500, tracking -0.015em
+- Project/article detail H1: 38–40px desktop / 32px mobile, weight 500, tracking -0.015em
+- Narrative H2: 28px, weight 500, tracking -0.01em
+- Narrative H3: 19–21px, weight 500, tracking normal to -0.01em
+- Homepage section label: 14px, weight 500, muted, tracking normal
+- Featured/secondary project title: 28px / 20px; homepage writing title: 18px
+- Body: 16px, weight 400, line-height 1.7–1.75, tracking normal; 18px is reserved for lead copy
 - Metadata: 13–14px, weight 400, tracking normal
 - Navbar: 14–15px, weight 400/500, tracking normal
 
@@ -66,13 +69,17 @@ Weights: regular 400 and medium 500. Semibold only occasionally; bold almost nev
 
 No ALL-CAPS labels. Kickers read like `2026 · Systems design` — sentence case, Manrope, muted color.
 
+Tracking follows optical size: `-0.015em` at 36px and above, `-0.01em` at
+20–32px, and normal tracking below 20px. Do not use display-size tracking on
+navigation, metadata, or compact list titles.
+
 ## Content widths
 
 Columns are centered in the page shell (`mx-auto`) while text stays left-aligned.
-The homepage hero shares the 65rem composition column with Projects and Writing,
+The homepage hero shares the 56rem composition column with Projects and Writing,
 and its heading, copy, and profile actions align to that column's left edge.
 
-- Homepage composition column: `max-w-[65rem]`
+- Homepage composition column: `max-w-[56rem]`
 - Projects index: `max-w-[56rem]`
 - Project detail + Writing index: `max-w-[47.5rem]`
 - About: `max-w-[47.5rem]`
@@ -83,19 +90,22 @@ Reading measures narrow as the reader goes deeper.
 ## Spacing
 
 Desktop:
-- Major homepage boundary: 144–160px
+- Major homepage boundary: 112px
 - Major narrative/page chapters: 88–104px
 - Content groups: 40–56px
 - Heading → copy: 20–32px
 - Paragraph rhythm: 20–24px
 
 Mobile:
-- Major homepage boundary: 88–96px
+- Major homepage boundary: 80px mobile / 96px tablet
 - Page chapters: 64–72px
 - Content groups: 32–40px
 - Heading → copy: 16–24px
 
-Do not achieve spacing by randomly stacking `pb-14 + pt-12 + mt-20`. Define/reuse understandable spacing tokens or consistent utilities.
+Homepage sections use one boundary margin (`mt-20 sm:mt-24 lg:mt-28`) instead
+of stacking bottom and top padding on adjacent sections. Do not achieve spacing
+by randomly stacking `pb-14 + pt-12 + mt-20`; define or reuse understandable
+spacing tokens and consistent utilities.
 
 ## MDX body styling
 

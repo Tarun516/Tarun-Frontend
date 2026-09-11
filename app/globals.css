@@ -116,7 +116,7 @@
    * not borders, boxes or numbering. Whitespace > lines.
    */
   .mdx-body h2 {
-    @apply font-display mt-20 text-[1.75rem] leading-snug font-medium tracking-[-0.02em] text-foreground;
+    @apply font-display mt-20 text-[1.75rem] leading-snug font-medium tracking-[-0.01em] text-foreground;
   }
 
   .mdx-body h3 {

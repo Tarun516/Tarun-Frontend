@@ -71,6 +71,9 @@ Homepage placement is explicit via `homeOrder` frontmatter on projects:
 Never rely on filesystem or year sorting to decide what recruiters see first.
 The homepage always ends its sections with "View all projects →" / "All
 writing →" links and reserves 80–112px of bottom space after the final link.
+Its Hero → Projects and Projects → Writing boundaries use the same 80px mobile,
+96px tablet, and 112px desktop rhythm; visible section labels are semantic `h2`
+headings.
 
 ## Project detail layout order
 

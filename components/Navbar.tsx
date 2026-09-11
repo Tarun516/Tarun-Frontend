@@ -64,7 +64,7 @@ export function Navbar() {
           <div>
             <Link
               href="/"
-              className={`inline-block whitespace-nowrap font-display text-lg font-medium tracking-[-0.02em] text-foreground ${growUnderline}`}
+              className={`inline-block whitespace-nowrap font-display text-lg font-medium tracking-[-0.01em] text-foreground ${growUnderline}`}
             >
               {portfolio.name}
             </Link>
@@ -135,7 +135,7 @@ export function Navbar() {
           <div>
             <Link
               href="/"
-              className="whitespace-nowrap font-display text-lg font-medium tracking-[-0.02em] text-foreground"
+              className="whitespace-nowrap font-display text-lg font-medium tracking-[-0.01em] text-foreground"
               onClick={closeDrawer}
             >
               {portfolio.name}

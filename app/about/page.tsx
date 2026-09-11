@@ -19,10 +19,10 @@ export default function AboutPage() {
               <p className="text-sm text-muted">
                 {portfolio.role} · {portfolio.location}
               </p>
-              <h1 className="mt-4 font-display text-[2.5rem] leading-[1.05] font-medium tracking-[-0.015em] text-foreground sm:text-[3.25rem]">
+              <h1 className="mt-4 font-display text-[2.25rem] leading-[1.08] font-medium tracking-[-0.015em] text-foreground sm:text-[2.75rem]">
                 About
               </h1>
-              <p className="mt-7 max-w-2xl font-display text-xl leading-[1.55] tracking-[-0.015em] text-foreground sm:text-[1.375rem]">
+              <p className="mt-7 max-w-2xl font-display text-xl leading-[1.55] tracking-[-0.01em] text-foreground sm:text-[1.375rem]">
                 I build reliable systems and products around AI,
                 infrastructure, and developer experience.
               </p>
@@ -35,7 +35,7 @@ export default function AboutPage() {
             </div>
 
             <section className="mt-20 sm:mt-24">
-              <h2 className="font-display text-[1.75rem] font-medium tracking-[-0.015em] text-foreground">
+              <h2 className="font-display text-[1.75rem] font-medium tracking-[-0.01em] text-foreground">
                 Today
               </h2>
               <p className="mt-6 text-[17px] leading-[1.75] text-secondary sm:text-lg">
@@ -44,7 +44,7 @@ export default function AboutPage() {
             </section>
 
             <section className="mt-20 sm:mt-24">
-              <h2 className="font-display text-[1.75rem] font-medium tracking-[-0.015em] text-foreground">
+              <h2 className="font-display text-[1.75rem] font-medium tracking-[-0.01em] text-foreground">
                 Experience
               </h2>
               <ol className="mt-9 space-y-12 sm:space-y-14">
@@ -53,7 +53,7 @@ export default function AboutPage() {
                     <div className="sm:grid sm:grid-cols-[9rem_minmax(0,1fr)] sm:gap-8">
                       <p className="text-sm text-muted">{item.period}</p>
                       <div className="mt-2 sm:mt-0">
-                        <h3 className="font-display text-xl font-medium tracking-[-0.015em] text-foreground">
+                        <h3 className="font-display text-xl font-medium tracking-[-0.01em] text-foreground">
                           {item.company}
                         </h3>
                         <p className="mt-1 text-[15px] text-muted">{item.role}</p>
@@ -78,10 +78,10 @@ export default function AboutPage() {
             </section>
 
             <section className="mt-20 sm:mt-24">
-              <h2 className="font-display text-[1.75rem] font-medium tracking-[-0.025em] text-foreground">
+              <h2 className="font-display text-[1.75rem] font-medium tracking-[-0.01em] text-foreground">
                 Education
               </h2>
-              <p className="mt-7 font-display text-xl font-medium tracking-[-0.015em] text-foreground">
+              <p className="mt-7 font-display text-xl font-medium tracking-[-0.01em] text-foreground">
                 {portfolio.about.education.degree}
               </p>
               <p className="mt-2 text-[15px] text-muted">
@@ -90,7 +90,7 @@ export default function AboutPage() {
             </section>
 
             <section className="mt-20 sm:mt-24">
-              <h2 className="font-display text-[1.75rem] font-medium tracking-[-0.015em] text-foreground">
+              <h2 className="font-display text-[1.75rem] font-medium tracking-[-0.01em] text-foreground">
                 Beyond the current build
               </h2>
               <p className="mt-6 text-[17px] leading-[1.75] text-secondary sm:text-lg">
@@ -99,7 +99,7 @@ export default function AboutPage() {
             </section>
 
             <section className="mt-16 sm:mt-20">
-              <h2 className="font-display text-[1.75rem] font-medium tracking-[-0.025em] text-foreground">
+              <h2 className="font-display text-[1.75rem] font-medium tracking-[-0.01em] text-foreground">
                 Tools and technologies
               </h2>
               <ul className="mt-8 grid gap-x-12 gap-y-7 sm:grid-cols-2">
