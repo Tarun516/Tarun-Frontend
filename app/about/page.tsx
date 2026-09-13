@@ -44,6 +44,22 @@ export default function AboutPage() {
 
             <section className="mt-20 sm:mt-24">
               <h2 className="font-display text-[1.75rem] font-medium tracking-[-0.01em] text-foreground">
+                Areas of interest
+              </h2>
+              <ul className="mt-7 grid gap-x-10 gap-y-4 sm:grid-cols-2">
+                {portfolio.about.interests.map((interest) => (
+                  <li
+                    key={interest}
+                    className="text-[17px] leading-[1.7] text-secondary sm:text-lg"
+                  >
+                    {interest}
+                  </li>
+                ))}
+              </ul>
+            </section>
+
+            <section className="mt-20 sm:mt-24">
+              <h2 className="font-display text-[1.75rem] font-medium tracking-[-0.01em] text-foreground">
                 Experience
               </h2>
               <ol className="mt-9 space-y-12 sm:space-y-14">
@@ -72,34 +88,6 @@ export default function AboutPage() {
               </ol>
             </section>
 
-            <section className="mt-20 sm:mt-24">
-              <h2 className="font-display text-[1.75rem] font-medium tracking-[-0.01em] text-foreground">
-                Education
-              </h2>
-              <p className="mt-7 font-display text-xl font-medium tracking-[-0.01em] text-foreground">
-                {portfolio.about.education.degree}
-              </p>
-              <p className="mt-2 text-[15px] text-muted">
-                {portfolio.about.education.school} · {portfolio.about.education.period}
-              </p>
-            </section>
-
-            <section className="mt-20 sm:mt-24">
-              <h2 className="font-display text-[1.75rem] font-medium tracking-[-0.01em] text-foreground">
-                Areas of interest
-              </h2>
-              <ul className="mt-7 grid gap-x-10 gap-y-4 sm:grid-cols-2">
-                {portfolio.about.interests.map((interest) => (
-                  <li
-                    key={interest}
-                    className="text-[17px] leading-[1.7] text-secondary sm:text-lg"
-                  >
-                    {interest}
-                  </li>
-                ))}
-              </ul>
-            </section>
-
             <section className="mt-16 sm:mt-20">
               <h2 className="font-display text-[1.75rem] font-medium tracking-[-0.01em] text-foreground">
                 Tools and technologies
@@ -114,6 +102,18 @@ export default function AboutPage() {
                   </li>
                 ))}
               </ul>
+            </section>
+
+            <section className="mt-20 sm:mt-24">
+              <h2 className="font-display text-[1.75rem] font-medium tracking-[-0.01em] text-foreground">
+                Education
+              </h2>
+              <p className="mt-7 font-display text-xl font-medium tracking-[-0.01em] text-foreground">
+                {portfolio.about.education.degree}
+              </p>
+              <p className="mt-2 text-[15px] text-muted">
+                {portfolio.about.education.school} · {portfolio.about.education.period}
+              </p>
             </section>
 
           </div>

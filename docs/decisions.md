@@ -6,6 +6,7 @@ Format: `- YYYY-MM-DD — decision — one-line why.`
 
 ---
 
+- 2026-09-13 — Reordered About around present work, interests, experience, tools, then education — the page now moves from current context through background before closing with formal education.
 - 2026-09-13 — Replaced the speculative profile narrative with current projects, interests, and a completed Trizen timeline — public identity copy now reflects the user-provided present state across Home, About, and metadata.
 - 2026-09-13 — Restricted public content to real work, direct observations, documented learning, and verifiable facts — placeholder projects/notes are drafts, and advisory language is excluded unless explicitly requested.
 - 2026-09-13 — Added `published` visibility to project frontmatter and collection loading — unfinished or non-public project MDX stays in the repository without entering pages, routes, navigation lists, or discovery feeds.
