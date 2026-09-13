@@ -30,38 +30,29 @@ export const portfolio = {
   resumeUrl: "",
   hero: {
     greeting: "Hey, I'm Tarun.",
-    tagline: "I build AI systems, realtime software, and developer infrastructure.",
+    tagline: "I like building software and exploring new stuff.",
     subtitle:
-      "I build backend infrastructure, AI agents, and products focused on developer experience.",
+      "I am working on Audio Tensor Lab and PyBatch, with interests in Voice AI, inference engineering, agent runtimes, and full-stack applications.",
   },
   /** One human sentence, not a buzzword list. */
   focus:
-    "Currently building Memory OS while exploring agent runtimes, voice AI, context engineering, and production AI infrastructure.",
+    "Currently working on Audio Tensor Lab and PyBatch while learning about Voice AI and inference engineering.",
   about: {
     path:
       "",
-    beyond:
-      "Away from immediate product deadlines, I like studying the ideas that make complex systems easier to reason about—memory and retrieval, distributed execution, realtime interaction, and developer tools that make failure visible.",
     bio: [
-      "I care about systems that stay correct under load: clear interfaces, intentional trade-offs, and failure modes you can reason about.",
-      "Most of my time goes into backend services, execution pipelines, and the glue that makes AI features reliable in production.",
+      "This website is where I document the software I build, the questions I explore, and what I learn from them.",
     ],
-    currentRole: {
-      company: "Trizen",
-      title: "SDE",
-      period: "May 2026 to Present",
-      summary: "Building product features and backend systems.",
-    },
     education: {
       school: "SRM University, AP",
       degree: "B.Tech, Computer Science",
       period: "2021 to 2025",
     },
     interests: [
-      "Agent runtimes & orchestration",
-      "Memory systems & retrieval",
-      "Distributed execution",
-      "Developer tooling",  
+      "Voice AI",
+      "Inference engines and inference engineering",
+      "Agent runtimes",
+      "Full-stack applications",
     ],
     /** Quiet tools list, shown on /about only. */
     tools: [
@@ -93,8 +84,10 @@ export const portfolio = {
     {
       company: "Trizen",
       role: "SDE",
-      period: "May 2026 to Present",
-      highlights: [],
+      period: "May 2026 to Aug 31, 2026",
+      highlights: [
+        "Worked on product features and backend systems.",
+      ],
     },
     {
       company: "Trizen",

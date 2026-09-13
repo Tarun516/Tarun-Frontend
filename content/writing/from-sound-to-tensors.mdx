@@ -1,0 +1,369 @@
+---
+title: "From Sound to Tensors: What Happens Before Audio Reaches a Neural Network"
+summary: "A ground-up walkthrough of how sound becomes digital audio, PCM, NumPy arrays, model-ready tensors and eventually a trainable PyTorch batch."
+date: "2026-09-13"
+type: "deep-dive"
+tags: ["Voice AI", "Audio", "PyTorch", "Machine Learning"]
+diagram:
+  id: "audio-pipeline"
+  caption: "The complete path from a physical sound wave to parameters updated by gradient descent."
+---
+
+Most speech and Voice AI systems eventually receive something that looks
+deceptively simple: `Tensor [B, C, T]`.
+
+But quite a lot has already happened before audio reaches that point. A person
+spoke. A microphone captured a continuously changing signal. That signal was
+sampled, represented as numbers and stored in a file. The bytes were decoded
+into an array, normalized, possibly converted from stereo to mono, resampled,
+converted into a tensor, padded and grouped into a batch.
+
+Only then does the model begin doing anything.
+
+I wanted to understand every transition in that chain while building Audio
+Tensor Lab. This is the resulting mental model: not only what each stage does,
+but why it has to exist.
+
+## Index
+
+1. [Sound becomes digital data](#sound-becomes-digital-data)
+2. [Samples and sample rate](#samples-and-sample-rate)
+3. [PCM and WAV](#pcm-and-wav)
+4. [WAV bytes become NumPy arrays](#wav-bytes-become-numpy-arrays)
+5. [PCM16 becomes float32](#pcm16-becomes-float32)
+6. [Stereo becomes mono](#stereo-becomes-mono)
+7. [Resampling](#resampling)
+8. [NumPy becomes a PyTorch tensor](#numpy-becomes-a-pytorch-tensor)
+9. [Batching variable-length audio](#batching-variable-length-audio)
+10. [What the model receives](#what-the-model-receives)
+11. [From logits to gradients](#from-logits-to-gradients)
+
+## Sound becomes digital data
+
+When someone speaks, their voice creates changes in air pressure. Those changes
+form a continuous sound wave, and a microphone converts them into a continuously
+changing electrical signal.
+
+A computer cannot store an infinitely continuous waveform. It needs discrete
+numbers, so an analogue-to-digital converter measures the signal at specific
+points in time. That process is **sampling**.
+
+```text
+person speaks
+→ air-pressure changes
+→ microphone
+→ electrical signal
+→ measurements
+→ numbers
+```
+
+The numbers are not an approximation added later for machine learning. They are
+the beginning of digital audio itself.
+
+<ContentDiagram
+  id="audio-sampling"
+  caption="Sampling measures a continuous waveform at regular time intervals, producing a sequence of discrete values."
+/>
+
+## Samples and sample rate
+
+A **sample** is one measurement of the waveform at one instant. A sequence such
+as `120, 340, 510, 200, -100, -420` describes how its amplitude changes over
+time.
+
+The **sample rate** says how many measurements were taken each second:
+
+```text
+16 kHz = 16,000 samples per second
+48 kHz = 48,000 samples per second
+```
+
+This gives us a useful invariant:
+
+```text
+duration = number of frames / sample rate
+```
+
+If a mono recording contains 48,000 frames at 16 kHz, its duration is three
+seconds. The sample count alone is not enough; the rate gives those samples a
+meaning in time.
+
+For multi-channel audio, a **frame** contains one sample for each channel at the
+same instant. A stereo second at 48 kHz therefore has 48,000 frames but 96,000
+individual sample values.
+
+## PCM and WAV
+
+Two terms that initially looked interchangeable to me were **PCM** and **WAV**.
+They describe different things.
+
+PCM—Pulse Code Modulation—is a numerical representation of waveform samples.
+PCM16 stores each sample as a signed 16-bit integer, with values from `-32768`
+through `32767`. Each value occupies two bytes.
+
+WAV is a **container format**. It holds the PCM bytes together with the metadata
+needed to interpret them:
+
+```text
+WAV
+├── metadata
+│   ├── sample rate
+│   ├── channels
+│   ├── sample width
+│   └── number of frames
+└── PCM audio bytes
+```
+
+The distinction matters because bytes do not explain themselves. The same byte
+sequence can mean something completely different when interpreted with another
+sample width, byte order, channel count or sample rate. The WAV header supplies
+that contract.
+
+## WAV bytes become NumPy arrays
+
+Reading frames from a WAV file gives us raw bytes. For little-endian PCM16,
+every pair of bytes represents one signed sample. NumPy can interpret the buffer
+directly:
+
+```python
+samples = np.frombuffer(raw_bytes, dtype="<i2")
+```
+
+The dtype string is compact but precise:
+
+- `<` means little-endian byte order.
+- `i` means signed integer.
+- `2` means two bytes per value.
+
+For mono audio, the result has shape `[T]`, where `T` is time. PCM WAV stores
+multi-channel samples interleaved, so a stereo buffer begins as a flat sequence
+like `L0, R0, L1, R1`. Reshaping it to `[T, C]` makes channel meaning explicit:
+
+```python
+samples = samples.reshape(num_frames, channels)
+```
+
+A shape such as `[48000, 2]` now means 48,000 time positions and two channels.
+At this boundary, audio stops looking like a media file and starts looking like
+ordinary numerical data.
+
+This also exposes memory concepts that models eventually care about. A NumPy
+array has a dtype, item size, shape and strides. A channel slice such as
+`samples[:, 0]` can be a non-contiguous view over the same interleaved storage,
+not an independent copy.
+
+## PCM16 becomes float32
+
+PCM16 is compact and useful for storage. Neural-network computation usually
+needs floating-point values with a predictable scale, so we normalize it:
+
+```python
+samples = samples.astype(np.float32) / 32768.0
+```
+
+```text
+-16384 → -0.5
+     0 →  0.0
+ 16384 →  0.5
+```
+
+The waveform has not changed conceptually. Its **numerical representation** has.
+In this pipeline, the cast happens before division, so the operation produces
+float32 rather than retaining an integer representation.
+
+There is a memory trade-off too. An `int16` value uses two bytes; a `float32`
+value uses four. Normalizing the same array therefore roughly doubles its raw
+memory footprint. This is the first small version of a concern that later
+appears as FP32, FP16, BF16, INT8 and model quantization.
+
+## Stereo becomes mono
+
+Stereo audio has shape `[T, 2]`. If the model's input contract is mono, the two
+channels need to become one. A simple starting point is their average:
+
+```python
+mono = samples.astype(np.float32).mean(axis=1)
+```
+
+The cast prevents multiple integer channels from overflowing while they are
+combined. More importantly, `axis=1` is not an arbitrary detail:
+
+```text
+[T, C]
+ ↑  ↑
+ 0  1
+```
+
+Averaging axis 1 removes the channel dimension and preserves time, changing
+`[T, C]` into `[T]`. Averaging axis 0 would collapse the entire time dimension
+and destroy the waveform. Once arrays have more than one axis, knowing what each
+axis means becomes part of correctness.
+
+## Resampling
+
+A source might provide 48 kHz audio while a speech model expects 16 kHz. That
+expected sample rate is part of the model's input contract, so the audio must be
+transformed before inference or training.
+
+For three seconds of audio:
+
+```text
+48,000 frames/sec × 3 sec = 144,000 frames
+16,000 frames/sec × 3 sec =  48,000 frames
+```
+
+The sample rate and number of frames change, while duration stays approximately
+constant.
+
+<ContentDiagram
+  id="audio-resampling"
+  caption="Downsampling changes the representation density, not the recording's duration. Frequencies above the new Nyquist limit are filtered first."
+/>
+
+A tempting shortcut for 48 kHz to 16 kHz is `samples[::3]`. The length is even
+correct, but this is not sufficient resampling.
+
+A 48 kHz signal can represent frequencies up to about 24 kHz. A 16 kHz signal
+can represent only frequencies below about 8 kHz. If higher frequencies remain
+when samples are dropped, they can fold into the lower range as false
+frequencies. That distortion is **aliasing**.
+
+Proper downsampling first applies an anti-aliasing low-pass filter and then
+changes the sampling grid. Audio Tensor Lab uses `scipy.signal.resample_poly`
+for this operation.
+
+Changing only the metadata is also wrong. The same 48,000 frames interpreted at
+48 kHz last one second; interpreted at 16 kHz they last three seconds. Real
+resampling changes the sample values and their count so that the perceived
+duration is preserved.
+
+## NumPy becomes a PyTorch tensor
+
+The preprocessing side uses time-first NumPy shapes:
+
+```text
+mono           [T]
+multi-channel  [T, C]
+```
+
+The model uses channel-first PyTorch shapes:
+
+```text
+[T]    → [1, T]
+[T, C] → [C, T]
+```
+
+Now every individual waveform follows `[C, T]`, which matches the input
+convention for PyTorch's `Conv1d`. A batch adds one more leading dimension:
+`[B, C, T]`.
+
+This transpose is not cosmetic. Passing `[T, C]` where `[C, T]` is expected
+changes the meaning of both axes. Making the conversion at one named boundary
+keeps the convention consistent everywhere after it.
+
+## Batching variable-length audio
+
+Real recordings do not naturally have equal durations. Three examples might
+arrive with shapes:
+
+```text
+[1, 16000]
+[1, 32000]
+[1, 24000]
+```
+
+They cannot be stacked into one rectangular tensor while `T` differs. A custom
+collation step finds the longest clip and pads shorter clips with zeros, creating
+`[3, 1, 32000]`.
+
+<ContentDiagram
+  id="audio-batching"
+  caption="Padding creates a rectangular tensor; the mask preserves which time positions came from each original recording."
+/>
+
+Padding solves the storage problem but introduces values that are not real
+audio. The batch therefore carries three related tensors:
+
+```text
+waveforms  [B, C, T]
+mask       [B, T]
+lengths    [B]
+```
+
+For every example, the boolean mask is true over valid audio and false over
+padding. Its sum equals the original unpadded length. Later operations can use
+that fact to keep padded regions from affecting pooling, attention or metrics.
+
+The responsibilities stay separate: the Dataset loads and transforms one
+example, the DataLoader groups examples, and the custom `collate_fn` constructs
+the padded batch and mask.
+
+## What the model receives
+
+The tiny classifier finally receives `[B, 1, T]`:
+
+```text
+[B, 1, T]
+    ↓
+Conv1D → ReLU
+    ↓
+Conv1D → ReLU
+    ↓
+masked mean pooling
+    ↓
+Linear
+    ↓
+[B, K] logits
+```
+
+`Conv1d` moves learned filters across time to detect local waveform patterns.
+ReLU adds non-linearity. Masked pooling collapses time while excluding padded
+positions. The final linear layer maps the pooled features to one score per
+class.
+
+Those scores are **logits**, not probabilities. Softmax can turn them into
+probabilities for inspection, but `CrossEntropyLoss` expects the raw logits and
+applies the necessary log-softmax calculation internally.
+
+The model is intentionally small. Its purpose is to keep the entire data and
+runtime path visible, not to claim useful speech-recognition accuracy.
+
+## From logits to gradients
+
+Training connects the model's output back to its parameters:
+
+```text
+batch → forward → logits → loss
+                         ↓
+                  loss.backward()
+                         ↓
+                     gradients
+                         ↓
+                  optimizer.step()
+                         ↓
+                 updated parameters
+```
+
+The loss measures how wrong the current predictions are. Calling
+`loss.backward()` asks PyTorch autograd to follow the computation graph backward
+and calculate a gradient for every trainable parameter that contributed to the
+loss.
+
+A gradient describes the local sensitivity of the loss to that parameter. It
+does not update anything by itself. The optimizer reads those gradients and
+changes the parameter values according to its update rule.
+
+The manual training loop makes that order visible:
+
+```python
+optimizer.zero_grad()
+logits = model(batch.waveforms, batch.mask)
+loss = criterion(logits, batch.labels)
+loss.backward()
+optimizer.step()
+```
+
+Gradients accumulate by default, so the old values are cleared before the next
+backward pass. A checkpoint stores the model parameters, optimizer state,
+completed epoch and configuration. Loading it restores the state used for later
+training or inference.

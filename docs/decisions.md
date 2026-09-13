@@ -6,6 +6,10 @@ Format: `- YYYY-MM-DD — decision — one-line why.`
 
 ---
 
+- 2026-09-13 — Replaced the speculative profile narrative with current projects, interests, and a completed Trizen timeline — public identity copy now reflects the user-provided present state across Home, About, and metadata.
+- 2026-09-13 — Restricted public content to real work, direct observations, documented learning, and verifiable facts — placeholder projects/notes are drafts, and advisory language is excluded unless explicitly requested.
+- 2026-09-13 — Added `published` visibility to project frontmatter and collection loading — unfinished or non-public project MDX stays in the repository without entering pages, routes, navigation lists, or discovery feeds.
+- 2026-09-13 — Added generated MDX heading ids and registered inline content diagrams — deep dives can now provide linked indexes and reusable theme-aware visuals without manual heading ids or screenshots.
 - 2026-09-11 — Normalized the typography hierarchy and narrowed the homepage composition from 65rem to 56rem — clearer size steps, optical tracking, and denser alignment replace competing headings and unused horizontal space without changing the Manrope identity.
 - 2026-09-11 — Tightened homepage section boundaries to one 80/96/112px responsive margin and made Projects/Writing labels semantic h2 headings — removes stacked dead space while preserving the established editorial hierarchy.
 - 2026-09-10 — Declared `data-scroll-behavior="smooth"` on the root html element — allows Next.js 16 to disable the global smooth-scroll rule during route transitions and removes its runtime warning.

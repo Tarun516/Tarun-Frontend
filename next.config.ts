@@ -15,7 +15,10 @@ const withMDX = createMDX({
       "remark-frontmatter",
       ["remark-mdx-frontmatter", { name: "frontmatter" }],
     ],
-    rehypePlugins: [],
+    rehypePlugins: [
+      // Generate stable heading ids for deep-dive indexes and direct links.
+      "rehype-slug",
+    ],
   },
 });
 

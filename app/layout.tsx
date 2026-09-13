@@ -30,9 +30,10 @@ export const metadata: Metadata = {
   keywords: [
     portfolio.name,
     "software engineer",
-    "backend infrastructure",
-    "AI systems",
-    "distributed systems",
+    "Voice AI",
+    "inference engineering",
+    "agent runtimes",
+    "full-stack applications",
   ],
   authors: [{ name: portfolio.name }],
   alternates: { canonical: "/" },

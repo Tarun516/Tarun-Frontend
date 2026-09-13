@@ -77,7 +77,7 @@ content/**/*.mdx ──▶ lib/content loaders ──▶ typed metadata ──�
 
 ## Frontmatter contracts
 
-Project (`content/projects/`): `kind` ("project" | "case-study"), `title`, `summary`, `role`, `year`, `tags`, `homeOrder?` (explicit homepage placement: 1 = hero project, 2-5 = secondary grid, absent = projects page only), `repoUrl?` (only a real, useful repo URL — never a placeholder), `liveUrl?`, `metrics?` (only genuinely measured numbers), `diagram?` (id + caption).
+Project (`content/projects/`): `kind` ("project" | "case-study"), `title`, `summary`, `role`, `year`, `tags`, `published?` (false = hidden draft), `homeOrder?` (explicit homepage placement: 1 = hero project, 2-5 = secondary grid, absent = projects page only), `repoUrl?` (only a real, useful repo URL — never a placeholder), `liveUrl?`, `metrics?` (only genuinely measured numbers), `diagram?` (id + caption).
 
 Article (`content/writing/`): `title`, `summary`, `date` (ISO), `tags`, `type` (`deep-dive` | `note` | `build-log`, defaults to `note`), `published?` (false = hidden draft), `diagram?`.
 
@@ -95,6 +95,8 @@ the canonical production origin (Vercel URL variables are fallbacks).
 
 - Design tokens are CSS variables surfaced as Tailwind theme colors: `foreground`, `secondary`, `muted`, `border`, `border-bright`, `surface`, `accent`. Use these, never raw hex values.
 - Rendered markdown is styled by the scoped `.mdx-body` rules in `app/globals.css` — site chrome keeps its own hand-tuned styling and must not be affected.
+- MDX headings receive stable ids through `rehype-slug`; registered
+  `ContentDiagram` visuals can be used both as article heroes and inline.
 - Light/dark theming is class-based (`html.dark`) with a no-flash inline script (`components/theme-script.tsx`).
 
 ## Adding content

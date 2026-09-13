@@ -37,13 +37,15 @@ export default function ProjectsPage() {
               learned from.
             </p>
 
-            <section className="mt-14 sm:mt-16">
-              <div className="grid gap-x-14 gap-y-16 sm:grid-cols-2">
-                {selected.map((entry) => (
-                  <ProjectCard key={entry.id} entry={entry} visual />
-                ))}
-              </div>
-            </section>
+            {selected.length > 0 ? (
+              <section className="mt-14 sm:mt-16">
+                <div className="grid gap-x-14 gap-y-16 sm:grid-cols-2">
+                  {selected.map((entry) => (
+                    <ProjectCard key={entry.id} entry={entry} visual />
+                  ))}
+                </div>
+              </section>
+            ) : null}
 
             {remaining.length > 0 ? (
               <section className="mt-24 sm:mt-28">

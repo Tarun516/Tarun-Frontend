@@ -27,41 +27,41 @@ export default function Home() {
           <div className="mx-auto max-w-[56rem]">
             <WorkspaceHero />
 
-            <section
-              id="projects"
-              className="mt-20 scroll-mt-20 sm:mt-24 sm:scroll-mt-24 lg:mt-28"
-            >
-              <SectionLabel>Projects</SectionLabel>
+            {primary ? (
+              <section
+                id="projects"
+                className="mt-20 scroll-mt-20 sm:mt-24 sm:scroll-mt-24 lg:mt-28"
+              >
+                <SectionLabel>Projects</SectionLabel>
 
-              {primary ? (
                 <div className="mt-10 sm:mt-12">
                   <ProjectCard entry={primary} visual />
                 </div>
-              ) : null}
 
-              {secondary.length > 0 ? (
-                <div className="mt-14 grid gap-x-16 gap-y-10 sm:mt-16 sm:grid-cols-2 sm:gap-y-12">
-                  {secondary.map((entry) => (
-                    <ProjectCard key={entry.id} entry={entry} />
-                  ))}
-                </div>
-              ) : null}
+                {secondary.length > 0 ? (
+                  <div className="mt-14 grid gap-x-16 gap-y-10 sm:mt-16 sm:grid-cols-2 sm:gap-y-12">
+                    {secondary.map((entry) => (
+                      <ProjectCard key={entry.id} entry={entry} />
+                    ))}
+                  </div>
+                ) : null}
 
-              <p className="mt-12 sm:mt-14">
-                <Link
-                  href="/projects"
-                  className="group inline-flex items-center gap-1.5 text-sm text-secondary transition-colors duration-200 ease-out hover:text-foreground"
-                >
-                  View all projects
-                  <span
-                    aria-hidden="true"
-                    className="inline-block opacity-45 transition-[transform,opacity] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-1 group-hover:opacity-100"
+                <p className="mt-12 sm:mt-14">
+                  <Link
+                    href="/projects"
+                    className="group inline-flex items-center gap-1.5 text-sm text-secondary transition-colors duration-200 ease-out hover:text-foreground"
                   >
-                    →
-                  </span>
-                </Link>
-              </p>
-            </section>
+                    View all projects
+                    <span
+                      aria-hidden="true"
+                      className="inline-block opacity-45 transition-[transform,opacity] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-1 group-hover:opacity-100"
+                    >
+                      →
+                    </span>
+                  </Link>
+                </p>
+              </section>
+            ) : null}
 
             <section
               id="writing"

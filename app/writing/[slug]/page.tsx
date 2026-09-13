@@ -92,9 +92,9 @@ export default async function ArticlePage({ params }: PageProps) {
             </header>
 
             {diagramId ? (
-              <figure className="mt-12">
+              <div className="mt-12">
                 <ContentDiagram id={diagramId} caption={diagramCaption} />
-              </figure>
+              </div>
             ) : null}
 
             <article className="mdx-body mt-20 sm:mt-24">

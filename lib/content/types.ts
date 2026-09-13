@@ -38,6 +38,8 @@ export type ProjectFrontmatter = {
   role: string;
   year: string;
   tags: string[];
+  /** False keeps unfinished or non-public work out of every public surface. */
+  published?: boolean;
   /**
    * Explicit homepage placement: 1 = primary/hero project,
    * 2-5 = secondary grid, absent = projects page only.

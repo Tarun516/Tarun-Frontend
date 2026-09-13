@@ -1,6 +1,10 @@
 import type { ComponentType } from "react";
 import { Diagram } from "@/components/Diagram";
 import {
+  AudioBatchingDiagram,
+  AudioPipelineDiagram,
+  AudioResamplingDiagram,
+  AudioSamplingDiagram,
   ContextMemoryDiagram,
   ExecutionEngineDiagram,
   MemoryOsDiagram,
@@ -8,6 +12,10 @@ import {
 } from "@/components/diagrams/svgs";
 
 export const diagramRegistry = {
+  "audio-pipeline": AudioPipelineDiagram,
+  "audio-sampling": AudioSamplingDiagram,
+  "audio-resampling": AudioResamplingDiagram,
+  "audio-batching": AudioBatchingDiagram,
   "memory-os": MemoryOsDiagram,
   "execution-engine": ExecutionEngineDiagram,
   "context-memory": ContextMemoryDiagram,

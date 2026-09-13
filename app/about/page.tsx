@@ -23,8 +23,7 @@ export default function AboutPage() {
                 About
               </h1>
               <p className="mt-7 max-w-2xl font-display text-xl leading-[1.55] tracking-[-0.01em] text-foreground sm:text-[1.375rem]">
-                I build reliable systems and products around AI,
-                infrastructure, and developer experience.
+                {portfolio.hero.tagline}
               </p>
             </header>
 
@@ -65,11 +64,7 @@ export default function AboutPage() {
                               </li>
                             ))}
                           </ul>
-                        ) : (
-                          <p className="mt-4 text-base leading-[1.7] text-secondary">
-                            {portfolio.about.currentRole.summary}
-                          </p>
-                        )}
+                        ) : null}
                       </div>
                     </div>
                   </li>
@@ -91,11 +86,18 @@ export default function AboutPage() {
 
             <section className="mt-20 sm:mt-24">
               <h2 className="font-display text-[1.75rem] font-medium tracking-[-0.01em] text-foreground">
-                Beyond the current build
+                Areas of interest
               </h2>
-              <p className="mt-6 text-[17px] leading-[1.75] text-secondary sm:text-lg">
-                {portfolio.about.beyond}
-              </p>
+              <ul className="mt-7 grid gap-x-10 gap-y-4 sm:grid-cols-2">
+                {portfolio.about.interests.map((interest) => (
+                  <li
+                    key={interest}
+                    className="text-[17px] leading-[1.7] text-secondary sm:text-lg"
+                  >
+                    {interest}
+                  </li>
+                ))}
+              </ul>
             </section>
 
             <section className="mt-16 sm:mt-20">

@@ -88,7 +88,7 @@ headings.
 ## About page
 
 Personal narrative, not résumé data: intro lead paragraph, bio, "Today" (uses
-`portfolio.focus`), Experience, Education, Beyond the current build, Tools and
+`portfolio.focus`), Experience, Education, Areas of interest, Tools and
 technologies. Its 47.5rem reading column remains centered like other deep
 reading pages. Contact actions remain on the homepage rather than being
 duplicated here.

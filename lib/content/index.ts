@@ -20,6 +20,7 @@ export function getAllProjects(): ProjectContent[] {
       href: slug,
       ...parseProjectFrontmatter(frontmatter, slug),
     }))
+    .filter((project) => project.published !== false)
     .sort((a, b) => b.year.localeCompare(a.year));
 
   const homeOrders = new Map<number, string>();
@@ -41,7 +42,7 @@ export function getProject(slug: string): ProjectContent | undefined {
 }
 
 export function getProjectSlugs(): string[] {
-  return readAllMdx("projects").map(({ slug }) => slug);
+  return getAllProjects().map(({ slug }) => slug);
 }
 
 /**

@@ -1,4 +1,5 @@
 import type { MDXComponents } from "mdx/types";
+import { ContentDiagram } from "@/components/diagrams";
 import { Callout, CodeBlock } from "@/components/mdx";
 
 // Global component map for MDX content (required by @next/mdx in App Router).
@@ -8,6 +9,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
     pre: (props) => <CodeBlock {...props} />,
     Callout,
+    ContentDiagram,
     ...components,
   };
 }

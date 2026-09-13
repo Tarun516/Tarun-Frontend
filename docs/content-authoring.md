@@ -14,7 +14,7 @@ How to write and maintain the content that powers the site.
 
 1. **Filename = slug = route.** `context-windows.mdx` is served at `/writing/context-windows`. Never store a slug or href in frontmatter.
 2. **Reading time is computed**, never written. It comes from the body word count.
-3. **Drafts**: set `published: false` in an article's frontmatter. Drafts are excluded from all lists, prerendering, and return 404.
+3. **Drafts**: set `published: false` in article or project frontmatter. Drafts are excluded from all lists, prerendering, and discovery routes, and their detail URLs return 404.
 4. **Diagrams** are referenced by id: `diagram: { id: "execution-engine", caption: "..." }`. The id must exist in `components/diagrams`.
 5. **Content determines the story. There is no fixed case-study heading template.** Each project chooses its own ~4–5 narrative headings.
 6. **Frontmatter is validated at build time.** Unknown fields and invalid types fail with the offending filename. Project `homeOrder` values must be unique.
@@ -28,6 +28,7 @@ summary: "One or two sentences."
 role: "What I did"
 year: "2026"
 tags: ["TypeScript", "Postgres"]
+published: false          # optional; hides non-public work from every public surface
 homeOrder: 1              # optional, unique 1–5; explicit homepage order
 repoUrl: "https://github.com/..."
 liveUrl: "https://..."
@@ -59,11 +60,19 @@ Inside any `.mdx` file you can use:
 
 - Standard markdown: headings, lists, tables (GFM), code fences, blockquotes, links, images.
 - `<Callout tone="info|warn" title="Optional">...</Callout>` — inline emphasis block.
+- `<ContentDiagram id="..." caption="..." />` — a registered, theme-aware vector diagram.
 
 Code fences are automatically rendered through the styled `CodeBlock`.
+Level-two and level-three headings receive generated slug ids, so long-form
+articles can link an index directly to their sections.
 
 ## Writing style
 
 - First person, plain prose. No buzzword stacking.
-- Sentences should state a trade-off or a reason, not just a feature list.
+- Publish only direct experience, personal observations, documented learning,
+  and verifiable facts.
+- Do not add advice, recommendations, prescriptions, or claims of authority
+  unless they are explicitly requested for that piece.
+- Describe what happened and why a transition exists without telling the reader
+  what they should do.
 - Summaries are one to two sentences and must make sense as a link preview.
